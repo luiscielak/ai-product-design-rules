@@ -1,148 +1,196 @@
 # .cursorrules
 
+## Workflow Overview
+These rules define a structured AI product design workflow with five sequential stages:
+1. **Project Setup** (/new-project) → 2. **PRD** (/prd) → 3. **Lo-Fi Wireframes** (/lofi) → 4. **Mid-Fi Wireframes** (/midfi) → 5. **Hi-Fi Design** (/hifi) → 6. **Prototype** (/ui-proto)
+
+Each stage builds on the previous. When a command is invoked, check for prerequisite outputs and reference them.
+
+---
+
 ## Rule: Project Manager → Generate New AI Product Design Project
-- Command: /new-project
-- Role: Project Manager
-- Purpose: Create a new organized project structure for AI product design workflows.
-- Required Inputs:
-  - project_name (kebab-case, e.g., "foto-sage", "chat-assistant")
-  - project_type (default: "ai-product-design")
-  - include_marketing (default: true)
-- Behavior:
-  - Create projects/{project_name}/ directory structure
-  - Initialize three main folders: app/, docs/, and marketing/ (if requested)
+- **Command:** `/new-project`
+- **Role:** Project Manager
+- **Purpose:** Create a new organized project structure for AI product design workflows.
+- **Required Inputs:**
+  - `project_name` (kebab-case, e.g., "foto-sage", "chat-assistant")
+  - `project_type` (default: "ai-product-design")
+  - `include_marketing` (default: true)
+- **Behavior:**
+  - Create `projects/{project_name}/` directory structure
+  - Initialize three main folders: `app/`, `docs/`, and `marketing/` (if requested)
   - Set up basic configuration files and README templates
   - Create initial directory structure for design documentation
-- Output:
-  - Directory: projects/{project_name}/
-  - Structure:
-    - app/ (Next.js application)
+  - If project already exists, ask before overwriting
+- **Output:**
+  - **Directory:** `projects/{project_name}/`
+  - **Structure:**
+    - `app/` (Next.js application)
       - Basic Next.js setup with TypeScript, Tailwind, and shadcn/ui
-      - src/app/ with basic routing structure
-      - components/ui/ for reusable components
-    - docs/ (Design documentation)
-      - PRD.md template
-      - wireframes/ (lofi/ and midfi/ subdirectories)
-      - ui-design/ (for design system documentation)
-      - presentations/ (for case studies and presentations)
-    - marketing/ (Marketing site, if requested)
+      - `src/app/` with basic routing structure
+      - `components/ui/` for reusable components
+    - `docs/` (Design documentation)
+      - `PRD.md` template (empty, to be filled by /prd)
+      - `presentations/` (for case studies and presentations)
+    - `design/` (Design assets)
+      - `wireframes/` (`lofi/` and `midfi/` subdirectories)
+      - `ui-design/` (for design system documentation)
+    - `marketing/` (Marketing site, if requested)
       - Basic Next.js setup for marketing pages
       - Waitlist functionality template
-  - Files:
-    - projects/{project_name}/README.md (project overview and setup instructions)
-    - Each app has its own package.json, tsconfig.json, etc.
-- Acceptance:
+  - **Files:**
+    - `projects/{project_name}/README.md` (project overview and setup instructions)
+    - Each app has its own `package.json`, `tsconfig.json`, etc.
+- **Acceptance:**
   - Project structure follows the established pattern
-  - All generated apps can run with npm install && npm run dev
+  - All generated apps can run with `npm install && npm run dev`
   - README includes clear setup and usage instructions
+  - All directories and template files are created
 
 ## Rule: Product Owner → Generate PRD
-- Command: /prd
-- Role: Product Owner
-- Purpose: Create a concise, actionable PRD to align scope, requirements, and metrics.
-- Required Inputs:
-  - product_name, target_users, key_problem, business_goals, success_metrics
-  - primary_flows (list), constraints, assumptions, risks, stakeholders, timeline
-- Behavior:
-  - Validate inputs; ask for missing critical info only once, then proceed with best assumptions.
-  - Keep PRD short but complete; prefer bullet points and measurable criteria.
-- Output:
-  - File: projects/{project_name}/docs/PRD.md
-  - Format:
-    1. Overview: product_name, elevator_pitch, problem_statement
-    2. Goals and Non‑Goals
-    3. Target Users and Personas
-    4. User Stories (INVEST) and Primary Flows
-    5. Scope (MVP vs. Post‑MVP)
-    6. Functional Requirements (numbered FR‑001…)
-    7. Non‑Functional Requirements (NFR‑001…: performance, security, accessibility)
-    8. Acceptance Criteria (Gherkin‑style where useful)
-    9. Success Metrics (north star + leading indicators; baselines and targets)
-    10. Dependencies and Constraints
-    11. Assumptions and Open Questions
-    12. Risks and Mitigations
-    13. Release Plan and Milestones
-- Acceptance:
-  - All FRs map to at least one user story and metric.
-  - Each metric has a target, timeframe, and measurement method.
+- **Command:** `/prd` or `/prd using docs/design-brief.md`
+- **Role:** Product Owner
+- **Purpose:** Create a concise, actionable PRD to align scope, requirements, and metrics.
+- **Prerequisites:** Project structure should exist (run `/new-project` first if needed)
+- **Required Inputs:**
+  - `product_name`, `target_users`, `key_problem`, `business_goals`, `success_metrics`
+  - `primary_flows` (list), `constraints`, `assumptions`, `risks`, `stakeholders`, `timeline`
+  - **Optional:** Reference to existing design brief (e.g., "using docs/design-brief.md" or "from design-brief.md")
+- **Behavior:**
+  - **If design brief is referenced:** Read the design brief file first and extract relevant information to populate PRD sections
+  - **If no design brief:** Validate inputs; ask for missing critical info only once, then proceed with best assumptions
+  - Keep PRD short but complete; prefer bullet points and measurable criteria
+  - Automatically search for and reference existing design briefs in `docs/` directory if not explicitly provided
+  - If project_name not provided, infer from current directory or ask once
+  - **Note:** When working within a project directory (`projects/{project_name}/`), use relative paths (e.g., `docs/PRD.md`)
+- **Output:**
+  - **File:** `docs/PRD.md` (relative to project directory)
+  - **Format:**
+    1. **Overview:** product_name, elevator_pitch, problem_statement
+    2. **Goals and Non‑Goals**
+    3. **Target Users and Personas**
+    4. **User Stories** (INVEST format) and Primary Flows
+    5. **Scope** (MVP vs. Post‑MVP)
+    6. **Functional Requirements** (numbered FR‑001, FR‑002…)
+    7. **Non‑Functional Requirements** (NFR‑001, NFR‑002…: performance, security, accessibility)
+    8. **Acceptance Criteria** (Gherkin‑style where useful: Given/When/Then)
+    9. **Success Metrics** (north star + leading indicators; baselines and targets)
+    10. **Dependencies and Constraints**
+    11. **Assumptions and Open Questions**
+    12. **Risks and Mitigations**
+    13. **Release Plan and Milestones**
+- **Acceptance:**
+  - All FRs map to at least one user story and metric
+  - Each metric has a target, timeframe, and measurement method
+  - PRD is actionable and scoped appropriately for MVP
+  - File is saved to correct location and properly formatted
 
 ## Rule: UX Designer → Generate ASCII Lo‑Fi Wireframes
-- Command: /lofi
-- Role: UX Designer
-- Purpose: Explore structure and flow quickly; no visual polish.
-- Required Inputs:
-  - screens (list of screen names), primary_flows, key_content (per screen), breakpoints (default: mobile, desktop)
-- Behavior:
-  - For each screen, produce mobile and desktop ASCII frames with clear layout and hierarchy.
-  - Use a shared legend with standardized symbols and annotations.
-- Output:
-  - Directory: projects/{project_name}/docs/wireframes/lofi/
-  - Files: <screen>-mobile.txt, <screen>-desktop.txt, plus projects/{project_name}/docs/wireframes/lofi/legend.md
-  - ASCII Conventions:
-    - Containers: +------+ | content | +------+
-    - Images: [IMG:w×h], Avatars: (O), Icon: [*], Button: [Button: Label]
-    - Inputs: [Input: Placeholder], Select: [Select: Value], Checkbox: [x] Label
-    - Sections labeled with [S1], [S2] ...; notes as [A1], [A2]...
-  - Legend (legend.md):
-    - Symbol map, grid guidance, spacing hints (XS/S/M/L), navigation conventions.
-  - Each file includes:
-    - Title: <Screen Name> — <Breakpoint>
+- **Command:** `/lofi`
+- **Role:** UX Designer
+- **Purpose:** Explore structure and flow quickly; no visual polish.
+- **Prerequisites:** PRD should exist (`docs/PRD.md`). If missing, ask user if they want to create PRD first or proceed with provided inputs.
+- **Required Inputs:**
+  - `screens` (list of screen names)
+  - `primary_flows` (list of user flow sequences)
+  - `key_content` (per screen: what content/elements appear)
+  - `breakpoints` (default: ["mobile", "desktop"])
+- **Behavior:**
+  - Read PRD to understand functional requirements and user stories
+  - For each screen, produce mobile and desktop ASCII frames with clear layout and hierarchy
+  - Use a shared legend with standardized symbols and annotations
+  - Map each screen to relevant FRs from PRD
+  - **Note:** When working within a project directory, use relative paths
+- **Output:**
+  - **Directory:** `design/wireframes/lofi/` (relative to project directory)
+  - **Files:**
+    - `<screen-name>-mobile.txt` (one per screen)
+    - `<screen-name>-desktop.txt` (one per screen)
+    - `legend.md` (shared symbol reference)
+  - **ASCII Conventions:**
+    - Containers: `+------+` `| content |` `+------+`
+    - Images: `[IMG:w×h]`, Avatars: `(O)`, Icon: `[*]`, Button: `[Button: Label]`
+    - Inputs: `[Input: Placeholder]`, Select: `[Select: Value]`, Checkbox: `[x] Label`
+    - Sections labeled with `[S1]`, `[S2]` ...; notes as `[A1]`, `[A2]`...
+  - **Legend (`legend.md`):**
+    - Symbol map, grid guidance, spacing hints (XS/S/M/L), navigation conventions
+  - **Each screen file includes:**
+    - Title: `<Screen Name> — <Breakpoint>`
     - Frame: ASCII layout
-    - Annotations: A1:, A2: (content rules, empty/long states)
+    - Annotations: `A1:`, `A2:` (content rules, empty/long states)
     - Flow Hooks: Next/Prev screen references
-- Acceptance:
-  - Every FR in PRD has at least one corresponding screen/section.
-  - Shows empty, loading, and error states for core interactions.
+    - Related FRs: List of functional requirements this screen addresses
+- **Acceptance:**
+  - Every FR in PRD has at least one corresponding screen/section
+  - Shows empty, loading, and error states for core interactions
+  - All primary flows are represented
+  - Files are properly named and saved to correct directory
 
 ## Rule: Product Designer → Generate Mid‑Fidelity Wireframes
-- Command: /midfi
-- Role: Product Designer
-- Purpose: Define structure, hierarchy, and interaction states; introduce systemized spacing and type; still minimal visual brand.
-- Required Inputs:
-  - screens (from lo‑fi), states (default: default/hover/focus/disabled/loading/error/success)
-  - content_examples (short/long), accessibility_targets (WCAG AA)
-- Behavior:
-  - Convert each lo‑fi screen into mid‑fi with componentized layout, spacing scale, and type scale.
-  - Provide a token spec aligned to Tailwind and shadcn defaults.
-  - Generate a mid‑fi `ui.html` overview that previews each screen in device frames: a phone frame for mobile and a browser frame for desktop.
-- Output:
-  - Directory: projects/{project_name}/docs/wireframes/midfi/
-  - Files:
-    - tokens.md (foundations)
-    - components.md (component variants/states)
-    - screens/<screen>.md (annotated frames and interactions)
-    - ui.html (mid‑fi overview page linking tokens/components/screens, showing each screen in phone and browser device frames)
-  - tokens.md includes:
-    - Spacing: 0, 2, 4, 6, 8, 12, 16, 24, 32 (map to Tailwind: 0, 0.5, 1, 1.5, 2, 3, 4, 6, 8)
-    - Typography: text-xs/sm/base/lg/xl/2xl; line-heights; weights
-    - Color: neutrals, brand, semantic (map to Tailwind + shadcn themes)
-    - Radius: sm/md/lg/full; Shadows: sm/md/lg
-  - components.md:
-    - Inventory (Button, Input, Select, Card, Dialog, Sheet, Toast, Tabs, Pagination, Table, Navbar, Sidebar)
-    - Each: anatomy, states, props, interactions, keyboard navigation, focus order
-  - screens/<screen>.md:
-    - Frame description (grid, layout, spacing), component instances with props, state table, transitions and error handling.
-- Acceptance:
-  - All interactive elements have defined states and focus styles.
-  - Accessibility notes for color contrast and keyboard support included.
-  - Each screen preview includes device frames: phone (mobile) and browser (desktop) in `ui.html`.
+- **Command:** `/midfi`
+- **Role:** Product Designer
+- **Purpose:** Define structure, hierarchy, and interaction states; introduce systemized spacing and type; still minimal visual brand.
+- **Prerequisites:** Lo‑fi wireframes should exist (`design/wireframes/lofi/`). If missing, ask user if they want to create lo‑fi first or proceed with provided inputs.
+- **Required Inputs:**
+  - `screens` (from lo‑fi, or list of screen names)
+  - `states` (default: ["default", "hover", "focus", "disabled", "loading", "error", "success"])
+  - `content_examples` (short/long text variations)
+  - `accessibility_targets` (default: "WCAG AA")
+- **Behavior:**
+  - Read lo‑fi wireframes to understand structure and flows
+  - Convert each lo‑fi screen into mid‑fi with componentized layout, spacing scale, and type scale
+  - Provide a token spec aligned to Tailwind and shadcn defaults
+  - Generate a mid‑fi `ui.html` overview that previews each screen in device frames: a phone frame for mobile and a browser frame for desktop
+  - **Note:** When working within a project directory, use relative paths
+- **Output:**
+  - **Directory:** `design/wireframes/midfi/` (relative to project directory)
+  - **Files:**
+    - `tokens.md` (design foundations)
+    - `components.md` (component variants/states)
+    - `screens/<screen-name>.md` (annotated frames and interactions, one per screen)
+    - `ui.html` (mid‑fi overview page linking tokens/components/screens, showing each screen in phone and browser device frames)
+  - **`tokens.md` includes:**
+    - **Spacing:** 0, 2, 4, 6, 8, 12, 16, 24, 32 (map to Tailwind: 0, 0.5, 1, 1.5, 2, 3, 4, 6, 8)
+    - **Typography:** text-xs/sm/base/lg/xl/2xl; line-heights; weights (400, 500, 600, 700)
+    - **Color:** neutrals, brand, semantic (map to Tailwind + shadcn themes)
+    - **Radius:** sm/md/lg/full; **Shadows:** sm/md/lg
+  - **`components.md`:**
+    - Inventory: Button, Input, Select, Card, Dialog, Sheet, Toast, Tabs, Pagination, Table, Navbar, Sidebar
+    - Each component includes: anatomy, states, props, interactions, keyboard navigation, focus order
+  - **`screens/<screen-name>.md`:**
+    - Frame description (grid, layout, spacing)
+    - Component instances with props
+    - State table (default/hover/focus/disabled/loading/error/success)
+    - Transitions and error handling
+    - Responsive behavior notes
+- **Acceptance:**
+  - All interactive elements have defined states and focus styles
+  - Accessibility notes for color contrast and keyboard support included
+  - Each screen preview includes device frames: phone (mobile) and browser (desktop) in `ui.html`
+  - Tokens are mappable to Tailwind/shadcn without refactoring
+  - All screens from lo‑fi are represented
 
 ## Rule: UI Designer → High‑Fidelity UI Design Kit
-- Command: /hifi
-- Role: UI Designer
-- Purpose: Deliver a comprehensive hi‑fi UI design kit ready for engineering handoff, combining design system documentation with mobile-first UI designs.
-- Required Inputs:
-  - theme (light|dark|both, default: dark), brand_color (hex/HSL), accent_color (hex/HSL)
-  - components (list, default: shadcn core used in project)
-  - app_concept (optional: for mobile UI design focus)
-  - key_features (optional: for mobile UI design focus)
-  - target_users (optional: for mobile UI design focus)
-- Behavior:
-  - Map product tokens to Tailwind/shadcn CSS variables; document color roles and states.
-  - Generate a static component gallery with device frames (phone + browser) showing key variants and states.
-  - Include layout density, elevation, motion, and accessibility checklists.
-  - If mobile UI focus is requested, create mobile-first designs following design principles.
-- Design Principles (for mobile UI focus):
+- **Command:** `/hifi`
+- **Role:** UI Designer
+- **Purpose:** Deliver a comprehensive hi‑fi UI design kit ready for engineering handoff, combining design system documentation with mobile-first UI designs.
+- **Prerequisites:** Mid‑fi wireframes should exist (`design/wireframes/midfi/`). If missing, ask user if they want to create mid‑fi first or proceed with provided inputs.
+- **Required Inputs:**
+  - `theme` (light|dark|both, default: "dark")
+  - `brand_color` (hex/HSL format)
+  - `accent_color` (hex/HSL format)
+  - `components` (list, default: shadcn core used in project)
+  - `app_concept` (optional: for mobile UI design focus)
+  - `key_features` (optional: for mobile UI design focus)
+  - `target_users` (optional: for mobile UI design focus)
+- **Behavior:**
+  - Read mid‑fi wireframes and tokens to understand structure and design system
+  - Map product tokens to Tailwind/shadcn CSS variables; document color roles and states
+  - Generate a static component gallery with device frames (phone + browser) showing key variants and states
+  - Include layout density, elevation, motion, and accessibility checklists
+  - If mobile UI focus is requested, create mobile-first designs following design principles
+  - **Note:** When working within a project directory, use relative paths
+- **Design Principles (for mobile UI focus):**
   - Balance elegant minimalism with functional design
   - Use soft, refreshing gradient colors aligned with brand palette
   - Have well-proportioned white space and clean layouts
@@ -152,7 +200,7 @@
   - Use refined rounded corners
   - Include delicate micro-interactions
   - Ensure comfortable visual proportions
-- Technical Requirements (for mobile UI focus):
+- **Technical Requirements (for mobile UI focus):**
   - Design for 375x812px mobile viewport with device frames
   - Use background-free vector icons from online libraries
   - Source open-source images with direct links
@@ -160,61 +208,130 @@
   - Exclude mobile status bars and system indicators
   - Avoid non-mobile UI elements like scrollbars
   - Use only black or white text
-- Output:
-  - Directory: projects/{project_name}/docs/ui-design/
-  - Files:
-    - theme.md (CSS variables and Tailwind mapping examples)
-    - color-roles.md (neutrals, brand, semantic; usage and contrast notes)
-    - component-gallery.html (interactive preview of core components in device frames)
-    - layout-guidelines.md (grid, spacing, elevation, motion)
-    - accessibility-checklist.md (WCAG AA essentials, keyboard/focus)
-    - mobile-ui-design.html (mobile-first UI designs with device frames, if mobile focus requested)
-- Acceptance:
-  - Component gallery renders primary variants and states for Button, Input, Select, Checkbox, Card, Tabs, Table; Dialog preview included.
-  - Device frames present for mobile and desktop previews.
-  - Theme variables align with tokens and are implementable in Tailwind/shadcn without refactoring.
-  - If mobile UI focus: horizontal UI.html with all app screens, following design principles and technical requirements.
+- **Output:**
+  - **Directory:** `design/ui-design/` (relative to project directory)
+  - **Files:**
+    - `theme.md` (CSS variables and Tailwind mapping examples)
+    - `color-roles.md` (neutrals, brand, semantic; usage and contrast notes)
+    - `component-gallery.html` (interactive preview of core components in device frames)
+    - `layout-guidelines.md` (grid, spacing, elevation, motion)
+    - `accessibility-checklist.md` (WCAG AA essentials, keyboard/focus)
+    - `mobile-ui-design.html` (mobile-first UI designs with device frames, if mobile focus requested)
+- **Acceptance:**
+  - Component gallery renders primary variants and states for Button, Input, Select, Checkbox, Card, Tabs, Table; Dialog preview included
+  - Device frames present for mobile and desktop previews
+  - Theme variables align with tokens and are implementable in Tailwind/shadcn without refactoring
+  - If mobile UI focus: horizontal `mobile-ui-design.html` with all app screens, following design principles and technical requirements
+  - All color combinations meet WCAG AA contrast requirements
+  - Design system is complete and ready for engineering handoff
 
-  ## Rule: UI Engineer → Generate Clickable Prototype (shadcn + Tailwind)
-- Command: /ui-proto
-- Role: UI Engineer
-- Purpose: Implement a runnable prototype with shadcn/ui components and Tailwind, covering primary flows.
-- Required Inputs:
-  - framework (default: Next.js 14+ App Router), package_manager (npm|pnpm|yarn), ts (default: true)
-  - pages (list), components (from mid‑fi), routes/flows, data (mock or live), theming (light|dark|both)
-- Behavior:
-  - Detect existing Next.js/Tailwind; otherwise scaffold with safe defaults.
-  - Configure Tailwind and shadcn/ui; map tokens from mid‑fi to Tailwind config when feasible.
-  - Build pages and flows with real keyboard/focus management and basic form validation.
-- Output:
-  - Codebase changes:
-    - If new: create Next.js app in projects/{project_name}/app/, Tailwind, and shadcn/ui setup
-    - Install and add shadcn components per components.md
+## Rule: UI Engineer → Generate Clickable Prototype (shadcn + Tailwind)
+- **Command:** `/ui-proto`
+- **Role:** UI Engineer
+- **Purpose:** Implement a runnable prototype with shadcn/ui components and Tailwind, covering primary flows.
+- **Prerequisites:** Mid‑fi wireframes (`design/wireframes/midfi/`) and hi‑fi design (`design/ui-design/`) should exist. If missing, ask user if they want to create them first or proceed with provided inputs.
+- **Required Inputs:**
+  - `framework` (default: "Next.js 14+ App Router")
+  - `package_manager` (npm|pnpm|yarn, default: "npm")
+  - `ts` (default: true)
+  - `pages` (list of pages to implement)
+  - `components` (from mid‑fi/components.md)
+  - `routes/flows` (primary user flows to implement)
+  - `data` (mock or live, default: "mock")
+  - `theming` (light|dark|both, default: "both")
+- **Behavior:**
+  - Detect existing Next.js/Tailwind setup; otherwise scaffold with safe defaults
+  - Configure Tailwind and shadcn/ui; map tokens from mid‑fi to Tailwind config when feasible
+  - Reference hi‑fi design for styling and component specifications
+  - Build pages and flows with real keyboard/focus management and basic form validation
+  - Implement loading, empty, and error states for all primary interactions
+  - **Note:** When working within a project directory, use relative paths (e.g., `app/`, `docs/`)
+- **Output:**
+  - **Codebase changes:**
+    - If new: create Next.js app in `app/` directory (relative to project root), Tailwind, and shadcn/ui setup
+    - Install and add shadcn components per `components.md`
     - Implement routes and pages matching screens; basic mock data and API stubs
-  - Deliverables:
-    - projects/{project_name}/app/README-proto.md with:
+    - Apply theme from hi‑fi design (colors, spacing, typography)
+  - **Deliverables:**
+    - `app/README-proto.md` (relative to project directory) with:
       - Setup commands
       - Component list installed
       - Routes implemented
       - Known gaps and next steps
-  - Standard Setup Commands (adjust to existing project):
-    - Create app (if needed):
-      - npx create-next-app@latest projects/{project_name}/app --ts --eslint --src-dir --app --tailwind --no-import-alias
-    - Tailwind (if not created by the scaffold):
-      - npm install -D tailwindcss postcss autoprefixer
-      - npx tailwindcss init -p
-      - Configure content to src/**/*.{ts,tsx} or app/**/*.{ts,tsx}
-    - shadcn/ui:
-      - npx shadcn@latest init -y
-      - npx shadcn@latest add button card input label form select dialog sheet toast tabs table navigation-menu dropdown-menu tooltip avatar badge skeleton pagination textarea checkbox radio-switch
-- Implementation Guidelines:
-  - Use App Router, colocation in app/(routes)/, and server components where natural.
-  - Keep components in components/ui aligned with shadcn conventions.
-  - Use Tailwind utility classes and extracted class-variants when complexity grows.
-  - State: minimal client state (React), mock data via /app/api routes or local fixtures.
-  - Accessibility: use proper roles, labels, and focus management; ensure contrast AA.
-- Acceptance:
-  - Project runs: npm run dev
-  - Core flows clickable end‑to‑end with loading/empty/error states.
-  - No TypeScript or ESLint errors; basic responsiveness for mobile and desktop.
-  - Keyboard navigation works for interactive controls; focus outline visible.
+      - How to run the prototype
+- **Standard Setup Commands** (adjust to existing project):
+  - **Create app** (if needed):
+    ```bash
+    # When working within project directory:
+    npx create-next-app@latest app --ts --eslint --src-dir --app --tailwind --no-import-alias
+    # Or from workspace root:
+    npx create-next-app@latest projects/{project_name}/app --ts --eslint --src-dir --app --tailwind --no-import-alias
+    ```
+  - **Tailwind** (if not created by the scaffold):
+    ```bash
+    npm install -D tailwindcss postcss autoprefixer
+    npx tailwindcss init -p
+    # Configure content to src/**/*.{ts,tsx} or app/**/*.{ts,tsx}
+    ```
+  - **shadcn/ui:**
+    ```bash
+    npx shadcn@latest init -y
+    npx shadcn@latest add button card input label form select dialog sheet toast tabs table navigation-menu dropdown-menu tooltip avatar badge skeleton pagination textarea checkbox radio-switch
+    ```
+- **Implementation Guidelines:**
+  - Use App Router, colocation in `app/(routes)/`, and server components where natural
+  - Keep components in `components/ui` aligned with shadcn conventions
+  - Use Tailwind utility classes and extracted class-variants when complexity grows
+  - **State:** minimal client state (React), mock data via `/app/api` routes or local fixtures
+  - **Accessibility:** use proper roles, labels, and focus management; ensure contrast AA
+  - Follow design tokens from mid‑fi and hi‑fi design files
+  - Implement all primary user flows from PRD
+- **Acceptance:**
+  - Project runs: `npm run dev` (or equivalent for chosen package manager)
+  - Core flows clickable end‑to‑end with loading/empty/error states
+  - No TypeScript or ESLint errors; basic responsiveness for mobile and desktop
+  - Keyboard navigation works for interactive controls; focus outline visible
+  - Theme matches hi‑fi design specifications
+  - All primary screens from wireframes are implemented
+
+---
+
+## General Guidelines (Apply to All Commands)
+
+### Working Directory Context
+- **When working within a project directory** (`projects/{project_name}/`), use **relative paths**:
+  - `docs/PRD.md` (not `projects/{project_name}/docs/PRD.md`)
+  - `design/wireframes/lofi/` (not `projects/{project_name}/design/wireframes/lofi/`)
+  - `design/ui-design/` (not `projects/{project_name}/design/ui-design/`)
+  - `app/` (not `projects/{project_name}/app/`)
+- Detect current working directory and adjust paths accordingly
+- If unsure, check if `docs/`, `design/`, or `app/` directories exist in current location
+
+### Input Handling
+- When required inputs are missing, ask the user once for critical information
+- If user doesn't provide inputs, proceed with sensible defaults and document assumptions
+- Infer `project_name` from current directory context when possible
+- Validate inputs before proceeding (e.g., kebab-case for project names)
+
+### File Management
+- Always create files in the correct directory structure
+- Use consistent naming conventions (kebab-case for files and directories)
+- Check if files/directories exist before creating to avoid overwriting without warning
+- Preserve existing content when updating files unless explicitly replacing
+
+### Error Handling
+- If prerequisites are missing, clearly explain what's needed and offer to create them
+- Provide helpful error messages with actionable next steps
+- When encountering existing files, ask before overwriting unless explicitly instructed
+
+### Documentation
+- Include clear README files with setup and usage instructions
+- Document assumptions and decisions made during generation
+- Link related files and explain relationships between deliverables
+- Add comments in code explaining non-obvious decisions
+
+### Quality Standards
+- All generated code should be production-ready (no placeholders unless explicitly noted)
+- Follow best practices for the technology stack (Next.js, Tailwind, shadcn/ui, etc.)
+- Ensure accessibility (WCAG AA minimum) in all interactive elements
+- Test that generated projects can actually run before marking as complete
