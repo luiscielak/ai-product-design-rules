@@ -62,8 +62,12 @@ The same product ("Finley") carried through every stage of the pipeline.
 ### 4. Mid‑Fi (`/midfi`)
 ![Finley mid-fi tokens and components](assets/finley-04-midfi.png)
 
+<video src="https://raw.githubusercontent.com/luiscielak/ai-product-design-rules/main/assets/finley-04-midfi-demo.mp4" controls muted loop poster="assets/finley-04-midfi.png" width="100%"></video>
+
 ### 5. Hi‑Fi (`/hifi`)
 ![Finley hi-fi theme and design kit](assets/finley-05-hifi.png)
+
+<video src="https://raw.githubusercontent.com/luiscielak/ai-product-design-rules/main/assets/finley-05-hifi-demo.mp4" controls muted loop poster="assets/finley-05-hifi.png" width="100%"></video>
 
 ### 6. Prototype (`/ui-proto`)
 ![Finley clickable prototype](assets/finley-06-prototype.png)
