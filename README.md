@@ -2,6 +2,8 @@
 
 A reusable set of Cursor rules for an end‑to‑end AI product design workflow. Use these rules to spin up a structured project, move from PRD to wireframes and prototypes, and keep artifacts organized and reviewable.
 
+![AI Product Design Rules: six roles from brief to prototype](assets/agentic-design-process.png)
+
 ## Overview
 
 These rules define six collaborative roles and commands that move a product from concept to clickable prototype:
@@ -13,11 +15,58 @@ These rules define six collaborative roles and commands that move a product from
 5. **UI Engineer** → `/ui-proto` (clickable prototype using shadcn/ui + Tailwind)
 6. **UI Designer** → `/hifi` (hi‑fi design kit and component gallery)
 
+```mermaid
+flowchart LR
+  newProject["/new-project<br/>Project Manager"] --> prd["/prd<br/>Product Owner"]
+  prd --> lofi["/lofi<br/>UX Designer"]
+  lofi --> midfi["/midfi<br/>Product Designer"]
+  midfi --> uiProto["/ui-proto<br/>UI Engineer"]
+  uiProto --> hifi["/hifi<br/>UI Designer"]
+```
+
+Each step consumes the artifact produced by the previous step and writes its own output into `projects/{project_name}/`.
+
 ## Recommended Sequence
+
+The commands are designed to run in order. Each stage produces an artifact that the next stage builds on—so the pipeline doubles as an artifact handoff.
+
+```mermaid
+flowchart TB
+  bootstrap["/new-project"] --> structure["projects/{name}/<br/>app + docs + marketing"]
+  structure --> prdOut["/prd → docs/PRD.md"]
+  prdOut --> lofiOut["/lofi → docs/wireframes/lofi/"]
+  lofiOut --> midfiOut["/midfi → docs/wireframes/midfi/<br/>+ ui.html"]
+  midfiOut --> protoOut["/ui-proto → app/<br/>clickable prototype"]
+  midfiOut --> hifiOut["/hifi → docs/ui-design/<br/>gallery + theme"]
+```
+
+Both `/ui-proto` and `/hifi` build on the mid‑fi output, so they can be run in either order once `/midfi` is complete. In short:
 
 ```
 /new-project → /prd → /lofi → /midfi → /ui-proto → /hifi
 ```
+
+## Example: Finley walkthrough
+
+The same product ("Finley") carried through every stage of the pipeline.
+
+### 1. Design Brief
+![Finley design brief](assets/finley-01-design-brief.png)
+
+### 2. PRD (`/prd`)
+![Finley PRD](assets/finley-02-prd.png)
+
+### 3. Lo‑Fi (`/lofi`)
+![Finley lo-fi ASCII wireframes](assets/finley-03-lofi.png)
+
+### 4. Mid‑Fi (`/midfi`)
+![Finley mid-fi tokens and components](assets/finley-04-midfi.png)
+
+### 5. Hi‑Fi (`/hifi`)
+![Finley hi-fi theme and design kit](assets/finley-05-hifi.png)
+
+### 6. Prototype (`/ui-proto`)
+![Finley clickable prototype](assets/finley-06-prototype.png)
 
 ## Quick Start
 
@@ -253,6 +302,14 @@ npx shadcn@latest add button card input label form select dialog sheet toast tab
 - **Prototypes:** ensure keyboard navigation and visible focus outlines
 
 ## Using These Rules in Cursor
+
+```mermaid
+flowchart LR
+  copyRules["Copy .cursorrules .yaml<br/>to workspace root"] --> start["/new-project"]
+  start --> sequence["Run /prd → /lofi → /midfi"]
+  sequence --> deliver["/ui-proto and /hifi"]
+  deliver --> review["Review artifacts<br/>in docs/ and app/"]
+```
 
 1. Keep `.cursorrules .yaml` at the workspace root
 2. Start with `/new-project` to establish structure
