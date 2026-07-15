@@ -2,7 +2,7 @@
 
 A reusable set of Cursor rules for an end‑to‑end AI product design workflow. Use these rules to spin up a structured project, move from PRD to wireframes and prototypes, and keep artifacts organized and reviewable.
 
-![AI Product Design Rules: six roles from brief to prototype](assets/agentic-design-process.png)
+![AI Product Design Rules: six roles from brief to prototype](assets/agentic-design-process.jpg)
 
 ## Overview
 
@@ -51,26 +51,26 @@ Both `/ui-proto` and `/hifi` build on the mid‑fi output, so they can be run in
 The same product ("Finley") carried through every stage of the pipeline.
 
 ### 1. Design Brief
-![Finley design brief](assets/finley-01-design-brief.png)
+![Finley design brief](assets/finley-01-design-brief.jpg)
 
 ### 2. PRD (`/prd`)
-![Finley PRD](assets/finley-02-prd.png)
+![Finley PRD](assets/finley-02-prd.jpg)
 
 ### 3. Lo‑Fi (`/lofi`)
-![Finley lo-fi ASCII wireframes](assets/finley-03-lofi.png)
+![Finley lo-fi ASCII wireframes](assets/finley-03-lofi.jpg)
 
 ### 4. Mid‑Fi (`/midfi`)
-![Finley mid-fi tokens and components](assets/finley-04-midfi.png)
+![Finley mid-fi tokens and components](assets/finley-04-midfi.jpg)
 
-<video src="https://raw.githubusercontent.com/luiscielak/ai-product-design-rules/main/assets/finley-04-midfi-demo.mp4" controls muted loop poster="assets/finley-04-midfi.png" width="100%"></video>
+<video src="https://raw.githubusercontent.com/luiscielak/ai-product-design-rules/main/assets/finley-04-midfi-demo.mp4" controls muted loop poster="assets/finley-04-midfi.jpg" width="100%"></video>
 
 ### 5. Hi‑Fi (`/hifi`)
-![Finley hi-fi theme and design kit](assets/finley-05-hifi.png)
+![Finley hi-fi theme and design kit](assets/finley-05-hifi.jpg)
 
-<video src="https://raw.githubusercontent.com/luiscielak/ai-product-design-rules/main/assets/finley-05-hifi-demo.mp4" controls muted loop poster="assets/finley-05-hifi.png" width="100%"></video>
+<video src="https://raw.githubusercontent.com/luiscielak/ai-product-design-rules/main/assets/finley-05-hifi-demo.mp4" controls muted loop poster="assets/finley-05-hifi.jpg" width="100%"></video>
 
 ### 6. Prototype (`/ui-proto`)
-![Finley clickable prototype](assets/finley-06-prototype.png)
+![Finley clickable prototype](assets/finley-06-prototype.jpg)
 
 ## Quick Start
 
