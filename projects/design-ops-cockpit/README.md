@@ -19,7 +19,7 @@ Konstrukt v2.0.0 — [the-hooman-loop/konstrukt](https://github.com/the-hooman-l
 
 - Swiss / Bauhaus: `--radius: 0px`, `--shadow: none`, no gradients
 - One palette (`atelier`); light / dark via `data-mode` on `<html>`
-- Tokens come from generated build output only. Vendored at `vendor/konstrukt-2.0.0/` (`konstrukt.css`, `base.css`, `theme.js`, `tokens.json`). **Do not hand-type hex.**
+- Tokens come from generated build output only. Vendored at project-root `vendor/konstrukt-2.0.0/` (`konstrukt.css`, `base.css`, `theme.js`, `tokens.json`). **Do not hand-type hex.** **Do not create `design/vendor/`.**
 
 ## Setup
 

@@ -99,7 +99,7 @@ Comparable “before” app: git history on this branch (`d9eba6e`). One app onl
 ### Weak output
 
 - Mid-fi screens are structured but prose-heavy. The only visual proof is `ui.html`. If that file does not actually `<link>` `konstrukt.css`, the Konstrukt requirement is theater.
-- I vendored `dist/` twice (`vendor/` and `design/vendor/`) because the rules never say where generated CSS lives.
+- First run vendored `dist/` twice (`vendor/` and `design/vendor/`) because the rules never said where generated CSS lives. `design/vendor/` is now removed; only `vendor/konstrukt-2.0.0/` remains.
 
 ### Suggested rule fix
 

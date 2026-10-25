@@ -20,11 +20,12 @@ When a command is invoked, check for prerequisite outputs and reference them.
 - The two stacks are **exclusive**. Do not install shadcn in a Konstrukt project, and do not vendor Konstrukt into a shadcn project.
 - **`shadcn` (default):** Tailwind + shadcn/ui. Mid-fi tokens include radius and shadows. Hi-fi may use rounded corners, subtle shadows, and soft gradients. `/ui-proto` follows the **shadcn recipe** only.
 - **`konstrukt`:** [Konstrukt v2.0.0](https://github.com/the-hooman-loop/konstrukt) (MIT). Swiss / Bauhaus: square corners (`--radius: 0px`), no shadows (`--shadow: none`), one palette (`atelier`), light and dark via `data-mode` on `<html>` (`light` is `:root`; `[data-theme="dark"]` is a legacy alias), layered tokens (primitives → global → semantic → dark overrides), 8 type roles (`display`, `heading`, `subheading`, `label`, `badge`, `body`, `meta`, `mono`), stroke tokens (`--stroke-hairline` / `--stroke-rule` / `--stroke-rail`), 80-pair WCAG AA contrast gate. Teal is reserved for the one primary action on a surface.
-- **Konstrukt consumption (exact):** `@hooman-loop/konstrukt` is `private` on npm — do **not** `npm install` it. Copy generated files from the git tag `v2.0.0` (`dist/` after `npm run build` in that clone) into the single vendor path `projects/{project_name}/vendor/konstrukt-2.0.0/`:
+- **Konstrukt consumption (exact):** `@hooman-loop/konstrukt` is `private` on npm — do **not** `npm install` it. Copy generated files from the git tag `v2.0.0` (`dist/` after `npm run build` in that clone) into the **single** vendor path `projects/{project_name}/vendor/konstrukt-2.0.0/` (project root, sibling of `app/` and `design/`):
   - `konstrukt.css` ← `dist/css/konstrukt.css`
   - `base.css` ← `dist/css/base.css`
   - `theme.js` ← `dist/css/theme.js` (`HLTheme`)
   - `tokens.json` ← `dist/tokens.json`
+- **Never create `design/vendor/`.** Mid-fi and hi-fi HTML must `<link>` the project-root vendor files with relative paths (`../../../vendor/konstrukt-2.0.0/` from `design/wireframes/midfi/`, `../../vendor/konstrukt-2.0.0/` from `design/ui-design/`). Do not copy `dist/` under `design/`.
 - Never hand-type hex. Never invent radius, shadow, or gradient values. Reference `var(--accent)`, `var(--type-body)`, `var(--sp-4)`, etc. **Banned** under `konstrukt`: `rounded-*`, `shadow-*`, `bg-gradient-*`, `box-shadow`, `border-radius` except `var(--radius)`, soft-gradient guidance.
 
 ---
@@ -184,7 +185,7 @@ When a command is invoked, check for prerequisite outputs and reference them.
     - **Typography:** the 8 roles as `font: var(--type-<role>)` plus `-tracking` / `-transform` (`display`, `heading`, `subheading`, `label`, `badge`, `body`, `meta`, `mono`)
     - **Color:** semantic roles only (`--bg`, `--bg-alt`, `--surface`, `--text`, `--text-muted`, `--ink`, `--border`, `--border-light`, `--accent`, `--accent-soft`, `--accent-light`, `--on-accent`, `--focus`, feedback + `status-*` + `category-1`…`5`, `--selection-bg` / `--selection-fg`). Modes via `data-mode="light|dark"` on `<html>`.
     - **Radius:** `--radius: 0px`. **Shadow:** `--shadow: none`. **Stroke:** `--stroke-hairline` / `--stroke-rule` / `--stroke-rail`. No gradient tokens.
-    - `ui.html` must `<link>` vendored `konstrukt.css` + `base.css` and load `theme.js`; previews use Konstrukt components (`.module`, `.btn-primary`, `.field`, `.badge`, `.data-table`), not rounded/shadow/gradient chrome.
+    - `ui.html` must `<link>` `../../../vendor/konstrukt-2.0.0/{konstrukt.css,base.css}` and load `theme.js` from that same project-root path (never `design/vendor/`); previews use Konstrukt components (`.module`, `.btn-primary`, `.field`, `.badge`, `.data-table`), not rounded/shadow/gradient chrome.
   - **`components.md` (`shadcn` default):**
     - Inventory: Button, Input, Select, Card, Dialog, Sheet, Toast, Tabs, Pagination, Table, Navbar, Sidebar
     - Each component includes: anatomy, states, props, interactions, keyboard navigation, focus order
@@ -257,7 +258,7 @@ When a command is invoked, check for prerequisite outputs and reference them.
   - Use only black or white text
 - **Technical Requirements (for mobile UI focus, `konstrukt`):**
   - Design for 375x812px mobile viewport with device frames
-  - Link vendored `vendor/konstrukt-2.0.0/{konstrukt.css,base.css,theme.js}` — same files as mid-fi
+  - Link project-root `../../vendor/konstrukt-2.0.0/{konstrukt.css,base.css,theme.js}` from `design/ui-design/` — same files as mid-fi. Do **not** create `design/vendor/`.
   - Include a `HLTheme` mode toggle
   - Use gated role pairs; teal (`--accent` / `--on-accent`) is the one accent — do not restrict text to black or white
   - Exclude mobile status bars and system indicators
@@ -327,7 +328,8 @@ When a command is invoked, check for prerequisite outputs and reference them.
   - **Create app — `konstrukt`:**
     ```bash
     npx create-next-app@latest projects/{project_name}/app --ts --eslint --src-dir --app --no-tailwind --no-import-alias --use-npm --yes
-    # Vendor (from konstrukt git tag v2.0.0 dist/ — do not npm install @hooman-loop/konstrukt):
+    # Vendor (from konstrukt git tag v2.0.0 dist/ — do not npm install @hooman-loop/konstrukt).
+    # Single path only — never mkdir design/vendor/:
     mkdir -p projects/{project_name}/vendor/konstrukt-2.0.0 projects/{project_name}/app/public/konstrukt
     cp dist/css/konstrukt.css dist/css/base.css dist/css/theme.js dist/tokens.json \
       projects/{project_name}/vendor/konstrukt-2.0.0/

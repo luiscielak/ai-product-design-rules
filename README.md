@@ -128,7 +128,7 @@ projects/{project_name}/
 
 `design_system` is `shadcn` | `konstrukt` and **defaults to `shadcn`**. The stacks are exclusive: do not install shadcn in a Konstrukt project or vendor Konstrukt into a shadcn project.
 
-When `konstrukt` is set, `/midfi`, `/hifi`, and `/ui-proto` consume [Konstrukt v2.0.0](https://github.com/the-hooman-loop/konstrukt) generated `dist/` files. The npm package is private — copy `konstrukt.css`, `base.css`, `theme.js`, and `tokens.json` from git tag `v2.0.0` into `vendor/konstrukt-2.0.0/`. Never hand-type hex. Ban radius, shadow, and gradient. Light/dark is `data-mode` on `<html>`. Persist the choice in the project README.
+When `konstrukt` is set, `/midfi`, `/hifi`, and `/ui-proto` consume [Konstrukt v2.0.0](https://github.com/the-hooman-loop/konstrukt) generated `dist/` files. The npm package is private — copy `konstrukt.css`, `base.css`, `theme.js`, and `tokens.json` from git tag `v2.0.0` into the **single** path `vendor/konstrukt-2.0.0/` (project root, sibling of `app/` and `design/`). Never create `design/vendor/`. Mid-fi `ui.html` links `../../../vendor/konstrukt-2.0.0/`; hi-fi gallery links `../../vendor/konstrukt-2.0.0/`. Never hand-type hex. Ban radius, shadow, and gradient. Light/dark is `data-mode` on `<html>`. Persist the choice in the project README.
 
 ### `/new-project` (Project Manager)
 **Purpose:** Create an organized project structure for AI product design workflows.
@@ -226,8 +226,9 @@ When `konstrukt` is set, `/midfi`, `/hifi`, and `/ui-proto` consume [Konstrukt v
 - Inventory: Button, Input, Select, Card, Dialog, Sheet, Toast, Tabs, Pagination, Table, Navbar, Sidebar
 
 **tokens.md / components.md (`konstrukt`):**
-- CSS custom property names from `vendor/konstrukt-2.0.0/` only (no hand-typed hex)
+- CSS custom property names from project-root `vendor/konstrukt-2.0.0/` only (no hand-typed hex). Do not create `design/vendor/`.
 - `--radius: 0px`, `--shadow: none`, no gradients; 8 type roles; `data-mode` on `<html>`
+- `ui.html` links `../../../vendor/konstrukt-2.0.0/{konstrukt.css,base.css,theme.js}`
 - Inventory: `.site-nav`, `.module`, `.btn-primary`, `.portal-quiet-btn`, `.field`, `.input`, `.badge`, `.data-table`, `.alert` (no Sheet / Toast / shadcn Card)
 
 **Acceptance:**
@@ -291,12 +292,12 @@ npx shadcn@latest add button card input label form select dialog sheet toast tab
 
 **Design principles (`shadcn` default):** soft gradients, subtle shadows, refined rounded corners, modular cards.
 
-**Design principles (`konstrukt`):** Swiss / Bauhaus — `--radius: 0px`, `--shadow: none`, no gradients, one teal accent, 2px ink rules, 8 type roles, `data-mode` light/dark. Do not apply the shadcn principle list.
+**Design principles (`konstrukt`):** Swiss / Bauhaus — `--radius: 0px`, `--shadow: none`, no gradients, one teal accent, 2px ink rules, 8 type roles, `data-mode` light/dark. Do not apply the shadcn principle list. Link project-root `../../vendor/konstrukt-2.0.0/` from `design/ui-design/`. Do not create `design/vendor/`.
 
 **Acceptance:**
 - Gallery renders the inventory for the chosen system (shadcn core, or Konstrukt `.btn-primary` / `.module` / `.field` / `.data-table` / square dialog)
 - Device frames for mobile and desktop
-- Theme implementable without refactoring (`shadcn`: Tailwind/shadcn; `konstrukt`: vendored CSS variables)
+- Theme implementable without refactoring (`shadcn`: Tailwind/shadcn; `konstrukt`: project-root `vendor/konstrukt-2.0.0/` CSS variables)
 
 ---
 

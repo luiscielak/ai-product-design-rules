@@ -1,7 +1,7 @@
 # Mid-fi tokens — Design Ops Cockpit
 
 **design_system:** `konstrukt`
-**Source:** Konstrukt v2.0.0 generated build output, vendored at `vendor/konstrukt-2.0.0/` and `design/vendor/konstrukt-2.0.0/`.
+**Source:** Konstrukt v2.0.0 generated build output, vendored at `vendor/konstrukt-2.0.0/`.
 **Files:** `dist/css/konstrukt.css`, `dist/css/base.css`, `dist/css/theme.js`, `dist/tokens.json`.
 **Rule:** document **CSS custom property names only**. Do not hand-type hex. Values live in the generated CSS.
 
