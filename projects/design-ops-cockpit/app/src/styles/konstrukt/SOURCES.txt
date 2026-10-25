@@ -1,3 +1,0 @@
-Vendored from Konstrukt v2.0.0 dist/. Do not hand-edit hex.
-The Google Fonts @import was removed from this Next.js copy so Tailwind
-can compose the file; Inter and Space Grotesk load via next/font instead.

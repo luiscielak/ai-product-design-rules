@@ -1,20 +1,7 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 import { Providers } from "./providers";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-inter",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-space",
-});
 
 export const metadata: Metadata = {
   title: "Design Ops Cockpit",
@@ -33,9 +20,15 @@ export default function RootLayout({
       data-mode="light"
       data-theme="light"
       data-palette="atelier"
-      className={`${inter.variable} ${spaceGrotesk.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        {/* Vendored Konstrukt v2.0.0 dist — linked, not bundled, so @import fonts stay valid. */}
+        {/* eslint-disable-next-line @next/next/no-css-tags */}
+        <link rel="stylesheet" href="/konstrukt/konstrukt.css" />
+        {/* eslint-disable-next-line @next/next/no-css-tags */}
+        <link rel="stylesheet" href="/konstrukt/base.css" />
+      </head>
       <body>
         <Script src="/konstrukt/theme.js" strategy="beforeInteractive" />
         <Providers>{children}</Providers>

@@ -44,9 +44,8 @@ projects/design-ops-cockpit/
 ├── design/
 │   ├── wireframes/lofi/         # /lofi
 │   ├── wireframes/midfi/        # /midfi + ui.html
-│   ├── ui-design/               # /hifi
-│   └── vendor/konstrukt-2.0.0/  # generated CSS for static previews
-├── vendor/konstrukt-2.0.0/      # generated CSS / tokens.json
+│   └── ui-design/               # /hifi
+├── vendor/konstrukt-2.0.0/      # canonical Konstrukt v2.0.0 dist/
 └── marketing/                   # waitlist stub
 ```
 

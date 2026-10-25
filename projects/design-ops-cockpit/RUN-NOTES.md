@@ -8,14 +8,24 @@ I followed the **rules file** for output paths (`docs/PRD.md`, `design/wireframe
 
 ## Verdicts
 
-| Stage | Verdict | One line |
-| --- | --- | --- |
-| `/new-project` | **okay** | Tree is usable; paths and “two Next apps” are underspecified. |
-| `/prd` | **good** | Outline is complete and produced an actionable MVP PRD. |
-| `/lofi` | **good** | ASCII conventions and FR mapping are clear enough to execute. |
-| `/midfi` | **okay** | Konstrukt branch works; the required component inventory is still shadcn-shaped. |
-| `/ui-proto` | **weak** | Prerequisites, stack commands, and Konstrukt consumption are contradictory. |
-| `/hifi` | **okay** | Gallery is specified; default principles still fight Swiss tokens. |
+| Stage | First run | After top-3 rule fix | One line |
+| --- | --- | --- | --- |
+| `/new-project` | okay | okay | Tree is usable; marketing-as-second-app is still underspecified. |
+| `/prd` | good | good | Outline is complete and produced an actionable MVP PRD. |
+| `/lofi` | good | good | ASCII conventions and FR mapping are clear enough to execute. |
+| `/midfi` | okay | okay* | *Rules now have a Konstrukt inventory; this project's mid-fi files were not regenerated. |
+| `/ui-proto` | **weak** | **okay** | Exclusive Konstrukt recipe is followable; fixtures still aren't live files. |
+| `/hifi` | okay | okay* | *Rules now isolate Swiss principles; gallery artifacts were not regenerated. |
+
+### `/ui-proto` before → after
+
+**Before** (git `ad28096` / `d9eba6e`): Next 16 + Tailwind v4 + a stripped `konstrukt.css` imported through the Tailwind pipeline. Hi-fi listed as a hard prerequisite in the yaml while the README said optional. `npx shadcn` still sat in the copy-paste block. Dev 500'd until the Google Fonts `@import` was deleted. Verdict: **weak**.
+
+**After** (this re-run, following the updated exclusive recipe): no Tailwind, no shadcn. Canonical files at `vendor/konstrukt-2.0.0/` (Konstrukt `v2.0.0` `dist/`). Runtime copies at `app/public/konstrukt/` and `<link>`ed, so the generated `@import` fonts stay valid. Hi-fi treated as optional; mid-fi + vendored tokens are the visual source. `npm run build` and `npm run lint` pass without the CSS parse warning. Verdict: **okay**.
+
+Still weak: artifact pane is still fixtures, not a reader of `design/`; revision still does not spawn an agent; `create-next-app` flags will drift again; unused Next starter SVGs remain.
+
+Comparable “before” app: git history on this branch (`d9eba6e`). One app only — the same `app/` directory was rewritten, not copied.
 
 ---
 
@@ -151,8 +161,10 @@ I followed the **rules file** for output paths (`docs/PRD.md`, `design/wireframe
 - Persist `design_system` in the project README (done). A machine-readable `project.json` would be better so later commands do not re-parse prose.
 - The cockpit product in `hooman-loop` was **not** edited. This tree is the rules-repo proof only.
 
-## What I would change first (top 3)
+## Top 3 rule fixes (applied on this branch)
 
-1. **One artifact path, one sequence.** Align README and yaml (`design/` vs `docs/`; hi-fi prerequisite vs optional).
-2. **Exclusive stack recipes.** shadcn *or* Konstrukt setup commands; Konstrukt vendors `dist/` and bans radius/shadow/gradient.
-3. **Konstrukt-native mid-fi/hi-fi inventory and principles.** Stop asking a Swiss system to emit Sheet/Toast/rounded-gradient chrome.
+1. **One artifact path, one sequence.** README and yaml now both use `design/wireframes/` and `design/ui-design/`. `/ui-proto` requires mid-fi; hi-fi is optional.
+2. **Exclusive stack recipes.** shadcn *or* Konstrukt. Konstrukt vendors `v2.0.0` `dist/` to `vendor/konstrukt-2.0.0/` (no npm package) and bans radius/shadow/gradient. No Tailwind on the Konstrukt recipe.
+3. **Konstrukt-native mid-fi/hi-fi inventory and principles.** `.site-nav` / `.module` / `.btn-primary` / … instead of Sheet/Toast; Swiss principles do not inherit the rounded-gradient list.
+
+Remaining (not in this pass): marketing as a second Next app; `/new-project` vs `/ui-proto` both wanting to scaffold; machine-readable `project.json`; live artifact file reads.
