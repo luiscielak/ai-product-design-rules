@@ -1,0 +1,26 @@
+Revision request — Desktop
+================================================================================
+
++------------------------------------------------------------------------+
+| [S1] design-ops-cockpit / Lo-fi / Request revision             (O) [*] | [A1]
++------------------------------------------------------------------------+
+| [S2]                                                                   |
+|  +------------------------------------+  +---------------------------+ |
+|  | WHAT SHOULD CHANGE                 |  | THIS WILL                | |
+|  | [Textarea: ……………………]               |  | Keep Lo-fi current       | | [A2]
+|  |                                    |  | Increment revision count | |
+|  | [Button: Send revision]            |  | Leave Mid-fi locked      | |
+|  | [Button: Cancel]                   |  | Not spawn the agent (MVP)| |
+|  +------------------------------------+  +---------------------------+ |
+|  [S4] error under textarea   [S5] Saving note…                         |
++------------------------------------------------------------------------+
+
+Annotations
+- A1: Title includes stage name.
+- A2: Side panel states the gate (FR-007) so Luis knows revision is not a skip.
+- Note is required (FR-006).
+
+Flow hooks
+- Next/Prev: stage-review.
+
+Related FRs: FR-006, FR-007, FR-011

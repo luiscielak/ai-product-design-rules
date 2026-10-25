@@ -1,0 +1,45 @@
+Run overview — Mobile
+================================================================================
+
++----------------------------------+
+| [S1] [<] design-ops-cockpit  (O) |  [A1]
+|      In progress · 2 of 6        |
++----------------------------------+
+| [S2] STAGES                      |
+|                                  |
+| 1 New project     [complete]     |  [A2]
+|   Approved                       |
+|                                  |
+| 2 PRD             [complete]     |
+|   Approved                       |
+|                                  |
+| 3 Lo-fi           [review]       |  [A3]
+|   Current  [Button: Review]      |
+|                                  |
+| 4 Mid-fi          [draft]        |  [A4]
+|   Locked                         |
+|                                  |
+| 5 UI prototype    [draft]        |
+|   Locked                         |
+|                                  |
+| 6 Hi-fi           [draft]        |
+|   Locked                         |
++----------------------------------+
+| [S3] LOADING (alt)  fetching…    |  [A5]
+| [S4] ERROR (alt)    run missing  |  [A6]
++----------------------------------+
+
+Annotations
+- A1: project_name + run status. Back to home.
+- A2: Approved stages are tappable (read-only review).
+- A3: Only current stage has Review CTA (FR-004, FR-007).
+- A4: Locked stages have no CTA.
+- A5: Skeleton list.
+- A6: Unknown run id.
+
+Flow hooks
+- Next: stage-review (current or approved).
+- Prev: home.
+- After last approval: run-complete.
+
+Related FRs: FR-003, FR-007, FR-008

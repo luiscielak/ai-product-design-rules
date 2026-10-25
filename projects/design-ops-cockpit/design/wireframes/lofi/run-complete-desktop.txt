@@ -1,0 +1,31 @@
+Run complete — Desktop
+================================================================================
+
++------------------------------------------------------------------------+
+| [S1] Design Ops Cockpit     design-ops-cockpit · Complete      (O) [*] | [A1]
++------------------------------------------------------------------------+
+| [S2]                                                                   |
+|  1 ====== 2 ====== 3 ====== 4 ====== 5 ====== 6                        |
+|  done     done     done     done     done     done                     |
+|                                                                        |
+|  +------------------------------------------------------------------+  |
+|  | Stage        | Artifact                         | Revisions | View |  |
+|  | New project  | README.md                        | 0         | Open |  |
+|  | PRD          | docs/PRD.md                      | 0         | Open |  |
+|  | Lo-fi        | design/wireframes/lofi/          | 1         | Open |  |
+|  | Mid-fi       | design/wireframes/midfi/ui.html  | 0         | Open |  |
+|  | UI prototype | app/                             | 0         | Open |  |
+|  | Hi-fi        | design/ui-design/                | 0         | Open |  |
+|  +------------------------------------------------------------------+  |
+|                                                                        |
+|  [Button: Back to runs]                                                |
++------------------------------------------------------------------------+
+
+Annotations
+- A1: Complete is a status-complete badge, not a celebration gradient.
+- Summary table is the desktop expression of the mobile stack (FR-009).
+
+Flow hooks
+- Next: home or read-only stage-review.
+
+Related FRs: FR-003, FR-009

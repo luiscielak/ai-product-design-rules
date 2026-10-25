@@ -1,0 +1,35 @@
+Run complete — Mobile
+================================================================================
+
++----------------------------------+
+| [S1] [<] design-ops-cockpit  (O) |  [A1]
+|      Complete                    |
++----------------------------------+
+| [S2] ALL SIX STAGES APPROVED     |
+|                                  |
+| 1 New project     [complete]     |  [A2]
+| 2 PRD             [complete]     |
+| 3 Lo-fi           [complete]     |
+| 4 Mid-fi          [complete]     |
+| 5 UI prototype    [complete]     |
+| 6 Hi-fi           [complete]     |
+|                                  |
+| [Button: View artifact] per row  |  [A3]
+| [Button: Back to runs]           |  >>> home
++----------------------------------+
+| [S3] EMPTY (shouldn't happen)    |  [A4]
+| [S4] ERROR if summary missing    |  [A5]
++----------------------------------+
+
+Annotations
+- A1: Status is Complete (FR-009).
+- A2: No locked or current stages remain.
+- A3: View opens stage-review in read-only.
+- A4: Empty would be a bug; show a quiet message.
+- A5: If run state is corrupt.
+
+Flow hooks
+- Next: home, or stage-review (read-only).
+- Prev: home.
+
+Related FRs: FR-003, FR-009

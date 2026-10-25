@@ -1,0 +1,36 @@
+Home — Desktop
+================================================================================
+
++------------------------------------------------------------------------+
+| [S1] Design Ops Cockpit          Runs · New brief            (O) [sun] | [A1]
++------------------------------------------------------------------------+
+| [S2]                                                                 |
+|  RUNS                                                 [Button: New brief]
+|                                                                      |
+|  +----------------------------------------------------------------+  |
+|  | (empty)  No design runs. Paste a brief to launch the first one.|  | [A2]
+|  +----------------------------------------------------------------+  |
+|                                                                      |
+|  [S5] populated table (alt)                                          | [A5]
+|  +-------------+---------------+------------------+--------+---------+
+|  | Project     | Status        | Current stage    | Revs   | Action  |
+|  | design-ops… | In progress   | Mid-fi           | 1      | Open    |
+|  | foto-sage   | Complete      | Hi-fi            | 0      | Open    |
+|  +-------------+---------------+------------------+--------+---------+
+|                                                                      |
+|  [S3] loading row  [#### ####]                                       | [A3]
+|  [S4] error banner: Could not read local runs. [Button: Retry]       | [A4]
++------------------------------------------------------------------------+
+
+Annotations
+- A1: Desktop nav has a text "New brief" and a mode toggle.
+- A2: Empty state spans the content column (FR-008).
+- A3: Table skeleton.
+- A4: Inline error, does not replace the page chrome.
+- A5: Table is the desktop expression of the mobile card list.
+
+Flow hooks
+- Next: brief-intake or run-overview.
+- Prev: none.
+
+Related FRs: FR-008, FR-010, FR-011
