@@ -228,6 +228,7 @@ When a command is invoked, check for prerequisite outputs and reference them.
   - Include layout density, elevation, motion, and accessibility checklists
   - If mobile UI focus is requested, create mobile-first designs following design principles
   - **Note:** When working within a project directory, use relative paths
+- Apply **only** the principle list that matches `design_system`. The `shadcn` list is out of scope for a Konstrukt run.
 - **Design Principles (for mobile UI focus, `shadcn` default):**
   - Balance elegant minimalism with functional design
   - Use soft, refreshing gradient colors aligned with brand palette
