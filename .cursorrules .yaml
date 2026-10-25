@@ -6,6 +6,13 @@ These rules define a structured AI product design workflow with five sequential 
 
 Each stage builds on the previous. When a command is invoked, check for prerequisite outputs and reference them.
 
+### Design System Parameter (shared)
+- **Input:** `design_system` (`shadcn` | `konstrukt`, default: `shadcn`)
+- Persist the choice in `projects/{project_name}/README.md` (and reuse it on later commands if omitted).
+- **`shadcn` (default):** existing behavior. Tailwind + shadcn/ui. Mid-fi tokens include radius and shadows. Hi-fi may use rounded corners, subtle shadows, and soft gradients. `/ui-proto` installs shadcn components.
+- **`konstrukt`:** [Konstrukt v2.0.0](https://github.com/the-hooman-loop/konstrukt) (MIT). Swiss / Bauhaus: square corners (`--radius: 0px`), no shadows (`--shadow: none`), one palette (`atelier`), light and dark via `data-mode` on `<html>` (`light` is `:root`; `[data-theme="dark"]` is a legacy alias), layered tokens (primitives → global → semantic → dark overrides), 8 type roles (`display`, `heading`, `subheading`, `label`, `badge`, `body`, `meta`, `mono`), stroke tokens (`--stroke-hairline` / `--stroke-rule` / `--stroke-rail`), 80-pair WCAG AA contrast gate. Teal is reserved for the one primary action on a surface.
+- When `konstrukt` is chosen, `/midfi` tokens, `/hifi` theme and principles, and `/ui-proto` styling **must consume Konstrukt build output** — `dist/css/konstrukt.css`, `dist/css/base.css`, `dist/css/theme.js` (`HLTheme`), and `dist/tokens.json` from the tagged `v2.0.0` release. Vendor those generated files into the project. **Never hand-type hex** (or invent radius/shadow/gradient values). Reference CSS custom properties (`var(--accent)`, `var(--type-body)`, `var(--sp-4)`). Drop rounded-corner, shadow, and gradient guidance.
+
 ---
 
 ## Rule: Project Manager → Generate New AI Product Design Project
@@ -16,17 +23,21 @@ Each stage builds on the previous. When a command is invoked, check for prerequi
   - `project_name` (kebab-case, e.g., "foto-sage", "chat-assistant")
   - `project_type` (default: "ai-product-design")
   - `include_marketing` (default: true)
+  - `design_system` (`shadcn` | `konstrukt`, default: `shadcn`)
 - **Behavior:**
   - Create `projects/{project_name}/` directory structure
   - Initialize three main folders: `app/`, `docs/`, and `marketing/` (if requested)
   - Set up basic configuration files and README templates
   - Create initial directory structure for design documentation
+  - Record `design_system` in the project README so later stages inherit it
   - If project already exists, ask before overwriting
 - **Output:**
   - **Directory:** `projects/{project_name}/`
   - **Structure:**
     - `app/` (Next.js application)
-      - Basic Next.js setup with TypeScript, Tailwind, and shadcn/ui
+      - Basic Next.js setup with TypeScript and Tailwind
+      - **`shadcn`:** also scaffold shadcn/ui and `components/ui/`
+      - **`konstrukt`:** do not install shadcn; vendor Konstrukt `dist/css` + `theme.js` and skip rounded/shadow/gradient starter styles
       - `src/app/` with basic routing structure
       - `components/ui/` for reusable components
     - `docs/` (Design documentation)
@@ -136,10 +147,11 @@ Each stage builds on the previous. When a command is invoked, check for prerequi
   - `states` (default: ["default", "hover", "focus", "disabled", "loading", "error", "success"])
   - `content_examples` (short/long text variations)
   - `accessibility_targets` (default: "WCAG AA")
+  - `design_system` (`shadcn` | `konstrukt`, default: inherit from `/new-project`, else `shadcn`)
 - **Behavior:**
   - Read lo‑fi wireframes to understand structure and flows
   - Convert each lo‑fi screen into mid‑fi with componentized layout, spacing scale, and type scale
-  - Provide a token spec aligned to Tailwind and shadcn defaults
+  - Provide a token spec aligned to the chosen design system
   - Generate a mid‑fi `ui.html` overview that previews each screen in device frames: a phone frame for mobile and a browser frame for desktop
   - **Note:** When working within a project directory, use relative paths
 - **Output:**
@@ -149,11 +161,18 @@ Each stage builds on the previous. When a command is invoked, check for prerequi
     - `components.md` (component variants/states)
     - `screens/<screen-name>.md` (annotated frames and interactions, one per screen)
     - `ui.html` (mid‑fi overview page linking tokens/components/screens, showing each screen in phone and browser device frames)
-  - **`tokens.md` includes:**
+  - **`tokens.md` includes (`shadcn` default):**
     - **Spacing:** 0, 2, 4, 6, 8, 12, 16, 24, 32 (map to Tailwind: 0, 0.5, 1, 1.5, 2, 3, 4, 6, 8)
     - **Typography:** text-xs/sm/base/lg/xl/2xl; line-heights; weights (400, 500, 600, 700)
     - **Color:** neutrals, brand, semantic (map to Tailwind + shadcn themes)
     - **Radius:** sm/md/lg/full; **Shadows:** sm/md/lg
+  - **`tokens.md` includes (`konstrukt`):**
+    - Cite Konstrukt `v2.0.0` build output (`dist/tokens.json` / `dist/css/konstrukt.css`). List **CSS custom property names only** — never hand-typed hex.
+    - **Spacing:** `--sp-1`…`--sp-16` (4 / 8 / 12 / 16 / 20 / 24 / 32 / 48 / 64px)
+    - **Typography:** the 8 roles as `font: var(--type-<role>)` plus `-tracking` / `-transform` (`display`, `heading`, `subheading`, `label`, `badge`, `body`, `meta`, `mono`)
+    - **Color:** semantic roles only (`--bg`, `--bg-alt`, `--surface`, `--text`, `--text-muted`, `--ink`, `--border`, `--border-light`, `--accent`, `--accent-soft`, `--accent-light`, `--on-accent`, `--focus`, feedback + `status-*` + `category-1`…`5`, `--selection-bg` / `--selection-fg`). Modes via `data-mode="light|dark"` on `<html>`.
+    - **Radius:** `--radius: 0px`. **Shadow:** `--shadow: none`. **Stroke:** `--stroke-hairline` / `--stroke-rule` / `--stroke-rail`. No gradient tokens.
+    - `ui.html` must `<link>` vendored `konstrukt.css` + `base.css` and load `theme.js`; previews use Konstrukt components (`.module`, `.btn-primary`, `.field`, `.badge`, `.data-table`), not rounded/shadow/gradient chrome.
   - **`components.md`:**
     - Inventory: Button, Input, Select, Card, Dialog, Sheet, Toast, Tabs, Pagination, Table, Navbar, Sidebar
     - Each component includes: anatomy, states, props, interactions, keyboard navigation, focus order
@@ -167,7 +186,7 @@ Each stage builds on the previous. When a command is invoked, check for prerequi
   - All interactive elements have defined states and focus styles
   - Accessibility notes for color contrast and keyboard support included
   - Each screen preview includes device frames: phone (mobile) and browser (desktop) in `ui.html`
-  - Tokens are mappable to Tailwind/shadcn without refactoring
+  - Tokens are mappable to the chosen design system without refactoring (`shadcn`: Tailwind/shadcn; `konstrukt`: generated CSS variables)
   - All screens from lo‑fi are represented
 
 ## Rule: UI Designer → High‑Fidelity UI Design Kit
@@ -177,20 +196,22 @@ Each stage builds on the previous. When a command is invoked, check for prerequi
 - **Prerequisites:** Mid‑fi wireframes should exist (`design/wireframes/midfi/`). If missing, ask user if they want to create mid‑fi first or proceed with provided inputs.
 - **Required Inputs:**
   - `theme` (light|dark|both, default: "dark")
-  - `brand_color` (hex/HSL format)
-  - `accent_color` (hex/HSL format)
-  - `components` (list, default: shadcn core used in project)
+  - `brand_color` (hex/HSL format) — **ignored when `design_system` is `konstrukt`** (atelier palette is fixed)
+  - `accent_color` (hex/HSL format) — **ignored when `design_system` is `konstrukt`**
+  - `components` (list, default: shadcn core used in project; for `konstrukt`, default to Konstrukt portable components)
+  - `design_system` (`shadcn` | `konstrukt`, default: inherit from `/new-project`, else `shadcn`)
   - `app_concept` (optional: for mobile UI design focus)
   - `key_features` (optional: for mobile UI design focus)
   - `target_users` (optional: for mobile UI design focus)
 - **Behavior:**
   - Read mid‑fi wireframes and tokens to understand structure and design system
-  - Map product tokens to Tailwind/shadcn CSS variables; document color roles and states
+  - **`shadcn`:** Map product tokens to Tailwind/shadcn CSS variables; document color roles and states
+  - **`konstrukt`:** Map to generated Konstrukt custom properties from `dist/css/konstrukt.css` / `dist/tokens.json`. Document `data-mode` switching via `HLTheme`. Do not introduce brand hex, radius, shadow, or gradient values.
   - Generate a static component gallery with device frames (phone + browser) showing key variants and states
   - Include layout density, elevation, motion, and accessibility checklists
   - If mobile UI focus is requested, create mobile-first designs following design principles
   - **Note:** When working within a project directory, use relative paths
-- **Design Principles (for mobile UI focus):**
+- **Design Principles (for mobile UI focus, `shadcn` default):**
   - Balance elegant minimalism with functional design
   - Use soft, refreshing gradient colors aligned with brand palette
   - Have well-proportioned white space and clean layouts
@@ -200,6 +221,14 @@ Each stage builds on the previous. When a command is invoked, check for prerequi
   - Use refined rounded corners
   - Include delicate micro-interactions
   - Ensure comfortable visual proportions
+- **Design Principles (for mobile UI focus, `konstrukt`):**
+  - Bauhaus / Swiss International: authority through typography, not chrome
+  - Flat surfaces; `--shadow: none`; `--radius: 0px`; no gradients
+  - One teal accent; one primary action per surface (`.btn-primary`)
+  - Hierarchy via 2px ink rules (`--stroke-rule`), 4px accent rails (`--stroke-rail`), and the 8 type roles
+  - Light and dark are two resolved token sets on `data-mode`, not runtime color math
+  - Well-proportioned white space; comfortable visual proportions
+  - Focus rings use `--focus` (teal), never a second structural ink rule
 - **Technical Requirements (for mobile UI focus):**
   - Design for 375x812px mobile viewport with device frames
   - Use background-free vector icons from online libraries
@@ -220,15 +249,15 @@ Each stage builds on the previous. When a command is invoked, check for prerequi
 - **Acceptance:**
   - Component gallery renders primary variants and states for Button, Input, Select, Checkbox, Card, Tabs, Table; Dialog preview included
   - Device frames present for mobile and desktop previews
-  - Theme variables align with tokens and are implementable in Tailwind/shadcn without refactoring
+  - Theme variables align with tokens and are implementable without refactoring (`shadcn`: Tailwind/shadcn; `konstrukt`: vendored `konstrukt.css` custom properties)
   - If mobile UI focus: horizontal `mobile-ui-design.html` with all app screens, following design principles and technical requirements
-  - All color combinations meet WCAG AA contrast requirements
+  - All color combinations meet WCAG AA contrast requirements (`konstrukt`: rely on the shipped 80-pair gate; do not add unchecked pairs)
   - Design system is complete and ready for engineering handoff
 
 ## Rule: UI Engineer → Generate Clickable Prototype (shadcn + Tailwind)
 - **Command:** `/ui-proto`
 - **Role:** UI Engineer
-- **Purpose:** Implement a runnable prototype with shadcn/ui components and Tailwind, covering primary flows.
+- **Purpose:** Implement a runnable prototype covering primary flows. Default stack is shadcn/ui + Tailwind; when `design_system` is `konstrukt`, style with vendored Konstrukt CSS instead of shadcn.
 - **Prerequisites:** Mid‑fi wireframes (`design/wireframes/midfi/`) and hi‑fi design (`design/ui-design/`) should exist. If missing, ask user if they want to create them first or proceed with provided inputs.
 - **Required Inputs:**
   - `framework` (default: "Next.js 14+ App Router")
@@ -239,19 +268,22 @@ Each stage builds on the previous. When a command is invoked, check for prerequi
   - `routes/flows` (primary user flows to implement)
   - `data` (mock or live, default: "mock")
   - `theming` (light|dark|both, default: "both")
+  - `design_system` (`shadcn` | `konstrukt`, default: inherit from `/new-project`, else `shadcn`)
 - **Behavior:**
   - Detect existing Next.js/Tailwind setup; otherwise scaffold with safe defaults
-  - Configure Tailwind and shadcn/ui; map tokens from mid‑fi to Tailwind config when feasible
+  - **`shadcn`:** Configure Tailwind and shadcn/ui; map tokens from mid‑fi to Tailwind config when feasible
+  - **`konstrukt`:** Vendor `konstrukt.css`, `base.css`, and `theme.js` from Konstrukt `v2.0.0` `dist/`. Set `data-mode` on `<html>` via `HLTheme`. Use Konstrukt classes and `var(--*)` tokens. Do not install shadcn. Do not add rounded corners, box-shadows, or gradients.
   - Reference hi‑fi design for styling and component specifications
   - Build pages and flows with real keyboard/focus management and basic form validation
   - Implement loading, empty, and error states for all primary interactions
   - **Note:** When working within a project directory, use relative paths (e.g., `app/`, `docs/`)
 - **Output:**
   - **Codebase changes:**
-    - If new: create Next.js app in `app/` directory (relative to project root), Tailwind, and shadcn/ui setup
-    - Install and add shadcn components per `components.md`
+    - If new: create Next.js app in `app/` directory (relative to project root) with Tailwind
+    - **`shadcn`:** shadcn/ui setup; install and add shadcn components per `components.md`
+    - **`konstrukt`:** copy generated Konstrukt CSS/JS into the app; implement components with Konstrukt class names (`.btn-primary`, `.module`, `.field`, `.input`, `.badge`, `.data-table`, `.alert`)
     - Implement routes and pages matching screens; basic mock data and API stubs
-    - Apply theme from hi‑fi design (colors, spacing, typography)
+    - Apply theme from hi‑fi design (colors, spacing, typography) — for `konstrukt`, that means the generated custom properties, not hand-typed hex
   - **Deliverables:**
     - `app/README-proto.md` (relative to project directory) with:
       - Setup commands
@@ -273,15 +305,21 @@ Each stage builds on the previous. When a command is invoked, check for prerequi
     npx tailwindcss init -p
     # Configure content to src/**/*.{ts,tsx} or app/**/*.{ts,tsx}
     ```
-  - **shadcn/ui:**
+  - **shadcn/ui** (skip this block when `design_system` is `konstrukt`):
     ```bash
     npx shadcn@latest init -y
     npx shadcn@latest add button card input label form select dialog sheet toast tabs table navigation-menu dropdown-menu tooltip avatar badge skeleton pagination textarea checkbox radio-switch
     ```
+  - **konstrukt** (when `design_system` is `konstrukt`):
+    ```bash
+    # Copy generated files from Konstrukt v2.0.0 dist/ (never rewrite hex by hand):
+    #   dist/css/konstrukt.css  dist/css/base.css  dist/css/theme.js
+    # Link them from the app layout. Call HLTheme.setMode / toggleMode for theming.
+    ```
 - **Implementation Guidelines:**
   - Use App Router, colocation in `app/(routes)/`, and server components where natural
-  - Keep components in `components/ui` aligned with shadcn conventions
-  - Use Tailwind utility classes and extracted class-variants when complexity grows
+  - Keep components in `components/ui` aligned with the chosen system (`shadcn` conventions, or Konstrukt class names)
+  - Use Tailwind utility classes and extracted class-variants when complexity grows — under `konstrukt`, do not use `rounded-*`, `shadow-*`, or gradient utilities that fight the tokens
   - **State:** minimal client state (React), mock data via `/app/api` routes or local fixtures
   - **Accessibility:** use proper roles, labels, and focus management; ensure contrast AA
   - Follow design tokens from mid‑fi and hi‑fi design files
@@ -332,6 +370,6 @@ Each stage builds on the previous. When a command is invoked, check for prerequi
 
 ### Quality Standards
 - All generated code should be production-ready (no placeholders unless explicitly noted)
-- Follow best practices for the technology stack (Next.js, Tailwind, shadcn/ui, etc.)
+- Follow best practices for the technology stack (Next.js, Tailwind, and the chosen `design_system`)
 - Ensure accessibility (WCAG AA minimum) in all interactive elements
 - Test that generated projects can actually run before marking as complete

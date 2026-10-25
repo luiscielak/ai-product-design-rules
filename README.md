@@ -12,7 +12,7 @@ These rules define six collaborative roles and commands that move a product from
 2. **Product Owner** → `/prd` (concise, measurable PRD)
 3. **UX Designer** → `/lofi` (ASCII lo‑fi wireframes)
 4. **Product Designer** → `/midfi` (mid‑fi tokens, components, screens, UI overview)
-5. **UI Engineer** → `/ui-proto` (clickable prototype using shadcn/ui + Tailwind)
+5. **UI Engineer** → `/ui-proto` (clickable prototype; shadcn/ui + Tailwind by default, or Konstrukt when `design_system:"konstrukt"`)
 6. **UI Designer** → `/hifi` (hi‑fi design kit and component gallery)
 
 ```mermaid
@@ -76,7 +76,7 @@ The same product ("Finley") carried through every stage of the pipeline.
 
 ### 1) Create a new project
 ```
-/new-project project_name:"my-product" project_type:"ai-product-design" include_marketing:true
+/new-project project_name:"my-product" project_type:"ai-product-design" include_marketing:true design_system:"shadcn"
 ```
 
 ### 2) Draft the PRD
@@ -91,17 +91,17 @@ The same product ("Finley") carried through every stage of the pipeline.
 
 ### 4) Define mid‑fi wireframes
 ```
-/midfi screens:[...] states:[default, hover, focus, disabled, loading, error, success]
+/midfi screens:[...] states:[default, hover, focus, disabled, loading, error, success] design_system:"shadcn"
 ```
 
 ### 5) Build a clickable prototype
 ```
-/ui-proto framework:"Next.js App Router" package_manager:"npm" ts:true pages:[...] components:[...] theming:"both"
+/ui-proto framework:"Next.js App Router" package_manager:"npm" ts:true pages:[...] components:[...] theming:"both" design_system:"shadcn"
 ```
 
 ### 6) Deliver the hi‑fi UI kit
 ```
-/hifi theme:"dark" brand_color:"#5B8DEF" components:[...]
+/hifi theme:"dark" brand_color:"#5B8DEF" components:[...] design_system:"shadcn"
 ```
 
 ## Folder Structure (generated)
@@ -123,6 +123,12 @@ projects/{project_name}/
 
 ## Command Reference
 
+### Design system
+
+`design_system` is `shadcn` | `konstrukt` and **defaults to `shadcn`** so existing projects keep the current look (rounded corners, shadows, soft gradients).
+
+When `konstrukt` is set, `/midfi` tokens, `/hifi` theme and principles, and `/ui-proto` styling use [Konstrukt v2.0.0](https://github.com/the-hooman-loop/konstrukt) build output (`dist/css/konstrukt.css`, `dist/css/base.css`, `dist/css/theme.js`, `dist/tokens.json`) — never hand-typed hex — and drop rounded, shadow, and gradient guidance. Light/dark is `data-mode` on `<html>`. Persist the choice in the project README so later stages inherit it.
+
 ### `/new-project` (Project Manager)
 **Purpose:** Create an organized project structure for AI product design workflows.
 
@@ -130,6 +136,7 @@ projects/{project_name}/
 - `project_name` (kebab‑case, e.g., "foto-sage", "chat-assistant")
 - `project_type` (default: "ai-product-design")
 - `include_marketing` (default: true)
+- `design_system` (`shadcn` | `konstrukt`, default: `shadcn`)
 
 **Output:**
 - `projects/{project_name}/` with:
