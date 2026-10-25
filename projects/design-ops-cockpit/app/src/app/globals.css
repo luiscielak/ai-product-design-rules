@@ -2,6 +2,11 @@
 @import "../styles/konstrukt/konstrukt.css";
 @import "../styles/konstrukt/base.css";
 
+:root {
+  --font-sans: var(--font-inter), "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-display: var(--font-space), "Space Grotesk", system-ui, sans-serif;
+}
+
 button,
 input,
 select,

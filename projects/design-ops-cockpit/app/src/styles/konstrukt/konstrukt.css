@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
-
 /**
  * Konstrukt Design System — generated tokens. DO NOT EDIT BY HAND.
+ * Fonts are loaded via next/font in layout.tsx so this file can be
+ * composed after Tailwind (a leading @import url() fails that pipeline).
  * Source: tokens/*.json — run `npm run build`.
  *
  * Aesthetic: Bauhaus / Swiss International Typographic Style.
