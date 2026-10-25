@@ -1,0 +1,81 @@
+/* Product CSS only. Tokens come from /konstrukt/konstrukt.css (vendored dist). */
+button,
+input,
+select,
+textarea {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+a.btn-primary,
+a.portal-quiet-btn {
+  display: inline-block;
+  text-decoration: none;
+}
+
+a.btn-primary {
+  color: var(--on-accent);
+}
+
+a.btn-primary:hover {
+  text-decoration: none;
+}
+
+.cockpit-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 20rem);
+  gap: var(--sp-6);
+}
+
+@media (max-width: 800px) {
+  .cockpit-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.artifact-pre {
+  font: var(--type-mono);
+  white-space: pre-wrap;
+  background: var(--bg-alt);
+  border: var(--stroke-hairline) solid var(--border-light);
+  padding: var(--sp-4);
+}
+
+.step-track {
+  display: flex;
+  gap: var(--sp-1);
+  margin: var(--sp-4) 0 var(--sp-6);
+}
+
+.step-track i {
+  flex: 1;
+  height: var(--stroke-rail);
+  background: var(--border-light);
+}
+
+.step-track i.done {
+  background: var(--accent);
+}
+
+.step-track i.now {
+  background: var(--ink);
+}
+
+.decision-bar {
+  position: sticky;
+  bottom: 0;
+  background: var(--surface);
+  border-top: var(--stroke-rule) solid var(--ink);
+  padding: var(--sp-4);
+  display: flex;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+
+@media (min-width: 801px) {
+  .decision-bar {
+    position: static;
+    border-top: 0;
+    padding: 0;
+  }
+}

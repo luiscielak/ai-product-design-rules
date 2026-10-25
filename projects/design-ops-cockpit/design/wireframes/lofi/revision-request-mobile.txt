@@ -1,0 +1,32 @@
+Revision request — Mobile
+================================================================================
+
++----------------------------------+
+| [S1] [<] Revision · Lo-fi    (O) |  [A1]
++----------------------------------+
+| [S2] WHAT SHOULD CHANGE          |
+| [Textarea: Tell the agent what   |
+|  to fix before you review again] |  [A2]
+|                                  |
+| [S3]                             |
+| [Button: Send revision]          |  >>> stage-review
+| [Button: Cancel]                 |  >>> stage-review
++----------------------------------+
+| [S4] ERROR (alt)                 |  [A3]
+| A revision note is required.     |
++----------------------------------+
+| [S5] LOADING (alt)               |  [A4]
+| Saving note…                     |
++----------------------------------+
+
+Annotations
+- A1: Back cancels (no note saved).
+- A2: Required. Short and long notes both wrap.
+- A3: Empty submit is an error (FR-006).
+- A4: Disable both buttons while saving.
+
+Flow hooks
+- Next: stage-review (same stage, still current, rev+1, note visible).
+- Prev: stage-review.
+
+Related FRs: FR-006, FR-007, FR-011

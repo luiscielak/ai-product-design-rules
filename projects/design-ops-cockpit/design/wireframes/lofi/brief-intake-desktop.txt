@@ -1,0 +1,36 @@
+Brief intake — Desktop
+================================================================================
+
++------------------------------------------------------------------------+
+| [S1] Design Ops Cockpit           [<] Home                     (O) [*] | [A1]
++------------------------------------------------------------------------+
+| [S2]  New brief                                                        |
+|       One designer. One brief. Six gated stages.                       |
+|                                                                        |
+|  +---------------------------+  +------------------------------------+ |
+|  | PROJECT                   |  | PREVIEW                            | |
+|  | [Input: project-name]     |  | Stages that will be created:       | | [A2]
+|  |                           |  | 1 New project                      | |
+|  | BRIEF                     |  | 2 PRD                              | |
+|  | [Textarea: …………]          |  | 3 Lo-fi                            | | [A3]
+|  |                           |  | 4 Mid-fi                           | |
+|  | DESIGN SYSTEM             |  | 5 UI prototype                     | |
+|  | [Select: konstrukt]       |  | 6 Hi-fi                            | | [A4]
+|  |                           |  | All locked except stage 1.         | |
+|  | [Button: Launch run]      |  +------------------------------------+ |
+|  +---------------------------+                                         |
+|  [S5] errors under fields   [S6] button shows Launching… when pending  |
++------------------------------------------------------------------------+
+
+Annotations
+- A1: Persistent chrome.
+- A2: Live preview of the six-stage skeleton (FR-003) — desktop only affordance.
+- A3: Textarea grows; long briefs scroll inside.
+- A4: konstrukt called out so Luis can confirm Swiss tokens will be used later.
+- A5/A6: same as mobile error/loading.
+
+Flow hooks
+- Next: run-overview.
+- Prev: home.
+
+Related FRs: FR-001, FR-002, FR-003, FR-011

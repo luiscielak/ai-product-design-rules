@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light" data-palette="atelier">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design Ops Cockpit — hi-fi component gallery</title>
+  <link rel="stylesheet" href="../../vendor/konstrukt-2.0.0/konstrukt.css" />
+  <link rel="stylesheet" href="../../vendor/konstrukt-2.0.0/base.css" />
+  <style>
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--sp-6);
+    }
+    @media (max-width: 800px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+    .frames {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      gap: var(--sp-6);
+    }
+    @media (max-width: 900px) {
+      .frames { grid-template-columns: 1fr; }
+    }
+    .device { border: var(--stroke-hairline) solid var(--border-light); background: var(--bg-alt); }
+    .device-bar {
+      padding: var(--sp-2) var(--sp-3);
+      background: var(--surface);
+      border-bottom: var(--stroke-rule) solid var(--ink);
+      font: var(--type-label);
+      letter-spacing: var(--type-label-tracking);
+      text-transform: var(--type-label-transform);
+      color: var(--text-muted);
+    }
+    .device-screen { background: var(--bg); }
+    .phone .device-screen { height: 400px; overflow: auto; }
+    .ui-mini { font-size: 12px; }
+    .ui-mini .bar {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 10px;
+      background: var(--surface);
+      border-bottom: var(--stroke-rule) solid var(--ink);
+      font-family: var(--font-display);
+      font-weight: var(--type-weight-bold);
+    }
+    .ui-mini .pad { padding: 12px; }
+    dialog.k-dialog {
+      border: var(--stroke-hairline) solid var(--border-light);
+      border-top: var(--stroke-rule) solid var(--ink);
+      background: var(--surface);
+      color: var(--text);
+      padding: var(--sp-6);
+      max-width: 28rem;
+    }
+    dialog.k-dialog::backdrop {
+      background: color-mix(in srgb, var(--ink) 45%, transparent);
+    }
+    .check-row { display: flex; gap: var(--sp-2); align-items: center; margin: var(--sp-3) 0; }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Hi-fi">
+    <a class="nav-brand" href="#top">Design Ops · hi-fi</a>
+    <ul class="nav-links">
+      <li><a class="active" href="#gallery">Gallery</a></li>
+      <li><a href="#frames">Frames</a></li>
+      <li><a href="./theme.md">Theme</a></li>
+      <li><button class="portal-quiet-btn" type="button" id="mode-toggle">Mode</button></li>
+    </ul>
+  </nav>
+
+  <main class="page" id="top">
+    <header class="page-header">
+      <p class="micro-label">Konstrukt v2.0.0 · atelier · both modes</p>
+      <h1>Component gallery</h1>
+      <p class="tagline">
+        Engineering handoff for Design Ops Cockpit. Square corners, no shadows, no gradients.
+        Tokens are generated custom properties — never hand-typed hex.
+      </p>
+    </header>
+
+    <section id="gallery" class="gallery-grid">
+      <div class="module">
+        <div class="module-header">
+          <p class="micro-label">Button</p>
+          <h2>Primary and quiet</h2>
+        </div>
+        <p>
+          <button class="btn-primary" type="button">Approve</button>
+          <button class="portal-quiet-btn" type="button">Request revision</button>
+        </p>
+        <p>
+          <button class="btn-primary" type="button" disabled>Disabled</button>
+          <button class="portal-quiet-btn" type="button" disabled>Disabled</button>
+        </p>
+      </div>
+
+      <div class="module">
+        <div class="module-header">
+          <p class="micro-label">Input · Select · Checkbox</p>
+          <h2>Fields</h2>
+        </div>
+        <div class="field">
+          <label for="g-name">Project name</label>
+          <input class="input" id="g-name" value="design-ops-cockpit" />
+        </div>
+        <div class="field">
+          <label for="g-system">Design system</label>
+          <select class="input" id="g-system">
+            <option>konstrukt</option>
+            <option disabled>shadcn (not this run)</option>
+          </select>
+        </div>
+        <label class="check-row">
+          <input type="checkbox" checked />
+          Gate the next stage until I approve
+        </label>
+      </div>
+
+      <div class="module">
+        <div class="module-header">
+          <p class="micro-label">Card</p>
+          <h2>Module + index card</h2>
+        </div>
+        <a class="index-card" href="#frames">
+          <span class="card-label">Current stage</span>
+          <h3>Mid-fi</h3>
+          <p class="card-detail">tokens.md · ui.html · six device-framed screens</p>
+          <div class="card-meta"><span class="badge badge-review">current</span></div>
+        </a>
+      </div>
+
+      <div class="module">
+        <div class="module-header">
+          <p class="micro-label">Tabs</p>
+          <h2>Nav underline</h2>
+        </div>
+        <nav class="site-nav" aria-label="Example tabs" style="padding-inline:0;border-bottom:var(--stroke-rule) solid var(--ink)">
+          <ul class="nav-links" style="margin-left:0">
+            <li><a class="active" href="#gallery">Tokens</a></li>
+            <li><a href="#gallery">Components</a></li>
+            <li><a href="#frames">Screens</a></li>
+          </ul>
+        </nav>
+        <p class="meta">Active tab uses a 2px accent rule, not a rounded pill.</p>
+      </div>
+
+      <div class="module">
+        <div class="module-header">
+          <p class="micro-label">Table</p>
+          <h2>Stage list</h2>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr><th>Stage</th><th>Status</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>PRD</td><td><span class="badge badge-complete">approved</span></td><td><a href="#frames">View</a></td></tr>
+            <tr><td>Mid-fi</td><td><span class="badge badge-review">current</span></td><td><a href="#frames">Review</a></td></tr>
+            <tr><td>Hi-fi</td><td><span class="badge badge-draft">locked</span></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="module">
+        <div class="module-header">
+          <p class="micro-label">Dialog</p>
+          <h2>Square modal</h2>
+        </div>
+        <p class="meta">No radius, no shadow. Ink rule on top. Esc closes.</p>
+        <button class="btn-primary" type="button" id="open-dialog">Preview dialog</button>
+        <dialog class="k-dialog" id="k-dialog" aria-labelledby="dialog-title">
+          <p class="micro-label">Confirm</p>
+          <h2 id="dialog-title">Approve Mid-fi?</h2>
+          <p>UI prototype becomes current. Hi-fi stays locked.</p>
+          <p>
+            <button class="btn-primary" type="button" id="close-dialog">Approve</button>
+            <button class="portal-quiet-btn" type="button" id="cancel-dialog">Cancel</button>
+          </p>
+        </dialog>
+      </div>
+    </section>
+
+    <section id="frames">
+      <div class="section-label"><p class="micro-label">Device frames</p></div>
+      <div class="module">
+        <div class="module-header">
+          <p class="micro-label">Stage review</p>
+          <h2>Phone and browser</h2>
+        </div>
+        <div class="frames">
+          <div class="phone">
+            <div class="device">
+              <div class="device-bar">Phone · 375×812</div>
+              <div class="device-screen ui-mini">
+                <div class="bar"><span>4 Mid-fi</span><span>current</span></div>
+                <div class="pad">
+                  <p class="micro-label">Artifact</p>
+                  <p>ui.html · tokens.md</p>
+                  <p>
+                    <button class="btn-primary" type="button">Approve</button>
+                    <button class="portal-quiet-btn" type="button">Revision</button>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="device">
+            <div class="device-bar">Browser · desktop</div>
+            <div class="device-screen ui-mini" style="display:grid;grid-template-columns:1.4fr 1fr;min-height:240px">
+              <div class="pad">
+                <p class="micro-label">Artifact</p>
+                <h2>Mid-fi kit</h2>
+                <p>Generated CSS variables. Square frames. No chrome.</p>
+              </div>
+              <div class="pad" style="border-left:var(--stroke-rail) solid var(--accent);background:var(--surface)">
+                <p class="micro-label">Decision</p>
+                <p>
+                  <button class="btn-primary" type="button">Approve</button>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../vendor/konstrukt-2.0.0/theme.js"></script>
+  <script>
+    document.getElementById("mode-toggle").addEventListener("click", function () {
+      if (window.HLTheme) window.HLTheme.toggleMode();
+    });
+    var dialog = document.getElementById("k-dialog");
+    document.getElementById("open-dialog").addEventListener("click", function () { dialog.showModal(); });
+    document.getElementById("close-dialog").addEventListener("click", function () { dialog.close(); });
+    document.getElementById("cancel-dialog").addEventListener("click", function () { dialog.close(); });
+  </script>
+</body>
+</html>

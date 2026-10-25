@@ -1,0 +1,33 @@
+Stage review — Desktop
+================================================================================
+
++------------------------------------------------------------------------+
+| [S1] design-ops-cockpit / 4 Mid-fi          Current · rev 0    (O) [*] | [A1]
++------------------------------------------------------------------------+
+| [S2] ARTIFACT (wide)              | [S3] DECISION (rail)               |
+|                                   |                                    |
+|  tokens.md · components.md        |  Stage 4 of 6                      |
+|  screens/ · ui.html               |  Mid-fi                            |
+|                                   |                                    |
+|  +-----------------------------+  |  Artifact path                     |
+|  | [iframe / pre of ui.html]   |  |  design/wireframes/midfi/          |
+|  | device frames preview       |  |                                    | [A2]
+|  +-----------------------------+  |  Last revision note (if any)       |
+|                                   |  "Tighten empty state copy"        |
+|                                   |                                    |
+|                                   |  [Button: Approve]                 | [A3]
+|                                   |  [Button: Request revision]        |
+|                                   |                                    |
+| [S4] empty  [S5] loading  [S6] error  [S7] read-only if approved       |
++------------------------------------------------------------------------+
+
+Annotations
+- A1: Full path in the title.
+- A2: Desktop splits artifact | decision. Decision is a 4px accent-rail module, not a modal.
+- A3: Primary (Approve) is the one teal action. Revision is quiet.
+
+Flow hooks
+- Next: run-overview or revision-request or run-complete.
+- Prev: run-overview.
+
+Related FRs: FR-004, FR-005, FR-006, FR-007, FR-009

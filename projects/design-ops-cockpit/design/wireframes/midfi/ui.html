@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light" data-palette="atelier">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design Ops Cockpit — mid-fi</title>
+  <link rel="stylesheet" href="../../../vendor/konstrukt-2.0.0/konstrukt.css" />
+  <link rel="stylesheet" href="../../../vendor/konstrukt-2.0.0/base.css" />
+  <style>
+    .midfi-nav { position: sticky; top: 0; z-index: 4; }
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+      gap: var(--sp-3);
+    }
+    .swatch {
+      border: var(--stroke-hairline) solid var(--border-light);
+      border-top: var(--stroke-rule) solid var(--ink);
+      background: var(--surface);
+    }
+    .swatch .chip { height: 3.5rem; }
+    .swatch code {
+      display: block;
+      padding: var(--sp-2);
+      font: var(--type-mono);
+      color: var(--text);
+    }
+    .type-row { margin-bottom: var(--sp-4); }
+    .frames {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: var(--sp-6);
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .frames { grid-template-columns: 1fr; }
+    }
+    .device {
+      background: var(--bg-alt);
+      border: var(--stroke-hairline) solid var(--border-light);
+    }
+    .device-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      padding: var(--sp-2) var(--sp-3);
+      background: var(--surface);
+      border-bottom: var(--stroke-rule) solid var(--ink);
+      font: var(--type-label);
+      letter-spacing: var(--type-label-tracking);
+      text-transform: var(--type-label-transform);
+      color: var(--text-muted);
+    }
+    .phone {
+      width: 230px;
+      margin: 0 auto;
+    }
+    .phone .device-screen {
+      height: 420px;
+      overflow: auto;
+      background: var(--bg);
+    }
+    .browser .device-screen {
+      min-height: 280px;
+      background: var(--bg);
+    }
+    .ui-mini { font-size: 11px; line-height: 1.4; color: var(--text); }
+    .ui-mini .bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      background: var(--surface);
+      border-bottom: var(--stroke-rule) solid var(--ink);
+      font-family: var(--font-display);
+      font-weight: var(--type-weight-bold);
+    }
+    .ui-mini .pad { padding: 12px 10px 16px; }
+    .ui-mini h3 {
+      font: var(--type-heading);
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+    .ui-mini .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: var(--stroke-hairline) solid var(--border-light);
+    }
+    .ui-mini .btn {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 6px 10px;
+      background: var(--accent);
+      color: var(--on-accent);
+      border: var(--stroke-hairline) solid var(--accent);
+      font-weight: var(--type-weight-semibold);
+    }
+    .ui-mini .btn.quiet {
+      background: var(--surface);
+      color: var(--ink);
+      border-color: var(--border);
+    }
+    .ui-mini .field-box {
+      border: var(--stroke-hairline) solid var(--border);
+      padding: 8px;
+      background: var(--surface);
+      color: var(--text-muted);
+      margin: 4px 0 10px;
+    }
+    .split { display: grid; grid-template-columns: 1.4fr 1fr; min-height: 240px; }
+    .split .rail {
+      border-left: var(--stroke-rail) solid var(--accent);
+      padding: 10px;
+      background: var(--surface);
+    }
+    .step {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+    .step i {
+      flex: 1;
+      height: 4px;
+      background: var(--border-light);
+    }
+    .step i.on { background: var(--accent); }
+    .step i.now { background: var(--ink); }
+    .toc a { margin-right: var(--sp-4); }
+  </style>
+</head>
+<body>
+  <nav class="site-nav midfi-nav" aria-label="Mid-fi">
+    <a class="nav-brand" href="#top">Design Ops · mid-fi</a>
+    <ul class="nav-links">
+      <li><a href="#tokens">Tokens</a></li>
+      <li><a href="#components">Components</a></li>
+      <li><a href="#screens">Screens</a></li>
+      <li><button class="portal-quiet-btn" type="button" id="mode-toggle">Mode</button></li>
+    </ul>
+  </nav>
+
+  <main class="page" id="top">
+    <header class="page-header">
+      <p class="micro-label">Konstrukt v2.0.0 · atelier · design_system konstrukt</p>
+      <h1>Mid-fi overview</h1>
+      <p class="tagline">Tokens are CSS custom properties from vendored <code>konstrukt.css</code>. No hand-typed hex, no radius, no shadow, no gradient. Toggle <code>data-mode</code> to review both resolved sets.</p>
+      <div class="meta-row">
+        <span>Source: <strong>vendor/konstrukt-2.0.0</strong></span>
+        <span>Screens: <strong>6</strong></span>
+        <span>Contrast: <strong>80-pair AA gate</strong></span>
+      </div>
+    </header>
+
+    <nav class="toc meta" aria-label="Docs">
+      <a href="./tokens.md">tokens.md</a>
+      <a href="./components.md">components.md</a>
+      <a href="./screens/home.md">home</a>
+      <a href="./screens/brief-intake.md">brief-intake</a>
+      <a href="./screens/run-overview.md">run-overview</a>
+      <a href="./screens/stage-review.md">stage-review</a>
+      <a href="./screens/revision-request.md">revision-request</a>
+      <a href="./screens/run-complete.md">run-complete</a>
+    </nav>
+
+    <section id="tokens">
+      <div class="section-label"><p class="micro-label">Tokens</p></div>
+      <div class="module">
+        <div class="module-header">
+          <p class="micro-label">Color roles</p>
+          <h2>Semantic surfaces</h2>
+        </div>
+        <div class="swatch-grid">
+          <div class="swatch"><div class="chip" style="background:var(--bg)"></div><code>--bg</code></div>
+          <div class="swatch"><div class="chip" style="background:var(--bg-alt)"></div><code>--bg-alt</code></div>
+          <div class="swatch"><div class="chip" style="background:var(--surface)"></div><code>--surface</code></div>
+          <div class="swatch"><div class="chip" style="background:var(--text)"></div><code>--text</code></div>
+          <div class="swatch"><div class="chip" style="background:var(--text-muted)"></div><code>--text-muted</code></div>
+          <div class="swatch"><div class="chip" style="background:var(--ink)"></div><code>--ink</code></div>
+          <div class="swatch"><div class="chip" style="background:var(--border)"></div><code>--border</code></div>
+          <div class="swatch"><div class="chip" style="background:var(--accent)"></div><code>--accent</code></div>
+          <div class="swatch"><div class="chip" style="background:var(--accent-soft)"></div><code>--accent-soft</code></div>
+          <div class="swatch"><div class="chip" style="background:var(--focus)"></div><code>--focus</code></div>
+          <div class="swatch"><div class="chip" style="background:var(--success)"></div><code>--success</code></div>
+          <div class="swatch"><div class="chip" style="background:var(--warning)"></div><code>--warning</code></div>
+          <div class="swatch"><div class="chip" style="background:var(--danger)"></div><code>--danger</code></div>
+          <div class="swatch"><div class="chip" style="background:var(--info)"></div><code>--info</code></div>
+        </div>
+      </div>
+      <div class="module">
+        <div class="module-header">
+          <p class="micro-label">Type roles</p>
+          <h2>Eight roles</h2>
+        </div>
+        <div class="type-row" style="font:var(--type-display);letter-spacing:var(--type-display-tracking)">display</div>
+        <div class="type-row" style="font:var(--type-heading);letter-spacing:var(--type-heading-tracking)">heading</div>
+        <div class="type-row" style="font:var(--type-subheading);letter-spacing:var(--type-subheading-tracking);text-transform:var(--type-subheading-transform)">subheading</div>
+        <div class="type-row" style="font:var(--type-label);letter-spacing:var(--type-label-tracking);text-transform:var(--type-label-transform)">label</div>
+        <div class="type-row" style="font:var(--type-badge);letter-spacing:var(--type-badge-tracking);text-transform:var(--type-badge-transform)">badge</div>
+        <div class="type-row" style="font:var(--type-body)">body — review the artifact, then approve or send it back.</div>
+        <div class="type-row" style="font:var(--type-meta);color:var(--text-muted)">meta — path design/wireframes/midfi/</div>
+        <div class="type-row" style="font:var(--type-mono)">mono — project_name: design-ops-cockpit</div>
+        <p class="meta">Radius <code>var(--radius)</code> · Shadow <code>var(--shadow)</code> · Strokes hairline / rule / rail.</p>
+      </div>
+    </section>
+
+    <section id="components">
+      <div class="section-label"><p class="micro-label">Components</p></div>
+      <div class="module">
+        <div class="module-header">
+          <p class="micro-label">Actions and status</p>
+          <h2>Buttons, fields, badges</h2>
+        </div>
+        <p>
+          <button class="btn-primary" type="button">Approve</button>
+          <button class="portal-quiet-btn" type="button">Request revision</button>
+          <button class="btn-primary" type="button" disabled>Disabled</button>
+        </p>
+        <p>
+          <span class="badge badge-draft">locked</span>
+          <span class="badge badge-review">current</span>
+          <span class="badge badge-complete">approved</span>
+          <span class="badge badge-in-progress">in progress</span>
+        </p>
+        <div class="field" style="max-width:24rem">
+          <label for="demo-name">Project name</label>
+          <input class="input" id="demo-name" value="design-ops-cockpit" />
+          <p class="field-hint">kebab-case</p>
+        </div>
+        <div class="alert alert-warning"><strong>Revision r1.</strong> Tighten empty-state copy on Home.</div>
+      </div>
+      <div class="module">
+        <table class="data-table">
+          <thead>
+            <tr><th>Stage</th><th>Status</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>PRD</td><td><span class="badge badge-complete">approved</span></td><td><a href="#screen-review">View</a></td></tr>
+            <tr><td>Lo-fi</td><td><span class="badge badge-review">current</span></td><td><a href="#screen-review">Review</a></td></tr>
+            <tr><td>Mid-fi</td><td><span class="badge badge-draft">locked</span></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="screens">
+      <div class="section-label"><p class="micro-label">Screens</p></div>
+
+      <article class="module" id="screen-home">
+        <div class="module-header">
+          <p class="micro-label">01 Home</p>
+          <h2>Run list</h2>
+        </div>
+        <div class="frames">
+          <div class="phone">
+            <div class="device">
+              <div class="device-bar">Phone · 375</div>
+              <div class="device-screen ui-mini">
+                <div class="bar"><span>Design Ops</span><span>Luis</span></div>
+                <div class="pad">
+                  <h3>Runs</h3>
+                  <div class="row"><span>design-ops-cockpit<br>Mid-fi · in progress</span><span class="btn quiet">Open</span></div>
+                  <div class="row"><span>foto-sage<br>Hi-fi · complete</span><span class="btn quiet">Open</span></div>
+                  <span class="btn">New brief</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="browser device">
+            <div class="device-bar">Browser · desktop</div>
+            <div class="device-screen ui-mini">
+              <div class="bar"><span>Design Ops Cockpit</span><span>New brief · Luis</span></div>
+              <div class="pad">
+                <h3>Runs</h3>
+                <div class="row"><strong>Project</strong><strong>Status</strong><strong>Stage</strong></div>
+                <div class="row"><span>design-ops-cockpit</span><span>In progress</span><span>Mid-fi</span></div>
+                <div class="row"><span>foto-sage</span><span>Complete</span><span>Hi-fi</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="module" id="screen-intake">
+        <div class="module-header">
+          <p class="micro-label">02 Brief intake</p>
+          <h2>Launch a run</h2>
+        </div>
+        <div class="frames">
+          <div class="phone">
+            <div class="device">
+              <div class="device-bar">Phone · 375</div>
+              <div class="device-screen ui-mini">
+                <div class="bar"><span>&lt; New brief</span><span>Luis</span></div>
+                <div class="pad">
+                  <div class="micro-label">Project</div>
+                  <div class="field-box">design-ops-cockpit</div>
+                  <div class="micro-label">Brief</div>
+                  <div class="field-box">Designer intakes a brief and gates six stages…</div>
+                  <span class="btn">Launch run</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="browser device">
+            <div class="device-bar">Browser · desktop</div>
+            <div class="device-screen ui-mini split">
+              <div class="pad">
+                <h3>New brief</h3>
+                <div class="field-box">project-name</div>
+                <div class="field-box">Paste the product brief…</div>
+                <span class="btn">Launch run</span>
+              </div>
+              <div class="rail">
+                <div class="micro-label">Stages created</div>
+                <div class="row">1 New project</div>
+                <div class="row">2 PRD</div>
+                <div class="row">3 Lo-fi</div>
+                <div class="row">4 Mid-fi</div>
+                <div class="row">5 UI prototype</div>
+                <div class="row">6 Hi-fi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="module" id="screen-overview">
+        <div class="module-header">
+          <p class="micro-label">03 Run overview</p>
+          <h2>Six gated stages</h2>
+        </div>
+        <div class="frames">
+          <div class="phone">
+            <div class="device">
+              <div class="device-bar">Phone · 375</div>
+              <div class="device-screen ui-mini">
+                <div class="bar"><span>&lt; design-ops-cockpit</span><span>2/6</span></div>
+                <div class="pad">
+                  <div class="row">1 New project <span class="badge badge-complete">ok</span></div>
+                  <div class="row">2 PRD <span class="badge badge-complete">ok</span></div>
+                  <div class="row">3 Lo-fi <span class="btn">Review</span></div>
+                  <div class="row">4 Mid-fi <span class="badge badge-draft">lock</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="browser device">
+            <div class="device-bar">Browser · desktop</div>
+            <div class="device-screen ui-mini">
+              <div class="bar"><span>design-ops-cockpit · in progress</span><span>Luis</span></div>
+              <div class="pad">
+                <div class="step"><i class="on"></i><i class="on"></i><i class="now"></i><i></i><i></i><i></i></div>
+                <div class="row">3 Lo-fi · current · rev 1 <span class="btn">Review</span></div>
+                <div class="row">4 Mid-fi · locked</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="module" id="screen-review">
+        <div class="module-header">
+          <p class="micro-label">04 Stage review</p>
+          <h2>Artifact + decision</h2>
+        </div>
+        <div class="frames">
+          <div class="phone">
+            <div class="device">
+              <div class="device-bar">Phone · 375</div>
+              <div class="device-screen ui-mini">
+                <div class="bar"><span>&lt; 4 Mid-fi</span><span>current</span></div>
+                <div class="pad">
+                  <div class="field-box">ui.html · tokens.md · components.md</div>
+                  <span class="btn">Approve</span>
+                  <span class="btn quiet">Request revision</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="browser device">
+            <div class="device-bar">Browser · desktop</div>
+            <div class="device-screen ui-mini split">
+              <div class="pad">
+                <div class="micro-label">Artifact</div>
+                <div class="field-box">Mid-fi ui.html device frames…</div>
+              </div>
+              <div class="rail">
+                <div class="micro-label">Stage 4 of 6</div>
+                <p>design/wireframes/midfi/</p>
+                <span class="btn">Approve</span>
+                <span class="btn quiet">Request revision</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="module" id="screen-revision">
+        <div class="module-header">
+          <p class="micro-label">05 Revision request</p>
+          <h2>Note, then stay on stage</h2>
+        </div>
+        <div class="frames">
+          <div class="phone">
+            <div class="device">
+              <div class="device-bar">Phone · 375</div>
+              <div class="device-screen ui-mini">
+                <div class="bar"><span>&lt; Revision · Lo-fi</span><span>Luis</span></div>
+                <div class="pad">
+                  <div class="field-box">Tell the agent what to fix…</div>
+                  <span class="btn">Send revision</span>
+                  <span class="btn quiet">Cancel</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="browser device">
+            <div class="device-bar">Browser · desktop</div>
+            <div class="device-screen ui-mini split">
+              <div class="pad">
+                <h3>What should change</h3>
+                <div class="field-box">Empty-state copy on Home is too cute.</div>
+                <span class="btn">Send revision</span>
+              </div>
+              <div class="rail">
+                <div class="micro-label">This will</div>
+                <div class="row">Keep Lo-fi current</div>
+                <div class="row">Increment revision</div>
+                <div class="row">Leave Mid-fi locked</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="module" id="screen-complete">
+        <div class="module-header">
+          <p class="micro-label">06 Run complete</p>
+          <h2>All six approved</h2>
+        </div>
+        <div class="frames">
+          <div class="phone">
+            <div class="device">
+              <div class="device-bar">Phone · 375</div>
+              <div class="device-screen ui-mini">
+                <div class="bar"><span>design-ops-cockpit</span><span>done</span></div>
+                <div class="pad">
+                  <div class="row">PRD <span class="badge badge-complete">ok</span></div>
+                  <div class="row">Hi-fi <span class="badge badge-complete">ok</span></div>
+                  <span class="btn quiet">Back to runs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="browser device">
+            <div class="device-bar">Browser · desktop</div>
+            <div class="device-screen ui-mini">
+              <div class="bar"><span>Complete</span><span>Luis</span></div>
+              <div class="pad">
+                <div class="step"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+                <div class="row">Hi-fi · design/ui-design/ · 0 revs</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="../../../vendor/konstrukt-2.0.0/theme.js"></script>
+  <script>
+    document.getElementById("mode-toggle").addEventListener("click", function () {
+      if (window.HLTheme) window.HLTheme.toggleMode();
+    });
+  </script>
+</body>
+</html>

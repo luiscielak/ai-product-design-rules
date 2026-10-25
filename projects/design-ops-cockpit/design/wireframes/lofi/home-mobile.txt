@@ -1,0 +1,45 @@
+Home — Mobile
+================================================================================
+
++----------------------------------+
+| [S1] DESIGN OPS          (O) [*] |  [A1]
++----------------------------------+
+| [S2] RUNS                        |
+|                                  |
+| You have no design runs.         |  [A2]
+| Start from a product brief.      |
+|                                  |
+| [Button: New brief]              |  >>> brief-intake
++----------------------------------+
+| [S3] LOADING (alt)               |  [A3]
+| ........ fetching runs ........  |
++----------------------------------+
+| [S4] ERROR (alt)                 |  [A4]
+| Could not read local runs.       |
+| [Button: Retry]                  |
++----------------------------------+
+| [S5] LIST (populated alt)        |  [A5]
+| +------------------------------+ |
+| | design-ops-cockpit           | |
+| | In progress · Mid-fi         | |
+| | [Button: Open]               | |
+| +------------------------------+ |
+| +------------------------------+ |
+| | foto-sage                    | |
+| | Complete · Hi-fi approved    | |
+| | [Button: Open]               | |
+| +------------------------------+ |
++----------------------------------+
+
+Annotations
+- A1: Brand + Luis avatar. [*] = light/dark toggle (FR-010).
+- A2: Empty state when zero runs (FR-008).
+- A3: Loading skeleton while fixtures hydrate.
+- A4: Error if local state cannot be read.
+- A5: Each row shows project_name, status, current/last stage.
+
+Flow hooks
+- Next: brief-intake (New brief) or run-overview (Open).
+- Prev: none (root).
+
+Related FRs: FR-008, FR-010, FR-011

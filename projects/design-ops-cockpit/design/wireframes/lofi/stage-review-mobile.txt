@@ -1,0 +1,47 @@
+Stage review — Mobile
+================================================================================
+
++----------------------------------+
+| [S1] [<] 3 · Lo-fi         (O)   |  [A1]
+|      Current · rev 1             |
++----------------------------------+
+| [S2] ARTIFACT                    |
+| +------------------------------+ |
+| | legend.md                    | |  [A2]
+| | home-mobile.txt              | |
+| | … ASCII frames …             | |
+| +------------------------------+ |
+|                                  |
+| [S3] DECISION                    |
+| [Button: Approve]                |  >>> run-overview (next unlocked)
+| [Button: Request revision]       |  >>> revision-request
++----------------------------------+
+| [S4] EMPTY (alt)                 |  [A3]
+| No files under design/wireframes |
+| /lofi/ yet.                      |
++----------------------------------+
+| [S5] LOADING (alt)               |  [A4]
+| Reading artifact…                |
++----------------------------------+
+| [S6] ERROR (alt)                 |  [A5]
+| Could not load lofi directory.   |
+| [Button: Retry]                  |
++----------------------------------+
+| [S7] APPROVED READ-ONLY (alt)    |  [A6]
+| Approved. Decision row hidden.   |
++----------------------------------+
+
+Annotations
+- A1: Stage index + name. Back to run-overview.
+- A2: Artifact body. For code/html stages this is a scroll region.
+- A3: Empty if the agent has not written files (FR-004).
+- A4: Loading.
+- A5: IO / parse error.
+- A6: Approved stages omit decision buttons (FR-007).
+
+Flow hooks
+- Next: run-overview (approve) or revision-request.
+- Prev: run-overview.
+- If this is stage 6 and approved: run-complete.
+
+Related FRs: FR-004, FR-005, FR-006, FR-007

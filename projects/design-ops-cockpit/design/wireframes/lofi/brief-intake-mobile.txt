@@ -1,0 +1,41 @@
+Brief intake — Mobile
+================================================================================
+
++----------------------------------+
+| [S1] [<] New brief         (O)   |  [A1]
++----------------------------------+
+| [S2] PROJECT                     |
+| [Input: project-name]            |  [A2]
+| kebab-case, e.g. design-ops-…    |
+|                                  |
+| [S3] BRIEF                       |
+| [Textarea: Paste the product     |
+|  brief the agent should follow]  |  [A3]
+|                                  |
+| [S4] DESIGN SYSTEM               |
+| [Select: konstrukt]              |  [A4]
+| Inherited. Do not invent hex.    |
+|                                  |
+| [Button: Launch run]             |  >>> run-overview
++----------------------------------+
+| [S5] ERROR (alt)                 |  [A5]
+| project_name must be kebab-case  |
+| brief cannot be empty            |
++----------------------------------+
+| [S6] LOADING (alt)               |
+| Launching run…                   |  [A6]
++----------------------------------+
+
+Annotations
+- A1: Back to home.
+- A2: Required. Reject "Design Ops" / spaces / capitals.
+- A3: Required free text. Short and long examples both wrap.
+- A4: design_system shown as read-mostly select; default konstrukt for this project.
+- A5: Field-level errors, form stays.
+- A6: Disable submit while creating.
+
+Flow hooks
+- Next: run-overview on success.
+- Prev: home.
+
+Related FRs: FR-001, FR-002, FR-011

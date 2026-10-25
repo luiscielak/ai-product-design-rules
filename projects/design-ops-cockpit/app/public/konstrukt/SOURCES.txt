@@ -1,0 +1,1 @@
+Copied from ../../vendor/konstrukt-2.0.0/ (Konstrukt v2.0.0 dist/). Do not edit hex.

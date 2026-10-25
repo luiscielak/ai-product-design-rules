@@ -12,7 +12,7 @@ These rules define six collaborative roles and commands that move a product from
 2. **Product Owner** → `/prd` (concise, measurable PRD)
 3. **UX Designer** → `/lofi` (ASCII lo‑fi wireframes)
 4. **Product Designer** → `/midfi` (mid‑fi tokens, components, screens, UI overview)
-5. **UI Engineer** → `/ui-proto` (clickable prototype using shadcn/ui + Tailwind)
+5. **UI Engineer** → `/ui-proto` (clickable prototype; shadcn/ui + Tailwind by default, or Konstrukt when `design_system:"konstrukt"`)
 6. **UI Designer** → `/hifi` (hi‑fi design kit and component gallery)
 
 ```mermaid
@@ -32,15 +32,15 @@ The commands are designed to run in order. Each stage produces an artifact that 
 
 ```mermaid
 flowchart TB
-  bootstrap["/new-project"] --> structure["projects/{name}/<br/>app + docs + marketing"]
+  bootstrap["/new-project"] --> structure["projects/{name}/<br/>docs + design + app placeholder"]
   structure --> prdOut["/prd → docs/PRD.md"]
-  prdOut --> lofiOut["/lofi → docs/wireframes/lofi/"]
-  lofiOut --> midfiOut["/midfi → docs/wireframes/midfi/<br/>+ ui.html"]
+  prdOut --> lofiOut["/lofi → design/wireframes/lofi/"]
+  lofiOut --> midfiOut["/midfi → design/wireframes/midfi/<br/>+ ui.html"]
   midfiOut --> protoOut["/ui-proto → app/<br/>clickable prototype"]
-  midfiOut --> hifiOut["/hifi → docs/ui-design/<br/>gallery + theme"]
+  midfiOut --> hifiOut["/hifi → design/ui-design/<br/>gallery + theme"]
 ```
 
-Both `/ui-proto` and `/hifi` build on the mid‑fi output, so they can be run in either order once `/midfi` is complete. In short:
+Both `/ui-proto` and `/hifi` build on mid‑fi only. Hi‑fi is **optional** before `/ui-proto`. Either order after `/midfi` is valid. Default:
 
 ```
 /new-project → /prd → /lofi → /midfi → /ui-proto → /hifi
@@ -76,7 +76,7 @@ The same product ("Finley") carried through every stage of the pipeline.
 
 ### 1) Create a new project
 ```
-/new-project project_name:"my-product" project_type:"ai-product-design" include_marketing:true
+/new-project project_name:"my-product" project_type:"ai-product-design" include_marketing:true design_system:"shadcn"
 ```
 
 ### 2) Draft the PRD
@@ -91,37 +91,44 @@ The same product ("Finley") carried through every stage of the pipeline.
 
 ### 4) Define mid‑fi wireframes
 ```
-/midfi screens:[...] states:[default, hover, focus, disabled, loading, error, success]
+/midfi screens:[...] states:[default, hover, focus, disabled, loading, error, success] design_system:"shadcn"
 ```
 
 ### 5) Build a clickable prototype
 ```
-/ui-proto framework:"Next.js App Router" package_manager:"npm" ts:true pages:[...] components:[...] theming:"both"
+/ui-proto framework:"Next.js App Router" package_manager:"npm" ts:true pages:[...] components:[...] theming:"both" design_system:"shadcn"
 ```
 
 ### 6) Deliver the hi‑fi UI kit
 ```
-/hifi theme:"dark" brand_color:"#5B8DEF" components:[...]
+/hifi theme:"dark" brand_color:"#5B8DEF" components:[...] design_system:"shadcn"
 ```
 
 ## Folder Structure (generated)
 
 ```
 projects/{project_name}/
-├── app/                      # Next.js application
-│   ├── src/app/              # App Router structure
-│   └── components/ui/        # shadcn/ui components
-├── docs/                     # Design documentation
+├── app/                         # Next.js prototype (/ui-proto)
+│   ├── src/app/
+│   └── components/ui/           # shadcn only
+├── docs/
 │   ├── PRD.md
-│   ├── wireframes/
-│   │   ├── lofi/
-│   │   └── midfi/
-│   ├── ui-design/
 │   └── presentations/
-└── marketing/                # (optional) Marketing site
+├── design/
+│   ├── wireframes/lofi/         # /lofi
+│   ├── wireframes/midfi/        # /midfi
+│   └── ui-design/               # /hifi
+├── vendor/konstrukt-2.0.0/      # when design_system is konstrukt
+└── marketing/                   # (optional)
 ```
 
 ## Command Reference
+
+### Design system
+
+`design_system` is `shadcn` | `konstrukt` and **defaults to `shadcn`**. The stacks are exclusive: do not install shadcn in a Konstrukt project or vendor Konstrukt into a shadcn project.
+
+When `konstrukt` is set, `/midfi`, `/hifi`, and `/ui-proto` consume [Konstrukt v2.0.0](https://github.com/the-hooman-loop/konstrukt) generated `dist/` files. The npm package is private — copy `konstrukt.css`, `base.css`, `theme.js`, and `tokens.json` from git tag `v2.0.0` into the **single** path `vendor/konstrukt-2.0.0/` (project root, sibling of `app/` and `design/`). Never create `design/vendor/`. Mid-fi `ui.html` links `../../../vendor/konstrukt-2.0.0/`; hi-fi gallery links `../../vendor/konstrukt-2.0.0/`. Never hand-type hex. Ban radius, shadow, and gradient. Light/dark is `data-mode` on `<html>`. Persist the choice in the project README.
 
 ### `/new-project` (Project Manager)
 **Purpose:** Create an organized project structure for AI product design workflows.
@@ -130,11 +137,14 @@ projects/{project_name}/
 - `project_name` (kebab‑case, e.g., "foto-sage", "chat-assistant")
 - `project_type` (default: "ai-product-design")
 - `include_marketing` (default: true)
+- `design_system` (`shadcn` | `konstrukt`, default: `shadcn`)
 
 **Output:**
 - `projects/{project_name}/` with:
-  - `app/` (Next.js + TypeScript + Tailwind + shadcn/ui)
-  - `docs/` (PRD, wireframes, UI design docs)
+  - `docs/` (PRD + presentations)
+  - `design/wireframes/{lofi,midfi}/` and `design/ui-design/`
+  - `app/` placeholder (`/ui-proto` scaffolds the runnable app)
+  - `vendor/konstrukt-2.0.0/` when `design_system` is `konstrukt`
   - `marketing/` (if requested)
 - README templates and basic setup files
 
@@ -184,7 +194,7 @@ projects/{project_name}/
 - `key_content` (per screen)
 - `breakpoints` (default: mobile, desktop)
 
-**Output:** `projects/{project_name}/docs/wireframes/lofi/`
+**Output:** `projects/{project_name}/design/wireframes/lofi/`
 - Files: `<screen>-mobile.txt`, `<screen>-desktop.txt`, `legend.md`
 
 **ASCII Conventions:**
@@ -208,18 +218,18 @@ projects/{project_name}/
 - `content_examples` (short/long)
 - `accessibility_targets` (WCAG AA)
 
-**Output:** `projects/{project_name}/docs/wireframes/midfi/`
+**Output:** `projects/{project_name}/design/wireframes/midfi/`
 - Files: `tokens.md`, `components.md`, `screens/<screen>.md`, `ui.html`
 
-**tokens.md includes:**
-- Spacing: 0, 2, 4, 6, 8, 12, 16, 24, 32 (map to Tailwind)
-- Typography: text-xs/sm/base/lg/xl/2xl; line-heights; weights
-- Color: neutrals, brand, semantic (map to Tailwind + shadcn themes)
-- Radius: sm/md/lg/full; Shadows: sm/md/lg
-
-**components.md:**
+**tokens.md / components.md (`shadcn` default):**
+- Spacing, type, color mapped to Tailwind + shadcn; radius sm/md/lg/full; shadows sm/md/lg
 - Inventory: Button, Input, Select, Card, Dialog, Sheet, Toast, Tabs, Pagination, Table, Navbar, Sidebar
-- Each: anatomy, states, props, interactions, keyboard navigation, focus order
+
+**tokens.md / components.md (`konstrukt`):**
+- CSS custom property names from project-root `vendor/konstrukt-2.0.0/` only (no hand-typed hex). Do not create `design/vendor/`.
+- `--radius: 0px`, `--shadow: none`, no gradients; 8 type roles; `data-mode` on `<html>`
+- `ui.html` links `../../../vendor/konstrukt-2.0.0/{konstrukt.css,base.css,theme.js}`
+- Inventory: `.site-nav`, `.module`, `.btn-primary`, `.portal-quiet-btn`, `.field`, `.input`, `.badge`, `.data-table`, `.alert` (no Sheet / Toast / shadcn Card)
 
 **Acceptance:**
 - All interactive elements have defined states and focus styles
@@ -229,7 +239,9 @@ projects/{project_name}/
 ---
 
 ### `/ui-proto` (UI Engineer)
-**Purpose:** Implement a runnable prototype (shadcn/ui + Tailwind), keyboard/focus‑accessible, covering primary flows.
+**Purpose:** Implement a runnable prototype covering primary flows. Follow **one** exclusive recipe: `shadcn` (default) or `konstrukt`.
+
+**Prerequisites:** Mid‑fi required. Hi‑fi optional (style from mid‑fi if missing).
 
 **Required Inputs:**
 - `framework` (default: Next.js 14+ App Router)
@@ -240,27 +252,26 @@ projects/{project_name}/
 - `routes/flows`
 - `data` (mock or live)
 - `theming` (light|dark|both)
+- `design_system` (`shadcn` | `konstrukt`, default: inherit or `shadcn`)
 
 **Output:**
-- Next.js app (if new), Tailwind configured, shadcn components installed
-- Routes/pages per screens, mock data and API stubs
-- `projects/{project_name}/app/README-proto.md` (setup, components, routes, gaps)
+- Next.js app in `app/`
+- `projects/{project_name}/app/README-proto.md`
 
-**Standard Setup Commands:**
+**`shadcn` recipe:**
 ```bash
-# Create app (if needed)
-npx create-next-app@latest projects/{project_name}/app --ts --eslint --src-dir --app --tailwind --no-import-alias
-
-# shadcn/ui
+npx create-next-app@latest projects/{project_name}/app --ts --eslint --src-dir --app --tailwind --no-import-alias --use-npm --yes
 npx shadcn@latest init -y
-npx shadcn@latest add button card input label form select dialog sheet toast tabs table navigation-menu dropdown-menu tooltip avatar badge skeleton pagination textarea checkbox radio-switch
+npx shadcn@latest add button card input label form select dialog sheet toast tabs table navigation-menu dropdown-menu tooltip avatar badge skeleton pagination textarea checkbox
 ```
 
+**`konstrukt` recipe:** do not install Tailwind or shadcn. Copy Konstrukt `v2.0.0` `dist/` into `vendor/konstrukt-2.0.0/`, then into `app/public/konstrukt/`. Link those CSS files and load `theme.js`. Ban radius, shadow, and gradient utilities.
+
 **Acceptance:**
-- `npm run dev` works
+- `npm install && npm run dev` works; `npm run build` and lint pass
 - Core flows clickable end‑to‑end with loading/empty/error states
-- No TypeScript or ESLint errors; basic responsiveness for mobile and desktop
-- Keyboard navigation works for interactive controls; focus outline visible
+- Keyboard navigation works; focus outline visible
+- `konstrukt`: no shadcn, no Tailwind, no radius/shadow/gradient
 
 ---
 
@@ -276,25 +287,17 @@ npx shadcn@latest add button card input label form select dialog sheet toast tab
 - `key_features` (optional: for mobile UI design focus)
 - `target_users` (optional: for mobile UI design focus)
 
-**Output:** `projects/{project_name}/docs/ui-design/`
+**Output:** `projects/{project_name}/design/ui-design/`
 - Files: `theme.md`, `color-roles.md`, `component-gallery.html`, `layout-guidelines.md`, `accessibility-checklist.md`, `mobile-ui-design.html` (if mobile focus)
 
-**Design Principles (for mobile UI focus):**
-- Balance elegant minimalism with functional design
-- Use soft, refreshing gradient colors aligned with brand palette
-- Well-proportioned white space and clean layouts
-- Light and immersive user experience
-- Clear hierarchy through subtle shadows and modular cards
-- Natural focus on core functionalities
-- Refined rounded corners
-- Delicate micro-interactions
-- Comfortable visual proportions
+**Design principles (`shadcn` default):** soft gradients, subtle shadows, refined rounded corners, modular cards.
+
+**Design principles (`konstrukt`):** Swiss / Bauhaus — `--radius: 0px`, `--shadow: none`, no gradients, one teal accent, 2px ink rules, 8 type roles, `data-mode` light/dark. Do not apply the shadcn principle list. Link project-root `../../vendor/konstrukt-2.0.0/` from `design/ui-design/`. Do not create `design/vendor/`.
 
 **Acceptance:**
-- Component gallery renders primary variants/states for Button, Input, Select, Checkbox, Card, Tabs, Table; Dialog preview included
-- Device frames present for mobile and desktop previews
-- Theme variables align with tokens and are implementable in Tailwind/shadcn without refactoring
-- If mobile UI focus: horizontal UI.html with all app screens, following design principles and technical requirements
+- Gallery renders the inventory for the chosen system (shadcn core, or Konstrukt `.btn-primary` / `.module` / `.field` / `.data-table` / square dialog)
+- Device frames for mobile and desktop
+- Theme implementable without refactoring (`shadcn`: Tailwind/shadcn; `konstrukt`: project-root `vendor/konstrukt-2.0.0/` CSS variables)
 
 ---
 
@@ -311,8 +314,8 @@ npx shadcn@latest add button card input label form select dialog sheet toast tab
 flowchart LR
   copyRules["Copy .cursorrules .yaml<br/>to workspace root"] --> start["/new-project"]
   start --> sequence["Run /prd → /lofi → /midfi"]
-  sequence --> deliver["/ui-proto and /hifi"]
-  deliver --> review["Review artifacts<br/>in docs/ and app/"]
+  sequence --> deliver["/ui-proto and /hifi<br/>(either order after mid-fi)"]
+  deliver --> review["Review artifacts<br/>in design/ and app/"]
 ```
 
 1. Keep `.cursorrules .yaml` at the workspace root
