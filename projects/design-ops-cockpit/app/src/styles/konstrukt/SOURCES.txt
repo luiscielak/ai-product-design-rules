@@ -1,0 +1,1 @@
+Vendored from Konstrukt v2.0.0 dist/. Do not hand-edit hex.
