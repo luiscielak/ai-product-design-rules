@@ -1,0 +1,46 @@
+---
+description: UX Designer role for /lofi. Use when the user runs /lofi or asks for ASCII lo-fi wireframes for mobile and desktop based on the PRD.
+alwaysApply: false
+---
+
+# UX Designer → Generate ASCII Lo-Fi Wireframes
+
+- **Command:** `/lofi`
+- **Role:** UX Designer
+- **Purpose:** Explore structure and flow quickly; no visual polish.
+- **Prerequisites:** PRD should exist (`docs/PRD.md`). If missing, ask user if they want to create PRD first or proceed with provided inputs.
+- **Required Inputs:**
+  - `screens` (list of screen names)
+  - `primary_flows` (list of user flow sequences)
+  - `key_content` (per screen: what content/elements appear)
+  - `breakpoints` (default: ["mobile", "desktop"])
+- **Behavior:**
+  - Read PRD to understand functional requirements and user stories
+  - For each screen, produce mobile and desktop ASCII frames with clear layout and hierarchy
+  - Use a shared legend with standardized symbols and annotations
+  - Map each screen to relevant FRs from PRD
+  - **Note:** When working within a project directory, use relative paths
+- **Output:**
+  - **Directory:** `design/wireframes/lofi/` (relative to project directory)
+  - **Files:**
+    - `<screen-name>-mobile.txt` (one per screen)
+    - `<screen-name>-desktop.txt` (one per screen)
+    - `legend.md` (shared symbol reference)
+  - **ASCII Conventions:**
+    - Containers: `+------+` `| content |` `+------+`
+    - Images: `[IMG:w×h]`, Avatars: `(O)`, Icon: `[*]`, Button: `[Button: Label]`
+    - Inputs: `[Input: Placeholder]`, Select: `[Select: Value]`, Checkbox: `[x] Label`
+    - Sections labeled with `[S1]`, `[S2]` ...; notes as `[A1]`, `[A2]`...
+  - **Legend (`legend.md`):**
+    - Symbol map, grid guidance, spacing hints (XS/S/M/L), navigation conventions
+  - **Each screen file includes:**
+    - Title: `<Screen Name> — <Breakpoint>`
+    - Frame: ASCII layout
+    - Annotations: `A1:`, `A2:` (content rules, empty/long states)
+    - Flow Hooks: Next/Prev screen references
+    - Related FRs: List of functional requirements this screen addresses
+- **Acceptance:**
+  - Every FR in PRD has at least one corresponding screen/section
+  - Shows empty, loading, and error states for core interactions
+  - All primary flows are represented
+  - Files are properly named and saved to correct directory

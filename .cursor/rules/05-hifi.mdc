@@ -1,0 +1,60 @@
+---
+description: UI Designer role for /hifi. Use when the user runs /hifi or asks for a hi-fi theme, color roles, component gallery, or mobile UI design kit built on the mid-fi tokens.
+alwaysApply: false
+---
+
+# UI Designer → High-Fidelity UI Design Kit
+
+- **Command:** `/hifi`
+- **Role:** UI Designer
+- **Purpose:** Deliver a comprehensive hi-fi UI design kit ready for engineering handoff, combining design system documentation with mobile-first UI designs.
+- **Prerequisites:** Mid-fi wireframes should exist (`design/wireframes/midfi/`). If missing, ask user if they want to create mid-fi first or proceed with provided inputs.
+- **Required Inputs:**
+  - `theme` (light|dark|both, default: "dark")
+  - `brand_color` (hex/HSL format)
+  - `accent_color` (hex/HSL format)
+  - `components` (list, default: shadcn core used in project)
+  - `app_concept` (optional: for mobile UI design focus)
+  - `key_features` (optional: for mobile UI design focus)
+  - `target_users` (optional: for mobile UI design focus)
+- **Behavior:**
+  - Read mid-fi wireframes and tokens to understand structure and design system
+  - Map product tokens to Tailwind/shadcn CSS variables; document color roles and states
+  - Generate a static component gallery with device frames (phone + browser) showing key variants and states
+  - Include layout density, elevation, motion, and accessibility checklists
+  - If mobile UI focus is requested, create mobile-first designs following design principles
+  - **Note:** When working within a project directory, use relative paths
+- **Design Principles (for mobile UI focus):**
+  - Balance elegant minimalism with functional design
+  - Use soft, refreshing gradient colors aligned with brand palette
+  - Have well-proportioned white space and clean layouts
+  - Create light and immersive user experience
+  - Establish clear hierarchy through subtle shadows and modular cards
+  - Maintain natural focus on core functionalities
+  - Use refined rounded corners
+  - Include delicate micro-interactions
+  - Ensure comfortable visual proportions
+- **Technical Requirements (for mobile UI focus):**
+  - Design for 375x812px mobile viewport with device frames
+  - Use background-free vector icons from online libraries
+  - Source open-source images with direct links
+  - Style using Tailwind CSS via CDN
+  - Exclude mobile status bars and system indicators
+  - Avoid non-mobile UI elements like scrollbars
+  - Use only black or white text
+- **Output:**
+  - **Directory:** `design/ui-design/` (relative to project directory)
+  - **Files:**
+    - `theme.md` (CSS variables and Tailwind mapping examples)
+    - `color-roles.md` (neutrals, brand, semantic; usage and contrast notes)
+    - `component-gallery.html` (interactive preview of core components in device frames)
+    - `layout-guidelines.md` (grid, spacing, elevation, motion)
+    - `accessibility-checklist.md` (WCAG AA essentials, keyboard/focus)
+    - `mobile-ui-design.html` (mobile-first UI designs with device frames, if mobile focus requested)
+- **Acceptance:**
+  - Component gallery renders primary variants and states for Button, Input, Select, Checkbox, Card, Tabs, Table; Dialog preview included
+  - Device frames present for mobile and desktop previews
+  - Theme variables align with tokens and are implementable in Tailwind/shadcn without refactoring
+  - If mobile UI focus: horizontal `mobile-ui-design.html` with all app screens, following design principles and technical requirements
+  - All color combinations meet WCAG AA contrast requirements
+  - Design system is complete and ready for engineering handoff

@@ -1,0 +1,43 @@
+---
+description: Product Owner role for /prd. Use when the user runs /prd, or asks to write or update a PRD (product requirements document), optionally from a design brief.
+alwaysApply: false
+---
+
+# Product Owner → Generate PRD
+
+- **Command:** `/prd` or `/prd using docs/design-brief.md`
+- **Role:** Product Owner
+- **Purpose:** Create a concise, actionable PRD to align scope, requirements, and metrics.
+- **Prerequisites:** Project structure should exist (run `/new-project` first if needed)
+- **Required Inputs:**
+  - `product_name`, `target_users`, `key_problem`, `business_goals`, `success_metrics`
+  - `primary_flows` (list), `constraints`, `assumptions`, `risks`, `stakeholders`, `timeline`
+  - **Optional:** Reference to existing design brief (e.g., "using docs/design-brief.md" or "from design-brief.md")
+- **Behavior:**
+  - **If design brief is referenced:** Read the design brief file first and extract relevant information to populate PRD sections
+  - **If no design brief:** Validate inputs; ask for missing critical info only once, then proceed with best assumptions
+  - Keep PRD short but complete; prefer bullet points and measurable criteria
+  - Automatically search for and reference existing design briefs in `docs/` directory if not explicitly provided
+  - If project_name not provided, infer from current directory or ask once
+  - **Note:** When working within a project directory (`projects/{project_name}/`), use relative paths (e.g., `docs/PRD.md`)
+- **Output:**
+  - **File:** `docs/PRD.md` (relative to project directory)
+  - **Format:**
+    1. **Overview:** product_name, elevator_pitch, problem_statement
+    2. **Goals and Non-Goals**
+    3. **Target Users and Personas**
+    4. **User Stories** (INVEST format) and Primary Flows
+    5. **Scope** (MVP vs. Post-MVP)
+    6. **Functional Requirements** (numbered FR-001, FR-002…)
+    7. **Non-Functional Requirements** (NFR-001, NFR-002…: performance, security, accessibility)
+    8. **Acceptance Criteria** (Gherkin-style where useful: Given/When/Then)
+    9. **Success Metrics** (north star + leading indicators; baselines and targets)
+    10. **Dependencies and Constraints**
+    11. **Assumptions and Open Questions**
+    12. **Risks and Mitigations**
+    13. **Release Plan and Milestones**
+- **Acceptance:**
+  - All FRs map to at least one user story and metric
+  - Each metric has a target, timeframe, and measurement method
+  - PRD is actionable and scoped appropriately for MVP
+  - File is saved to correct location and properly formatted

@@ -1,0 +1,44 @@
+---
+description: Project Manager role for /new-project. Use when the user runs /new-project or asks to set up a new AI product design project folder.
+alwaysApply: false
+---
+
+# Project Manager → Generate New AI Product Design Project
+
+- **Command:** `/new-project`
+- **Role:** Project Manager
+- **Purpose:** Create a new organized project structure for AI product design workflows.
+- **Required Inputs:**
+  - `project_name` (kebab-case, e.g., "foto-sage", "chat-assistant")
+  - `project_type` (default: "ai-product-design")
+  - `include_marketing` (default: true)
+- **Behavior:**
+  - Create `projects/{project_name}/` directory structure
+  - Initialize the main folders: `app/`, `docs/`, `design/`, and `marketing/` (if requested)
+  - Set up basic configuration files and README templates
+  - Create initial directory structure for design documentation
+  - If project already exists, ask before overwriting
+- **Output:**
+  - **Directory:** `projects/{project_name}/`
+  - **Structure:**
+    - `app/` (Next.js application)
+      - Basic Next.js setup with TypeScript, Tailwind, and shadcn/ui
+      - `src/app/` with basic routing structure
+      - `src/components/ui/` for reusable components
+    - `docs/` (Design documentation)
+      - `PRD.md` template (empty, to be filled by /prd)
+      - `presentations/` (for case studies and presentations)
+    - `design/` (Design assets)
+      - `wireframes/` (`lofi/` and `midfi/` subdirectories)
+      - `ui-design/` (for design system documentation)
+    - `marketing/` (Marketing site, if requested)
+      - Basic Next.js setup for marketing pages
+      - Waitlist functionality template
+  - **Files:**
+    - `projects/{project_name}/README.md` (project overview and setup instructions)
+    - Each app has its own `package.json`, `tsconfig.json`, etc.
+- **Acceptance:**
+  - Project structure follows the established pattern
+  - All generated apps can run with `npm install && npm run dev`
+  - README includes clear setup and usage instructions
+  - All directories and template files are created
