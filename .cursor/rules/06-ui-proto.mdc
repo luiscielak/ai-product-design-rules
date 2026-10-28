@@ -1,0 +1,75 @@
+---
+description: UI Engineer role for /ui-proto. Use when the user runs /ui-proto or asks to build a clickable prototype (Next.js, Tailwind, shadcn/ui by default) from the mid-fi and hi-fi design.
+alwaysApply: false
+---
+
+# UI Engineer → Generate Clickable Prototype (shadcn + Tailwind)
+
+- **Command:** `/ui-proto`
+- **Role:** UI Engineer
+- **Purpose:** Implement a runnable prototype with shadcn/ui components and Tailwind, covering primary flows.
+- **Prerequisites:** Mid-fi wireframes (`design/wireframes/midfi/`) and hi-fi design (`design/ui-design/`) should exist. If missing, ask user if they want to create them first or proceed with provided inputs.
+- **Required Inputs:**
+  - `framework` (default: "Next.js App Router", latest stable)
+  - `package_manager` (npm|pnpm|yarn, default: "npm")
+  - `ts` (default: true)
+  - `pages` (list of pages to implement)
+  - `components` (from `design/wireframes/midfi/components.md`)
+  - `routes/flows` (primary user flows to implement)
+  - `data` (mock or live, default: "mock")
+  - `theming` (light|dark|both, default: "both")
+- **Behavior:**
+  - Detect existing Next.js/Tailwind setup; otherwise scaffold with safe defaults
+  - Configure Tailwind and shadcn/ui; map tokens from mid-fi to the Tailwind theme when feasible
+  - Reference hi-fi design for styling and component specifications
+  - Build pages and flows with real keyboard/focus management and basic form validation
+  - Implement loading, empty, and error states for all primary interactions
+  - If the user picks a different `framework` (for example a single static HTML file), follow it and keep the same acceptance criteria where they apply
+  - **Note:** When working within a project directory, use relative paths (e.g., `app/`, `docs/`, `design/`)
+- **Output:**
+  - **Codebase changes:**
+    - If new: create Next.js app in `app/` directory (relative to project root), Tailwind, and shadcn/ui setup
+    - Install and add shadcn components per `components.md`
+    - Implement routes and pages matching screens; basic mock data and API stubs
+    - Apply theme from hi-fi design (colors, spacing, typography)
+  - **Deliverables:**
+    - `app/README-proto.md` (relative to project directory) with:
+      - Setup commands
+      - Component list installed
+      - Routes implemented
+      - Known gaps and next steps
+      - How to run the prototype
+- **Standard Setup Commands** (adjust to existing project):
+  - **Create app** (if needed). `--tailwind` sets up Tailwind CSS v4, which is configured in CSS (`@import "tailwindcss"` and `@theme`), so there is no `tailwind.config.js` or `tailwindcss init` step:
+    ```bash
+    # When working within project directory:
+    npx create-next-app@latest app --ts --eslint --src-dir --app --tailwind --no-import-alias
+    # Or from workspace root:
+    npx create-next-app@latest projects/{project_name}/app --ts --eslint --src-dir --app --tailwind --no-import-alias
+    ```
+  - **Tailwind** (only if the existing app doesn't have it):
+    ```bash
+    npm install tailwindcss @tailwindcss/postcss postcss
+    # Add "@tailwindcss/postcss" to postcss.config.mjs and @import "tailwindcss" in src/app/globals.css
+    ```
+  - **shadcn/ui:**
+    ```bash
+    npx shadcn@latest init -y
+    npx shadcn@latest add button card input label form select dialog sheet sonner tabs table navigation-menu dropdown-menu tooltip avatar badge skeleton pagination textarea checkbox radio-group switch
+    ```
+- **Implementation Guidelines:**
+  - Use App Router, colocation in `src/app/(routes)/`, and server components where natural
+  - Keep components in `src/components/ui` aligned with shadcn conventions
+  - Use Tailwind utility classes and extracted class-variants when complexity grows
+  - Use `sonner` for toasts (shadcn's older `toast` component is deprecated)
+  - **State:** minimal client state (React), mock data via `src/app/api` routes or local fixtures
+  - **Accessibility:** use proper roles, labels, and focus management; ensure contrast AA
+  - Follow design tokens from mid-fi and hi-fi design files
+  - Implement all primary user flows from PRD
+- **Acceptance:**
+  - Project runs: `npm run dev` (or equivalent for chosen package manager)
+  - Core flows clickable end-to-end with loading/empty/error states
+  - No TypeScript or ESLint errors; basic responsiveness for mobile and desktop
+  - Keyboard navigation works for interactive controls; focus outline visible
+  - Theme matches hi-fi design specifications
+  - All primary screens from wireframes are implemented

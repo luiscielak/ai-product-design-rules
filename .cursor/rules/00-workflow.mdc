@@ -1,0 +1,91 @@
+---
+description: AI product design workflow. Maps the six slash commands (/new-project, /prd, /lofi, /midfi, /hifi, /ui-proto) to their role rules, plus shared paths, input handling, and quality standards.
+alwaysApply: true
+---
+
+# AI product design workflow
+
+## Workflow overview
+These rules define a structured AI product design workflow with six sequential stages:
+
+1. **Project Setup** (`/new-project`) → 2. **PRD** (`/prd`) → 3. **Lo-Fi Wireframes** (`/lofi`) → 4. **Mid-Fi Wireframes** (`/midfi`) → 5. **Hi-Fi Design** (`/hifi`) → 6. **Prototype** (`/ui-proto`)
+
+Each stage builds on the previous one. When a command is invoked, check for prerequisite outputs and reference them.
+
+## Commands and rule files
+When the user types one of these commands, read the matching rule file and follow it.
+
+| Command | Role | Rule file | Writes to |
+|---|---|---|---|
+| `/new-project` | Project Manager | `.cursor/rules/01-new-project.mdc` | `projects/{project_name}/` |
+| `/prd` | Product Owner | `.cursor/rules/02-prd.mdc` | `docs/PRD.md` |
+| `/lofi` | UX Designer | `.cursor/rules/03-lofi.mdc` | `design/wireframes/lofi/` |
+| `/midfi` | Product Designer | `.cursor/rules/04-midfi.mdc` | `design/wireframes/midfi/` |
+| `/hifi` | UI Designer | `.cursor/rules/05-hifi.mdc` | `design/ui-design/` |
+| `/ui-proto` | UI Engineer | `.cursor/rules/06-ui-proto.mdc` | `app/` |
+
+Paths in the "Writes to" column are relative to `projects/{project_name}/`.
+
+## Project layout
+```
+projects/{project_name}/
+├── app/                      # Prototype (Next.js by default)
+├── docs/
+│   ├── design-brief.md       # Optional input for /prd
+│   ├── PRD.md
+│   └── presentations/
+├── design/
+│   ├── wireframes/
+│   │   ├── lofi/
+│   │   └── midfi/
+│   └── ui-design/
+└── marketing/                # Optional
+```
+
+`docs/` holds written documents (brief, PRD, presentations). `design/` holds design artifacts (wireframes, UI kit).
+
+## General guidelines (apply to all commands)
+
+### Working directory context
+- **When working within a project directory** (`projects/{project_name}/`), use **relative paths**:
+  - `docs/PRD.md` (not `projects/{project_name}/docs/PRD.md`)
+  - `design/wireframes/lofi/` (not `projects/{project_name}/design/wireframes/lofi/`)
+  - `design/ui-design/` (not `projects/{project_name}/design/ui-design/`)
+  - `app/` (not `projects/{project_name}/app/`)
+- Detect current working directory and adjust paths accordingly
+- If unsure, check if `docs/`, `design/`, or `app/` directories exist in current location
+
+### Input handling
+- When required inputs are missing, ask the user once for critical information
+- If user doesn't provide inputs, proceed with sensible defaults and document assumptions
+- Infer `project_name` from current directory context when possible
+- Validate inputs before proceeding (e.g., kebab-case for project names)
+
+### File management
+- Always create files in the correct directory structure
+- Use consistent naming conventions (kebab-case for files and directories)
+- Check if files/directories exist before creating to avoid overwriting without warning
+- Preserve existing content when updating files unless explicitly replacing
+
+### Error handling
+- If prerequisites are missing, clearly explain what's needed and offer to create them
+- Provide helpful error messages with actionable next steps
+- When encountering existing files, ask before overwriting unless explicitly instructed
+
+### Documentation
+- Include clear README files with setup and usage instructions
+- Document assumptions and decisions made during generation
+- Link related files and explain relationships between deliverables
+- Add comments in code explaining non-obvious decisions
+
+### Quality standards
+- All generated code should be production-ready (no placeholders unless explicitly noted)
+- Follow best practices for the technology stack (Next.js, Tailwind, shadcn/ui, etc.)
+- Ensure accessibility (WCAG AA minimum) in all interactive elements
+- Test that generated projects can actually run before marking as complete
+
+### Conventions
+- **Project names:** kebab-case (e.g., `chat-assistant`)
+- **PRDs:** short but complete; each FR maps to at least one user story and metric
+- **Accessibility:** include color contrast and keyboard/focus guidance in mid-fi and hi-fi
+- **Prototypes:** ensure keyboard navigation and visible focus outlines

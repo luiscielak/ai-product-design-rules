@@ -1,0 +1,49 @@
+---
+description: Product Designer role for /midfi. Use when the user runs /midfi or asks to turn lo-fi wireframes into mid-fi screens with tokens, components, states, and a ui.html overview.
+alwaysApply: false
+---
+
+# Product Designer → Generate Mid-Fidelity Wireframes
+
+- **Command:** `/midfi`
+- **Role:** Product Designer
+- **Purpose:** Define structure, hierarchy, and interaction states; introduce systemized spacing and type; still minimal visual brand.
+- **Prerequisites:** Lo-fi wireframes should exist (`design/wireframes/lofi/`). If missing, ask user if they want to create lo-fi first or proceed with provided inputs.
+- **Required Inputs:**
+  - `screens` (from lo-fi, or list of screen names)
+  - `states` (default: ["default", "hover", "focus", "disabled", "loading", "error", "success"])
+  - `content_examples` (short/long text variations)
+  - `accessibility_targets` (default: "WCAG AA")
+- **Behavior:**
+  - Read lo-fi wireframes to understand structure and flows
+  - Convert each lo-fi screen into mid-fi with componentized layout, spacing scale, and type scale
+  - Provide a token spec aligned to Tailwind and shadcn defaults
+  - Generate a mid-fi `ui.html` overview that previews each screen in device frames: a phone frame for mobile and a browser frame for desktop
+  - **Note:** When working within a project directory, use relative paths
+- **Output:**
+  - **Directory:** `design/wireframes/midfi/` (relative to project directory)
+  - **Files:**
+    - `tokens.md` (design foundations)
+    - `components.md` (component variants/states)
+    - `screens/<screen-name>.md` (annotated frames and interactions, one per screen)
+    - `ui.html` (mid-fi overview page linking tokens/components/screens, showing each screen in phone and browser device frames)
+  - **`tokens.md` includes:**
+    - **Spacing:** 0, 2, 4, 6, 8, 12, 16, 24, 32 (map to Tailwind: 0, 0.5, 1, 1.5, 2, 3, 4, 6, 8)
+    - **Typography:** text-xs/sm/base/lg/xl/2xl; line-heights; weights (400, 500, 600, 700)
+    - **Color:** neutrals, brand, semantic (map to Tailwind + shadcn themes)
+    - **Radius:** sm/md/lg/full; **Shadows:** sm/md/lg
+  - **`components.md`:**
+    - Inventory: Button, Input, Select, Card, Dialog, Sheet, Toast, Tabs, Pagination, Table, Navbar, Sidebar
+    - Each component includes: anatomy, states, props, interactions, keyboard navigation, focus order
+  - **`screens/<screen-name>.md`:**
+    - Frame description (grid, layout, spacing)
+    - Component instances with props
+    - State table (default/hover/focus/disabled/loading/error/success)
+    - Transitions and error handling
+    - Responsive behavior notes
+- **Acceptance:**
+  - All interactive elements have defined states and focus styles
+  - Accessibility notes for color contrast and keyboard support included
+  - Each screen preview includes device frames: phone (mobile) and browser (desktop) in `ui.html`
+  - Tokens are mappable to Tailwind/shadcn without refactoring
+  - All screens from lo-fi are represented
