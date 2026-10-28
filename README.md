@@ -72,6 +72,18 @@ The same product ("Finley") carried through every stage of the pipeline.
 ### 6. Prototype (`/ui-proto`)
 ![Finley clickable prototype](assets/finley-06-prototype.jpg)
 
+## Agent skills
+
+The same commands are Cursor skills in `.cursor/skills/`. Use a stage skill on its own, or `ai-product-design-workflow` to run the chain in one pass.
+
+- `ai-product-design-new-project` — `/new-project`
+- `ai-product-design-prd` — `/prd`
+- `ai-product-design-lofi` — `/lofi`
+- `ai-product-design-midfi` — `/midfi`
+- `ai-product-design-ui-proto` — `/ui-proto`
+- `ai-product-design-hifi` — `/hifi`
+- `ai-product-design-workflow` — full chain
+
 ## Quick Start
 
 ### 1) Create a new project
