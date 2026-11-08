@@ -1,0 +1,12 @@
+{
+  "name": "ai-product-design-rules-explainer",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render": "node render.mjs",
+    "verify": "bash verify.sh"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.1"
+  }
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AI Product Design Rules — looping explainer</title>
+  <meta name="viewport" content="width=1920, height=1080" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="stage">
+    <div class="grid" aria-hidden="true"></div>
+
+    <div id="scenes">
+      <section class="scene" data-scene="open">
+        <div class="frame">
+          <img class="ken" src="../../assets/editorial/hero-brief-to-prototype-dark.png" alt="Finley brief beside the finished prototype" />
+        </div>
+      </section>
+
+      <section class="scene" data-scene="brief">
+        <div class="frame">
+          <img class="ken" src="../../assets/editorial/finley-01-design-brief-dark.png" alt="Rendered Finley design brief, 60-second test outlined" />
+        </div>
+      </section>
+
+      <section class="scene" data-scene="new-project">
+        <div class="folder-scene">
+          <div class="folder-copy">
+            <h2>A project folder with app/, docs/, design/</h2>
+            <p class="path">projects/{name}/</p>
+            <p class="note">Documented /new-project layout. Example name from the README: finley. Not a Finder screenshot — that tree is not in this repo.</p>
+          </div>
+          <pre class="tree"><span class="dim">projects/finley/</span>
+|-- app/
+|-- docs/
+|   |-- design-brief.md
+|   `-- PRD.md
+|-- design/
+|   |-- wireframes/lofi/
+|   |-- wireframes/midfi/
+|   `-- ui-design/
+`-- marketing/          <span class="dim"># optional</span></pre>
+        </div>
+      </section>
+
+      <section class="scene" data-scene="prd">
+        <div class="frame">
+          <img class="ken" src="../../assets/editorial/finley-02-prd-dark.png" alt="Finley PRD in-scope table of five screens" />
+        </div>
+      </section>
+
+      <section class="scene" data-scene="lofi">
+        <div class="frame">
+          <img class="ken" src="../../assets/editorial/finley-03-lofi-dark.png" alt="Finley forecast-desktop.txt ASCII wireframe" />
+        </div>
+      </section>
+
+      <section class="scene" data-scene="midfi">
+        <div class="frame rec">
+          <video class="ken" muted playsinline preload="auto" src="media/midfi-clip.mp4"></video>
+        </div>
+        <div class="video-label">Screen recording · ui.html</div>
+      </section>
+
+      <section class="scene" data-scene="hifi">
+        <div class="frame rec">
+          <video class="ken" muted playsinline preload="auto" src="media/hifi-clip.mp4"></video>
+        </div>
+        <div class="video-label">Screen recording · component-gallery.html</div>
+      </section>
+
+      <section class="scene" data-scene="proto">
+        <div class="frame">
+          <img class="ken" src="../../assets/editorial/finley-06-prototype-dark.png" alt="Finley prototype, desktop Today and phone Cost-to-operate" />
+        </div>
+      </section>
+
+      <section class="scene" data-scene="end">
+        <div class="frame">
+          <img class="ken" src="../../assets/editorial/hero-brief-to-prototype-dark.png" alt="Finley brief beside the finished prototype" />
+        </div>
+      </section>
+    </div>
+
+    <div class="overlay">
+      <div id="title-open" class="title-block">
+        <h1>From a one-page brief to a clickable prototype</h1>
+        <p>Six commands. Six roles. One paper trail you can review.</p>
+      </div>
+      <div id="title-end" class="title-end">
+        <div class="end-copy">
+          <h2>Same brief.<br />Working prototype.</h2>
+          <p>github.com/luiscielak/ai-product-design-rules</p>
+          <p class="scan">Scan to open the repo</p>
+        </div>
+        <div class="qr-card">
+          <img src="media/qr.png" alt="QR code to github.com/luiscielak/ai-product-design-rules" />
+        </div>
+      </div>
+    </div>
+
+    <header class="chrome-top">
+      <div>
+        <div class="kicker">
+          <span class="idx" id="kicker-idx"></span>
+          <span class="role" id="kicker-role">AI PRODUCT DESIGN RULES</span>
+          <span class="cmd" id="kicker-cmd"></span>
+        </div>
+        <p class="caption" id="caption">From a one-page brief to a clickable prototype</p>
+      </div>
+      <div class="meta-right">
+        <div class="chip">Example · Finley</div>
+        <div class="counter" id="counter"></div>
+      </div>
+    </header>
+
+    <footer class="chrome-bottom">
+      <div class="rail" aria-hidden="true">
+        <div class="cell" data-step="0">
+          <div class="n">01</div>
+          <div class="c">/new-project</div>
+          <div class="r">Project Manager</div>
+        </div>
+        <div class="cell" data-step="1">
+          <div class="n">02</div>
+          <div class="c">/prd</div>
+          <div class="r">Product Owner</div>
+        </div>
+        <div class="cell" data-step="2">
+          <div class="n">03</div>
+          <div class="c">/lofi</div>
+          <div class="r">UX Designer</div>
+        </div>
+        <div class="cell" data-step="3">
+          <div class="n">04</div>
+          <div class="c">/midfi</div>
+          <div class="r">Product Designer</div>
+        </div>
+        <div class="cell" data-step="4">
+          <div class="n">05</div>
+          <div class="c">/hifi</div>
+          <div class="r">UI Designer</div>
+        </div>
+        <div class="cell" data-step="5">
+          <div class="n">06</div>
+          <div class="c">/ui-proto</div>
+          <div class="r">UI Engineer</div>
+        </div>
+      </div>
+      <div class="foot">
+        <div class="brand">the hooman loop</div>
+        <div class="repo">github.com/luiscielak/ai-product-design-rules</div>
+      </div>
+    </footer>
+  </div>
+  <script type="module" src="player.js"></script>
+  <script>
+    // Fallback if the module is slow to set window.ready.
+    setTimeout(function () { if (window.ready == null) window.ready = true; }, 8000);
+  </script>
+</body>
+</html>
