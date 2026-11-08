@@ -161,7 +161,7 @@ html, body {
   grid-template-columns: 1fr auto;
   align-items: end;
   padding: 22px 72px 12px;
-  background: linear-gradient(to bottom, rgba(18,18,18,0.96) 70%, rgba(18,18,18,0));
+  background: #121212;
 }
 
 .kicker {
@@ -224,8 +224,8 @@ html, body {
 
 .counter {
   font-family: "JetBrains Mono", monospace;
-  font-size: 13px;
-  color: var(--muted);
+  font-size: 14px;
+  color: var(--text);
   letter-spacing: 0.08em;
 }
 
@@ -459,19 +459,24 @@ html, body {
 
 .tree .dim { color: var(--muted); }
 
+.frame.crop-brief img {
+  object-fit: cover;
+  object-position: center 58%;
+}
+
 .video-label {
   position: absolute;
-  top: 118px;
-  right: 88px;
+  top: 108px;
+  right: 72px;
   z-index: 5;
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  background: rgba(18,18,18,0.72);
-  padding: 6px 10px;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--text);
+  background: #121212;
+  padding: 7px 12px;
 }
 
 .hidden { opacity: 0 !important; }

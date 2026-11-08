@@ -1,6 +1,8 @@
 /** Timeline for the 1920×1080 silent looping explainer. Duration is 52.0s. */
 
 export const DURATION = 52;
+/** Last seconds are a hold of t=0 so the file loops without a snap. */
+export const LOOP_HOLD = 1.6;
 
 export const STEPS = [
   { id: "new-project", n: "01", cmd: "/new-project", role: "Project Manager" },
@@ -24,7 +26,7 @@ export const SCENES = [
   { id: "midfi", t0: 23.4, t1: 31.2, step: 3, kicker: "Product Designer", cmd: "/midfi", caption: "Tokens, components, states, and a ui.html overview.", counter: "04 / 06" },
   { id: "hifi", t0: 30.8, t1: 38.6, step: 4, kicker: "UI Designer", cmd: "/hifi", caption: "Every color has exactly one role, next to a live component gallery.", counter: "05 / 06" },
   { id: "proto", t0: 38.2, t1: 44.6, step: 5, kicker: "UI Engineer", cmd: "/ui-proto", caption: "Clickable on desktop and phone — the brief, built.", counter: "06 / 06" },
-  { id: "end", t0: 44.2, t1: 52.0, step: -1, kicker: "AI PRODUCT DESIGN RULES", cmd: "", caption: "Same brief. Working prototype.", counter: "" },
+  { id: "end", t0: 44.2, t1: 50.4, step: -1, kicker: "AI product design rules", cmd: "", caption: "Same brief. Working prototype.", counter: "" },
 ];
 
 const FADE = 0.4;
@@ -39,13 +41,19 @@ function range(t, a, b) {
 }
 
 export function sceneOpacity(scene, t) {
+  // Re-enter the opening hero in the last beat so the hold at t=0 is not a cut.
+  if (scene.id === "open" && t >= 49.6) {
+    return range(t, 49.6, 50.4);
+  }
   if (t < scene.t0 || t > scene.t1) return 0;
-  const fadeIn = range(t, scene.t0, scene.t0 + FADE);
+  // First scene is already on at t=0 so the file can loop onto a full frame.
+  const fadeIn = scene.t0 <= 0 ? 1 : range(t, scene.t0, scene.t0 + FADE);
   const fadeOut = 1 - range(t, scene.t1 - FADE, scene.t1);
   return Math.min(fadeIn, fadeOut);
 }
 
 export function kenScale(scene, t) {
+  if (scene.id === "open" || scene.id === "end") return 1;
   const u = range(t, scene.t0, scene.t1);
   return 1 + 0.045 * u;
 }
@@ -61,19 +69,21 @@ function $all(sel) {
 export function seek(t, opts = {}) {
   const time = ((t % DURATION) + DURATION) % DURATION;
   const hard = !!opts.hard;
+  const inHold = time >= DURATION - LOOP_HOLD;
+  const vis = inHold ? 0 : time;
 
   for (const scene of SCENES) {
     const el = document.querySelector(`[data-scene="${scene.id}"]`);
     if (!el) continue;
-    const o = sceneOpacity(scene, time);
+    const o = sceneOpacity(scene, vis);
     el.style.opacity = String(o);
     const media = el.querySelector("img.ken, video.ken");
     if (media) {
-      media.style.transform = `scale(${kenScale(scene, time)})`;
+      media.style.transform = `scale(${kenScale(scene, vis)})`;
     }
     const video = el.querySelector("video");
     if (video && video.readyState >= 1) {
-      const local = time - scene.t0;
+      const local = vis - scene.t0;
       if (o > 0.02 && local >= 0) {
         const target = Math.max(0, Math.min(local, (video.duration || 8) - 0.05));
         if (hard) {
@@ -99,14 +109,14 @@ export function seek(t, opts = {}) {
   let top = SCENES[0];
   let best = -1;
   for (const scene of SCENES) {
-    const o = sceneOpacity(scene, time);
-    if (o >= best) {
+    const o = sceneOpacity(scene, vis);
+    if (o > best) {
       best = o;
       top = scene;
     }
   }
 
-  const chrome = time >= 50.4 ? SCENES[0] : top;
+  const chrome = inHold || vis >= 49.6 ? SCENES[0] : top;
   const kicker = document.getElementById("kicker-role");
   const cmd = document.getElementById("kicker-cmd");
   const caption = document.getElementById("caption");
@@ -127,13 +137,17 @@ export function seek(t, opts = {}) {
   const openTitle = document.getElementById("title-open");
   const endTitle = document.getElementById("title-end");
   if (openTitle) {
-    const o =
-      sceneOpacity(SCENES[0], time) * (1 - range(time, 3.2, 4.6)) +
-      range(time, 50.4, 52.0);
+    const o = inHold
+      ? 1
+      : vis >= 49.6
+        ? range(vis, 49.6, 50.4)
+        : sceneOpacity(SCENES[0], vis) * (1 - range(vis, 3.2, 4.4));
     openTitle.style.opacity = String(clamp(o, 0, 1));
   }
   if (endTitle) {
-    const o = sceneOpacity(SCENES[SCENES.length - 1], time) * (1 - range(time, 50.4, 52.0)) * range(time, 44.4, 45.4);
+    const o = inHold
+      ? 0
+      : range(vis, 44.6, 45.4) * (1 - range(vis, 47.6, 49.4));
     endTitle.style.opacity = String(clamp(o, 0, 1));
   }
 
@@ -209,7 +223,7 @@ export function stop() {
   cancelAnimationFrame(raf);
 }
 
-window.explainer = { DURATION, SCENES, STEPS, seek, play, stop, prepare };
+window.explainer = { DURATION, LOOP_HOLD, SCENES, STEPS, seek, play, stop, prepare };
 
 const params = new URLSearchParams(location.search);
 const tParam = params.get("t");

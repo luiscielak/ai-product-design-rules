@@ -70,7 +70,7 @@ function run(cmd, args) {
 }
 
 const KEY_FRAMES = [
-  { t: 0.4, name: "00-open" },
+  { t: 0.0, name: "00-open" },
   { t: 6.5, name: "01-brief" },
   { t: 11.0, name: "02-new-project" },
   { t: 16.0, name: "03-prd" },
@@ -79,7 +79,7 @@ const KEY_FRAMES = [
   { t: 34.5, name: "06-hifi" },
   { t: 41.5, name: "07-prototype" },
   { t: 47.5, name: "08-result-qr" },
-  { t: 51.7, name: "09-loop-end" },
+  { t: 51.95, name: "09-loop-end" },
 ];
 
 async function main() {
