@@ -1,6 +1,6 @@
 import { chromium } from "playwright";
 import { createServer } from "node:http";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile, readdir, unlink } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -105,31 +105,31 @@ async function renderCovers(browser) {
 async function renderPreviews(browser) {
   const destDir = path.join(OUT, "readme");
   await mkdir(destDir, { recursive: true });
-  const dirs = ["current", "a", "b", "c"];
+  for (const name of await readdir(destDir)) {
+    if (name.endsWith(".png")) await unlink(path.join(destDir, name));
+  }
   const themes = ["light", "dark"];
   const widths = [
     { id: "desktop", viewport: { width: 1280, height: 900 }, dsf: 2 },
     { id: "mobile", viewport: { width: 390, height: 844 }, dsf: 3 },
   ];
-  for (const dir of dirs) {
-    for (const theme of themes) {
-      for (const w of widths) {
-        const page = await browser.newPage({
-          viewport: w.viewport,
-          deviceScaleFactor: w.dsf,
-        });
-        await page.emulateMedia({ colorScheme: theme });
-        const q = `?dir=${dir}&theme=${theme}&frame=${w.id}`;
-        await page.goto(`http://127.0.0.1:${PORT}/demo/cover/src/readme-preview.html${q}`, {
-          waitUntil: "networkidle",
-          timeout: 30000,
-        });
-        await waitFonts(page);
-        const dest = path.join(destDir, `${dir}-${w.id}-${theme}.png`);
-        await page.screenshot({ path: dest, type: "png" });
-        await page.close();
-        console.log("preview", dest);
-      }
+  for (const theme of themes) {
+    for (const w of widths) {
+      const page = await browser.newPage({
+        viewport: w.viewport,
+        deviceScaleFactor: w.dsf,
+      });
+      await page.emulateMedia({ colorScheme: theme });
+      const q = `?theme=${theme}&frame=${w.id}`;
+      await page.goto(`http://127.0.0.1:${PORT}/demo/cover/src/readme-preview.html${q}`, {
+        waitUntil: "networkidle",
+        timeout: 30000,
+      });
+      await waitFonts(page);
+      const dest = path.join(destDir, `${w.id}-${theme}.png`);
+      await page.screenshot({ path: dest, type: "png", fullPage: true });
+      await page.close();
+      console.log("preview", dest);
     }
   }
 }
@@ -139,11 +139,11 @@ async function writeSwapNotes() {
 
 Three 2400×1200 directions, built from HTML/CSS in \`src/\` and rendered with Playwright. All UI in the covers is the live Finley sample prototype (or the real stage artifacts behind it). Sample data only.
 
-| Direction | Cover PNGs | Idea |
+| Direction | Cover PNGs | In the README |
 |---|---|---|
-| **A — Editorial** (in the README) | \`out/a-editorial-light.png\`, \`out/a-editorial-dark.png\` | Headline + one-line value, then desktop Today + phone Forecast |
-| **B — Pipeline** | \`out/b-pipeline-light.png\`, \`out/b-pipeline-dark.png\` | Six-stage strip ending on the live prototype |
-| **C — Typographic** | \`out/c-typographic-light.png\`, \`out/c-typographic-dark.png\` | Large type over a tight crop of the Forecast chart |
+| **A — Editorial** | \`out/a-editorial-light.png\`, \`out/a-editorial-dark.png\` | Hero at the top |
+| **B — Pipeline** | \`out/b-pipeline-light.png\`, \`out/b-pipeline-dark.png\` | \`## The path\` (six-stage workflow) |
+| **C — Typographic** | \`out/c-typographic-light.png\`, \`out/c-typographic-dark.png\` | Not used (kept here as an unused alternate) |
 
 GitHub-like README screenshots (desktop / mobile, light / dark) live in \`out/readme/\`.
 
@@ -159,10 +159,6 @@ npm run build
 - \`npm run capture\` screenshots the Finley prototype into \`shots/\`
 - \`npm run render\` writes the cover PNGs and README previews
 - Covers are 2400×1200. Fonts come from \`demo/showreel/fonts/\`
-
-## Swap the README cover
-
-The repo README uses direction A via \`<picture>\` (\`prefers-color-scheme\`). To try B or C, point \`srcset\` / \`src\` at the matching files in \`out/\` and keep \`width="1280" height="640"\`.
 `;
   await writeFile(path.join(HERE, "README.md"), md);
 }

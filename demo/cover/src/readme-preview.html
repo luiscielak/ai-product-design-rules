@@ -120,6 +120,14 @@
         line-height: 1.25;
       }
       .md h1:first-child { margin-top: 0; }
+      .md h2 {
+        font-size: 1.5em;
+        font-weight: 600;
+        padding-bottom: 0.3em;
+        border-bottom: 1px solid var(--border);
+        margin: 24px 0 16px;
+        line-height: 1.25;
+      }
       .md p { margin: 0 0 16px; }
       .md .lede { font-weight: 600; }
       .md .muted { color: var(--muted); font-size: 14px; }
@@ -158,68 +166,38 @@
     </div>
     <script>
       const params = new URLSearchParams(location.search);
-      const dir = params.get("dir") || "a";
       const theme = params.get("theme") || "light";
       const frame = params.get("frame") || "desktop";
       document.documentElement.dataset.theme = theme;
       document.body.classList.add(frame);
 
-      const covers = {
-        a: {
-          light: "../out/a-editorial-light.png",
-          dark: "../out/a-editorial-dark.png",
-          alt: "Cover: Brief to prototype. Desktop Today dashboard with spending chart beside a phone showing the Forecast chart. Design agents and skills for personal and client apps and systems. Sample data.",
-        },
-        b: {
-          light: "../out/b-pipeline-light.png",
-          dark: "../out/b-pipeline-dark.png",
-          alt: "Cover: One page. Six stages. A prototype you can click. Strip of Brief, PRD, Lo-fi, Mid-fi, Hi-fi, and the live Finley prototype. Sample data.",
-        },
-        c: {
-          light: "../out/c-typographic-light.png",
-          dark: "../out/c-typographic-dark.png",
-          alt: "Cover: A prototype you can click. Tight crop of the Finley Forecast chart. Design agents and skills for personal and client apps and systems. Sample data.",
-        },
-        current: {
-          light: "../../showreel/out/finley-showreel-teaser.gif",
-          dark: "../../showreel/out/finley-showreel-teaser.gif",
-          alt: "Silent 42-second Finley showreel: hover a spending tooltip on the Today dashboard",
-        },
-      };
+      const a = theme === "dark" ? "../out/a-editorial-dark.png" : "../out/a-editorial-light.png";
+      const b = theme === "dark" ? "../out/b-pipeline-dark.png" : "../out/b-pipeline-light.png";
 
-      const c = covers[dir] || covers.a;
-      const src = theme === "dark" ? c.dark : c.light;
-      const img = `<img src="${src}" alt="${c.alt}" width="1280">`;
-
-      const rest = `
+      document.getElementById("md").innerHTML = `
+        <a class="cover-link" href="#">
+          <img src="${a}" width="1280" height="640" alt="Cover: Brief to prototype. Finley Today on desktop with a spending chart, beside a phone of the Forecast chart. Design agents and skills for personal and client apps and systems. Sample data.">
+        </a>
         <h1>AI Product Design</h1>
         <p class="lede">Design agents that take a one-page brief to a prototype you can click — without skipping the product thinking.</p>
         <p>Six staged skills, six roles on a small product team. Each stage reads what the last one wrote, so the PRD, wireframes, UI kit, and coded prototype stay in one reviewable trail. Built for any AI coding or agent environment that can follow structured skills.</p>
         <p class="muted">Silent 42s teaser · 16:9 · 9:16 · sample data</p>
+        <h2>The path</h2>
+        <p>
+          <img src="${b}" width="1280" height="640" alt="Six stages from a one-page brief to a prototype you can click: Brief, PRD, Lo-fi, Mid-fi, Hi-fi, and the live Finley sample prototype. Sample data.">
+        </p>
         <table>
           <thead><tr><th>Stage</th><th>Role</th><th>You get</th></tr></thead>
           <tbody>
             <tr><td>1. Project setup</td><td>Project Manager</td><td>A project folder with app/, docs/, design/</td></tr>
             <tr><td>2. PRD</td><td>Product Owner</td><td>docs/PRD.md, with requirements tied to metrics</td></tr>
+            <tr><td>3. Lo-fi</td><td>UX Designer</td><td>ASCII wireframes for mobile and desktop</td></tr>
+            <tr><td>4. Mid-fi</td><td>Product Designer</td><td>Tokens, components, states, and a ui.html overview</td></tr>
+            <tr><td>5. Hi-fi</td><td>UI Designer</td><td>Theme, color roles, and a component gallery</td></tr>
+            <tr><td>6. Prototype</td><td>UI Engineer</td><td>A clickable prototype</td></tr>
           </tbody>
         </table>
       `;
-
-      const md = document.getElementById("md");
-      if (dir === "current") {
-        md.innerHTML = `
-          <h1>AI Product Design</h1>
-          <p class="lede">Design agents that take a one-page brief to a prototype you can click — without skipping the product thinking.</p>
-          <p>Six staged skills, six roles on a small product team. Each stage reads what the last one wrote, so the PRD, wireframes, UI kit, and coded prototype stay in one reviewable trail. Built for any AI coding or agent environment that can follow structured skills.</p>
-          <a class="cover-link" href="#">${img}</a>
-          <p class="muted">Silent 42s teaser · 16:9 · 9:16 · sample data</p>
-        `;
-      } else {
-        md.innerHTML = `
-          <a class="cover-link" href="#">${img}</a>
-          ${rest}
-        `;
-      }
     </script>
   </body>
 </html>

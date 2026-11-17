@@ -17,6 +17,11 @@ The walkthrough below is **Finley**, a personal finance dashboard for a solo con
 
 ## The path
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="demo/cover/out/b-pipeline-dark.png">
+  <img src="demo/cover/out/b-pipeline-light.png" width="1280" height="640" alt="Six stages from a one-page brief to a prototype you can click: Brief, PRD, Lo-fi, Mid-fi, Hi-fi, and the live Finley sample prototype. Design agents and skills for personal and client apps and systems. Sample data.">
+</picture>
+
 | Stage | Role | You get |
 |---|---|---|
 | 1. Project setup | Project Manager | A project folder with `app/`, `docs/`, `design/` |
