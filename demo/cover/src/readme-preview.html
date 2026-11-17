@@ -104,9 +104,11 @@
       }
 
       .md { font-size: 16px; line-height: 1.5; word-wrap: break-word; }
+      /* Match GitHub iOS: max-width only. Do not set height: auto here —
+         that would hide the width+height attribute squeeze this preview is
+         meant to catch. Intrinsic ratio must come from the image itself. */
       .md img {
         max-width: 100%;
-        height: auto;
         display: block;
         background: transparent;
       }
@@ -176,7 +178,7 @@
 
       document.getElementById("md").innerHTML = `
         <a class="cover-link" href="#">
-          <img src="${a}" width="1280" height="640" alt="Cover: Brief to prototype. Finley Today on desktop with a spending chart, beside a phone of the Forecast chart. Design agents and skills for personal and client apps and systems. Sample data.">
+          <img src="${a}" width="100%" alt="Cover: Brief to prototype. Finley Today on desktop with a spending chart, beside a phone of the Forecast chart. Design agents and skills for personal and client apps and systems. Sample data.">
         </a>
         <h1>AI Product Design</h1>
         <p class="lede">Design agents that take a one-page brief to a prototype you can click — without skipping the product thinking.</p>
@@ -184,7 +186,7 @@
         <p class="muted">Silent 42s teaser · 16:9 · 9:16 · sample data</p>
         <h2>The path</h2>
         <p>
-          <img src="${b}" width="1280" height="640" alt="Six stages from a one-page brief to a prototype you can click: Brief, PRD, Lo-fi, Mid-fi, Hi-fi, and the live Finley sample prototype. Sample data.">
+          <img src="${b}" width="100%" alt="Six stages from a one-page brief to a prototype you can click: Brief, PRD, Lo-fi, Mid-fi, Hi-fi, and the live Finley sample prototype. Sample data.">
         </p>
         <table>
           <thead><tr><th>Stage</th><th>Role</th><th>You get</th></tr></thead>
