@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Finley — Today</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%2305717B' width='32' height='32' rx='6'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='white' font-family='Georgia' font-size='16'%3EF%3C/text%3E%3C/svg%3E"
+    />
+    <meta
+      name="description"
+      content="Finley is a sample personal-finance dashboard produced by the AI product design pipeline. All figures are mock data."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="app-nav">
+      <a class="brand" href="#today">Finley</a>
+      <nav class="nav-tabs" aria-label="Primary">
+        <button type="button" data-screen="data-quality">Data Quality</button>
+        <button type="button" data-screen="today" aria-current="page">Today</button>
+        <button type="button" data-screen="business">Business</button>
+        <button type="button" data-screen="cost-to-operate">Cost-to-Operate</button>
+        <button type="button" data-screen="forecast">Forecast</button>
+      </nav>
+      <div class="nav-tools">
+        <span class="chip">Sample data</span>
+        <button class="ghost" type="button" id="blur-toggle">Blur</button>
+        <button class="ghost" type="button" id="theme-toggle">Dark</button>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+      <section class="screen is-active" id="screen-today" aria-labelledby="today-title">
+        <div class="page-head">
+          <div>
+            <p class="kicker" id="today-date">Monday, May 18, 2026</p>
+            <h1 id="today-title">Today</h1>
+            <p class="question">Am I okay this week?</p>
+          </div>
+          <div class="seg" role="group" aria-label="Time range">
+            <button type="button" data-range="30d">30d</button>
+            <button type="button" data-range="90d" aria-pressed="true">90d</button>
+            <button type="button" data-range="365d">365d</button>
+          </div>
+        </div>
+        <div class="tabs-inline" role="tablist" aria-label="Account bucket">
+          <button type="button" data-bucket-group="today" data-bucket="business" aria-pressed="true">Business</button>
+          <button type="button" data-bucket-group="today" data-bucket="personal">Personal</button>
+        </div>
+        <div class="banner critical" role="status">
+          <div>
+            <span class="label">Data quality</span>
+            <p>3 critical findings. Numbers are directional until two cards are classified.</p>
+          </div>
+          <a href="#data-quality">Open Data Quality →</a>
+        </div>
+        <div class="decision" id="today-decision"></div>
+        <div class="kpi-row">
+          <article class="card">
+            <span class="kpi-label">Cash position</span>
+            <p class="kpi-value" id="kpi-cash">$4,727</p>
+            <p class="kpi-note">Cash + savings</p>
+          </article>
+          <article class="card">
+            <span class="kpi-label">Card debt</span>
+            <p class="kpi-value" id="kpi-debt">$2,109</p>
+            <p class="kpi-note">Credit, shown +</p>
+          </article>
+          <article class="card">
+            <span class="kpi-label">Net position</span>
+            <p class="kpi-value" id="kpi-net">$2,618</p>
+            <p class="kpi-note">Cash − card debt</p>
+          </article>
+          <article class="card">
+            <span class="kpi-label">Monthly burn</span>
+            <p class="kpi-value" id="kpi-burn">$739</p>
+            <p class="kpi-note" id="kpi-burn-note">Trailing 90 days</p>
+            <p class="kpi-note">Runway <span id="kpi-runway">6.4 months</span></p>
+          </article>
+        </div>
+        <div class="split">
+          <article class="card">
+            <span class="card-label">Trend</span>
+            <h2>Spending over time</h2>
+            <div class="chart" id="chart-spend" data-height="240"></div>
+            <p class="legend">
+              <span><i class="swatch"></i>Monthly spend</span>
+              <span>Dashed line is typical for this range</span>
+            </p>
+          </article>
+          <article class="card">
+            <span class="card-label">Drivers</span>
+            <h2>Category breakdown</h2>
+            <div class="chart tall" id="chart-categories" data-height="260"></div>
+          </article>
+        </div>
+        <div class="split">
+          <article class="card">
+            <span class="card-label">Cash flow</span>
+            <h2>Cash position</h2>
+            <div class="chart" id="chart-cashflow" data-height="240"></div>
+            <p class="legend">
+              <span><i class="swatch"></i>Cash + savings</span>
+            </p>
+          </article>
+          <article class="card">
+            <span class="card-label">This month vs typical</span>
+            <div id="vs-typical"></div>
+            <span class="card-label" style="margin-top: 16px">Six-month cash floor</span>
+            <div class="goal-track" id="chart-goal" role="img" aria-label="Progress toward a six-month cash floor"></div>
+            <div class="caption" id="goal-copy"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="screen" id="screen-business" aria-labelledby="biz-title">
+        <div class="page-head">
+          <div>
+            <p class="kicker">Business · sample consultant</p>
+            <h1 id="biz-title">Business</h1>
+            <p class="question">Understand burn and runway.</p>
+          </div>
+        </div>
+        <div class="hero-grid">
+          <article class="card">
+            <span class="kpi-label">Runway</span>
+            <p class="hero-metric" id="biz-runway">6.4 months</p>
+            <p class="caption" id="biz-runway-note"></p>
+          </article>
+          <article class="card">
+            <span class="kpi-label">Trailing 90-day burn</span>
+            <p class="hero-metric" id="biz-90">$739</p>
+            <p class="caption">The number Cost-to-operate uses</p>
+          </article>
+          <article class="card">
+            <span class="kpi-label">Vs trailing 365 days</span>
+            <p class="hero-metric" id="biz-365">$412</p>
+            <p class="caption">Acceleration <span id="biz-accel"></span></p>
+          </article>
+        </div>
+        <div class="split">
+          <article class="card">
+            <span class="card-label">Twelve months</span>
+            <h2>Net cash flow</h2>
+            <div class="chart tall" id="chart-biz-trend" data-height="280"></div>
+            <p class="legend">
+              <span><i class="swatch"></i>Invoice months</span>
+              <span><i class="swatch alt"></i>Spend-only months</span>
+            </p>
+          </article>
+          <article class="card">
+            <span class="card-label">Trailing 90 days</span>
+            <h2>Where burn goes</h2>
+            <div class="chart tall" id="chart-biz-cats" data-height="280"></div>
+          </article>
+        </div>
+        <article class="card">
+          <span class="card-label">This month vs typical</span>
+          <h2>Budget analog — typical month, not a budget target</h2>
+          <div class="chart" id="chart-biz-vs" data-height="220"></div>
+          <p class="caption">Typical is trailing-90 monthly average. This month is projected from 18 days of actuals.</p>
+        </article>
+      </section>
+
+      <section class="screen" id="screen-cost-to-operate" aria-labelledby="cto-title">
+        <div class="page-head">
+          <div>
+            <h1 id="cto-title">Cost-to-operate</h1>
+            <p class="question">What's my real number per day / week / month?</p>
+          </div>
+        </div>
+        <div class="tabs-inline" role="tablist" aria-label="Cost bucket">
+          <button type="button" data-bucket-group="cto" data-bucket="business" aria-pressed="true">Business</button>
+          <button type="button" data-bucket-group="cto" data-bucket="personal">Personal</button>
+          <button type="button" data-bucket-group="cto" data-bucket="combined">Combined</button>
+        </div>
+        <div class="hero-grid">
+          <article class="card">
+            <span class="kpi-label">Monthly</span>
+            <p class="hero-metric" id="cto-month">$739</p>
+            <p class="caption">/ month · trailing 90 days</p>
+          </article>
+          <article class="card">
+            <span class="kpi-label">Daily</span>
+            <p class="hero-metric" id="cto-day">≈ $25</p>
+            <p class="caption">monthly ÷ 30</p>
+          </article>
+          <article class="card">
+            <span class="kpi-label">Weekly</span>
+            <p class="hero-metric" id="cto-week">≈ $173</p>
+            <p class="caption">monthly × 7 ÷ 30</p>
+          </article>
+        </div>
+        <article class="card" style="margin-bottom: 16px">
+          <span class="card-label">Mix</span>
+          <h2>Fixed vs variable</h2>
+          <div class="chart short" id="chart-fixed-var" data-height="120"></div>
+        </article>
+        <div class="split">
+          <article class="card">
+            <span class="card-label">Trend</span>
+            <h2>Cost over 12 months</h2>
+            <div class="chart" id="chart-cto-trend" data-height="240"></div>
+          </article>
+          <article class="card">
+            <span class="card-label">Rolled up</span>
+            <h2>Category breakdown</h2>
+            <div class="chart" id="chart-cto-cats" data-height="240"></div>
+          </article>
+        </div>
+        <article class="card">
+          <span class="card-label">Subscription radar</span>
+          <h2>Sorted by annual cost</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Bucket</th>
+                  <th>Cadence</th>
+                  <th>Monthly</th>
+                  <th>Annual</th>
+                </tr>
+              </thead>
+              <tbody id="sub-table"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="screen" id="screen-forecast" aria-labelledby="fc-title">
+        <div class="page-head">
+          <div>
+            <h1 id="fc-title">Forecast</h1>
+            <p class="question">What happens if…?</p>
+          </div>
+          <div class="seg" role="group" aria-label="Horizon">
+            <button type="button" data-horizon="30">30d</button>
+            <button type="button" data-horizon="60">60d</button>
+            <button type="button" data-horizon="90" aria-pressed="true">90d</button>
+            <button type="button" data-horizon="365">365d</button>
+          </div>
+        </div>
+        <div class="tabs-inline" role="tablist" aria-label="Forecast bucket">
+          <button type="button" data-bucket-group="forecast" data-bucket="business" aria-pressed="true">Business</button>
+          <button type="button" data-bucket-group="forecast" data-bucket="personal">Personal</button>
+        </div>
+        <article class="card" style="margin-bottom: 16px">
+          <div class="slider-row">
+            <label for="burn-slider">If burn is</label>
+            <input id="burn-slider" type="range" min="50" max="150" value="100" />
+            <strong id="burn-readout">$25 / day</strong>
+          </div>
+          <p class="caption" id="forecast-note"></p>
+          <div class="chart tall" id="chart-forecast" data-height="300"></div>
+        </article>
+        <div class="split-even">
+          <article class="card">
+            <span class="kpi-label">Projected cash at horizon</span>
+            <p class="hero-metric" id="forecast-end">$2,510</p>
+            <p class="caption" id="forecast-end-note"></p>
+          </article>
+          <article class="card">
+            <span class="card-label">Threshold crossings</span>
+            <div class="table-wrap">
+              <table class="crossings">
+                <thead>
+                  <tr>
+                    <th>Threshold</th>
+                    <th>Amount</th>
+                    <th>When</th>
+                  </tr>
+                </thead>
+                <tbody id="cross-table"></tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="screen" id="screen-data-quality" aria-labelledby="dq-title">
+        <div class="page-head">
+          <div>
+            <h1 id="dq-title">Data quality</h1>
+            <p class="question">Trust the data before you trust the dashboards.</p>
+          </div>
+          <button class="btn" type="button" id="rerun">Re-run checks</button>
+        </div>
+        <div class="upload">
+          <article class="card">
+            <span class="card-label">Upload exports</span>
+            <h2>CSV in, findings out</h2>
+            <div class="file-row">
+              <span>Transactions CSV</span>
+              <span class="muted">tx.csv · sample loaded</span>
+            </div>
+            <div class="file-row">
+              <span>Balances CSV</span>
+              <span class="muted">bal.csv · sample loaded</span>
+            </div>
+            <p class="caption">Parsed: 12,418 transactions · 7 balance rows · source date 2026-05-20. This prototype does not read files; the sample set is already in memory.</p>
+          </article>
+          <article class="card">
+            <span class="card-label">Summary</span>
+            <p class="summary-num" id="dq-critical">3</p>
+            <p class="caption">critical · blocks Today until classified</p>
+            <div class="stat-row"><span>Warning</span><strong id="dq-warning">2</strong></div>
+            <div class="stat-row"><span>Info</span><strong id="dq-info">1</strong></div>
+          </article>
+        </div>
+        <article class="card">
+          <span class="card-label">Findings · sorted by severity</span>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Severity</th>
+                  <th>Check</th>
+                  <th>Subject</th>
+                  <th>Message</th>
+                </tr>
+              </thead>
+              <tbody id="dq-table"></tbody>
+            </table>
+          </div>
+          <p class="caption" id="dq-empty" hidden>No findings. Sample data is clean.</p>
+        </article>
+      </section>
+
+      <p class="footnote">
+        Finley prototype · sample data only · not live accounts.
+        Every number is invented for this walkthrough.
+      </p>
+    </main>
+    <script src="js/data.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
