@@ -1,0 +1,14 @@
+{
+  "name": "ai-product-design-cover",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "capture": "node capture-screens.mjs",
+    "render": "node render.mjs",
+    "preview": "node render.mjs --preview-only",
+    "build": "node capture-screens.mjs && node render.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.1"
+  }
+}

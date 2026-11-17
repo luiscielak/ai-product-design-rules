@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Cover C — Typographic</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="artboard c" id="board">
+      <div class="crop">
+        <img id="chart" src="../shots/forecast-chart-dark.png" alt="" />
+      </div>
+      <div class="veil"></div>
+      <div class="copy">
+        <p class="kicker">Design agents and skills</p>
+        <h1>A prototype<br />you can<br /><span class="mark">click.</span></h1>
+        <p class="value">For personal and client<br />apps and systems.</p>
+      </div>
+      <p class="meta">Six stages · a reviewable trail · sample data</p>
+    </div>
+    <script>
+      const light = new URLSearchParams(location.search).get("theme") === "light";
+      const board = document.getElementById("board");
+      if (light) {
+        board.classList.add("light");
+        document.getElementById("chart").src = "../shots/forecast-chart-light.png";
+      }
+    </script>
+  </body>
+</html>

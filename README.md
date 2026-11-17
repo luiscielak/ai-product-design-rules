@@ -1,16 +1,26 @@
+<a href="demo/showreel/out/finley-showreel-16x9.mp4">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="demo/cover/out/a-editorial-dark.png">
+    <img src="demo/cover/out/a-editorial-light.png" width="1280" height="640" alt="Cover: Brief to prototype. Finley Today on desktop with a spending chart, beside a phone of the Forecast chart. Design agents and skills for personal and client apps and systems. Sample data.">
+  </picture>
+</a>
+
 # AI Product Design
 
 **Design agents that take a one-page brief to a prototype you can click — without skipping the product thinking.**
 
 Six staged skills, six roles on a small product team. Each stage reads what the last one wrote, so the PRD, wireframes, UI kit, and coded prototype stay in one reviewable trail. Built for any AI coding or agent environment that can follow structured skills.
 
-[![Silent 42-second Finley showreel: hover a spending tooltip on the Today dashboard](demo/showreel/out/finley-showreel-teaser.gif)](demo/showreel/out/finley-showreel-16x9.mp4)
-
 Silent 42s teaser · [16:9](demo/showreel/out/finley-showreel-16x9.mp4) · [9:16](demo/showreel/out/finley-showreel-9x16.mp4) · sample data
 
 The walkthrough below is **Finley**, a personal finance dashboard for a solo consultant. Same product at every stage. All figures in the prototype are sample data.
 
 ## The path
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="demo/cover/out/b-pipeline-dark.png">
+  <img src="demo/cover/out/b-pipeline-light.png" width="1280" height="640" alt="Six stages from a one-page brief to a prototype you can click: Brief, PRD, Lo-fi, Mid-fi, Hi-fi, and the live Finley sample prototype. Design agents and skills for personal and client apps and systems. Sample data.">
+</picture>
 
 | Stage | Role | You get |
 |---|---|---|
@@ -46,6 +56,8 @@ Upgrading from the old `.cursorrules.yaml` file? Delete it and install the files
 ## Example: Finley, start to finish
 
 Finley is a personal finance dashboard for a solo consultant whose personal and business money run through the same accounts. It is not a generic budgeting app. Every screen has to answer a decision in under a minute.
+
+[![Silent 42-second Finley showreel: hover a spending tooltip on the Today dashboard](demo/showreel/out/finley-showreel-teaser.gif)](demo/showreel/out/finley-showreel-16x9.mp4)
 
 ### The brief (you write this)
 

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Cover B — Pipeline</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="artboard b" id="board">
+      <div class="grid"></div>
+      <div class="head">
+        <p class="kicker">Design agents and skills</p>
+        <h1>One page. Six stages.<br />A prototype you can click.</h1>
+        <p class="value">For personal and client apps and systems — with a trail you can review.</p>
+      </div>
+      <div class="strip">
+        <article class="card brief">
+          <div class="shot">
+            <img src="../../../assets/editorial/finley-01-design-brief-light.png" alt="" />
+          </div>
+          <footer>
+            <span class="n">01</span>
+            <span class="name">Brief</span>
+          </footer>
+        </article>
+        <article class="card prd">
+          <div class="shot">
+            <img src="../../../assets/editorial/finley-02-prd-light.png" alt="" />
+          </div>
+          <footer>
+            <span class="n">02</span>
+            <span class="name">PRD</span>
+          </footer>
+        </article>
+        <article class="card lofi">
+          <div class="shot">
+            <img src="../../../assets/editorial/finley-03-lofi-light.png" alt="" />
+          </div>
+          <footer>
+            <span class="n">03</span>
+            <span class="name">Lo-fi</span>
+          </footer>
+        </article>
+        <article class="card midfi">
+          <div class="shot">
+            <img src="../../../assets/editorial/finley-04-midfi-light.png" alt="" />
+          </div>
+          <footer>
+            <span class="n">04</span>
+            <span class="name">Mid-fi</span>
+          </footer>
+        </article>
+        <article class="card hifi">
+          <div class="shot">
+            <img src="../../../assets/editorial/finley-05-hifi-light.png" alt="" />
+          </div>
+          <footer>
+            <span class="n">05</span>
+            <span class="name">Hi-fi</span>
+          </footer>
+        </article>
+        <article class="card proto is-live">
+          <div class="shot">
+            <img id="proto" src="../shots/today-desktop-light.png" alt="" />
+          </div>
+          <footer>
+            <span class="n">06</span>
+            <span class="name">Prototype</span>
+          </footer>
+        </article>
+      </div>
+    </div>
+    <script>
+      const dark = new URLSearchParams(location.search).get("theme") === "dark";
+      const board = document.getElementById("board");
+      if (dark) {
+        board.classList.add("dark");
+        document.getElementById("proto").src = "../shots/today-desktop-dark.png";
+        document.querySelector(".brief img").src = "../../../assets/editorial/finley-01-design-brief-dark.png";
+        document.querySelector(".prd img").src = "../../../assets/editorial/finley-02-prd-dark.png";
+        document.querySelector(".lofi img").src = "../../../assets/editorial/finley-03-lofi-dark.png";
+        document.querySelector(".midfi img").src = "../../../assets/editorial/finley-04-midfi-dark.png";
+        document.querySelector(".hifi img").src = "../../../assets/editorial/finley-05-hifi-dark.png";
+      }
+    </script>
+  </body>
+</html>
