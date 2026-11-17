@@ -1,0 +1,530 @@
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("fonts/source-serif-4-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("fonts/source-serif-4-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("fonts/space-grotesk-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("fonts/space-grotesk-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/inter-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/inter-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("fonts/jetbrains-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("fonts/jetbrains-mono-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: block;
+}
+
+:root {
+  --bg: #121212;
+  --bg-alt: #18181c;
+  --text: #e8e6dc;
+  --muted: #8a8a82;
+  --accent: #2abfcc;
+  --accent-dim: #05717b;
+  --stroke: #2e2e2c;
+  --grid: rgba(232, 230, 220, 0.05);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, "Segoe UI", sans-serif;
+}
+
+html.landscape, html.landscape body, #stage.landscape {
+  width: 1920px;
+  height: 1080px;
+}
+
+html.portrait, html.portrait body, #stage.portrait {
+  width: 1080px;
+  height: 1920px;
+}
+
+#stage {
+  position: relative;
+  background: var(--bg);
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#scenes { position: absolute; inset: 0; z-index: 1; }
+
+.scene {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.bleed {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #0c0c0c;
+}
+
+.bleed img,
+.bleed video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transform-origin: 50% 40%;
+}
+
+.bleed.contain img,
+.bleed.contain video {
+  object-fit: contain;
+  background: #0c0c0c;
+}
+
+.phone-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 50% 40%, #1c1c20 0%, #0c0c0c 70%);
+}
+
+.phone {
+  width: 390px;
+  height: 844px;
+  border-radius: 36px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 10px #1a1a1c,
+    0 40px 80px rgba(0, 0, 0, 0.55);
+  background: #f3f1ea;
+}
+
+.portrait .phone {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 390 / 844;
+  border-radius: 48px;
+  box-shadow:
+    0 0 0 12px #1a1a1c,
+    0 32px 64px rgba(0, 0, 0, 0.5);
+}
+
+.phone video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top center;
+}
+
+.veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.18) 0%, transparent 22%, transparent 78%, rgba(18, 18, 18, 0.55) 100%);
+  pointer-events: none;
+}
+
+.landscape .veil-proto {
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.08) 0%, transparent 16%, transparent 86%, rgba(18, 18, 18, 0.42) 100%);
+}
+
+.portrait .veil {
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.35) 0%, transparent 18%, transparent 72%, rgba(18, 18, 18, 0.72) 100%);
+}
+
+#title-open,
+#title-end {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 96px 120px;
+  pointer-events: none;
+}
+
+.portrait #title-open,
+.portrait #title-end {
+  padding: 160px 72px 280px;
+}
+
+.portrait #title-end {
+  align-items: center;
+  justify-content: center;
+}
+
+.portrait .end-row {
+  align-items: center;
+}
+
+.portrait .end-copy {
+  text-align: center;
+}
+
+.kicker-open {
+  font-family: Space Grotesk, Inter, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 18px;
+  color: var(--accent);
+  margin-bottom: 28px;
+}
+
+.portrait .kicker-open { font-size: 16px; }
+
+.beats {
+  position: relative;
+  min-height: 220px;
+}
+
+.portrait .beats { min-height: 360px; }
+
+.beat {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-weight: 600;
+  font-size: 92px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 1400px;
+  opacity: 0;
+}
+
+.portrait .beat {
+  font-size: 76px;
+  max-width: 920px;
+}
+
+.beat-sub {
+  margin-top: 240px;
+  font-size: 22px;
+  color: var(--muted);
+  max-width: 640px;
+  line-height: 1.4;
+}
+
+.portrait .beat-sub {
+  margin-top: 400px;
+  font-size: 22px;
+}
+
+.end-row {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  width: 100%;
+}
+
+.portrait .end-row {
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+
+.end-copy h1 {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-weight: 600;
+  font-size: 72px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.portrait .end-copy h1 { font-size: 68px; }
+
+.end-copy p {
+  margin-top: 20px;
+  font-family: JetBrains Mono, ui-monospace, monospace;
+  font-size: 22px;
+  color: var(--accent);
+}
+
+.portrait .end-copy p { font-size: 20px; word-break: break-all; }
+
+.end-copy .note {
+  font-family: Inter, sans-serif;
+  font-size: 18px;
+  color: var(--muted);
+  margin-top: 16px;
+}
+
+.qr {
+  width: 220px;
+  height: 220px;
+  padding: 12px;
+  background: #f3f1ea;
+  border-radius: 8px;
+  flex: none;
+}
+
+.portrait .qr { width: 420px; height: 420px; padding: 18px; }
+
+.qr img { width: 100%; height: 100%; display: block; }
+
+#chrome {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+
+.portrait .topbar {
+  height: 120px;
+  padding: 36px 48px 0;
+  align-items: flex-start;
+}
+
+.chip {
+  font-family: Space Grotesk, Inter, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: var(--accent);
+}
+
+.stage-name {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.portrait .stage-name { font-size: 36px; }
+
+.caption {
+  position: absolute;
+  left: 40px;
+  bottom: 72px;
+  font-size: 18px;
+  color: var(--text);
+  max-width: 1100px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+}
+
+.portrait .caption {
+  left: 48px;
+  right: 48px;
+  bottom: 168px;
+  font-size: 22px;
+  max-width: none;
+}
+
+.rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  gap: 8px;
+  padding: 28px 40px 18px;
+  background: linear-gradient(180deg, transparent, rgba(12, 12, 12, 0.78));
+}
+
+.portrait .rail {
+  padding: 36px 48px 40px;
+  flex-wrap: wrap;
+}
+
+.rail .cell {
+  flex: 1;
+  height: 28px;
+  border: 1px solid var(--stroke);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Space Grotesk, Inter, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  background: rgba(24, 24, 28, 0.72);
+}
+
+.portrait .rail .cell {
+  flex: 1 1 30%;
+  height: 40px;
+  font-size: 14px;
+}
+
+html.landscape #chrome.is-proto .caption,
+html.landscape #chrome.is-proto .topbar,
+html.landscape #chrome.is-proto .sample {
+  opacity: 0;
+}
+
+html.landscape #chrome.is-proto .rail {
+  padding-top: 36px;
+  background: linear-gradient(180deg, transparent, rgba(12, 12, 12, 0.55));
+}
+
+.rail .cell.on {
+  color: #121212;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.sample {
+  position: absolute;
+  top: 24px;
+  right: 40px;
+  font-family: JetBrains Mono, ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.portrait .sample {
+  display: none;
+}
+
+/* True 9:16 layout: contained cards, never cover-crop. */
+.portrait .stage-card,
+.portrait .desk-fit {
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  top: 280px;
+  bottom: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.portrait .stage-card {
+  background: #1a1a1c;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+}
+
+.portrait .stage-card img,
+.portrait .stage-card video,
+.portrait .desk-fit video {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transform: none !important;
+}
+
+.portrait .desk-fit video {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.35);
+  background: #0c0c0c;
+}
+
+.portrait .phone-wrap {
+  position: absolute;
+  left: 96px;
+  right: 96px;
+  top: 280px;
+  bottom: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 40%, #1c1c20 0%, #0c0c0c 70%);
+}
+
+.portrait .topbar {
+  height: auto;
+  padding: 48px 56px 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.portrait .caption {
+  left: 56px;
+  right: 56px;
+  top: 168px;
+  bottom: auto;
+  font-size: 24px;
+  line-height: 1.3;
+  text-shadow: none;
+}
+
+.portrait .beat {
+  max-width: 900px;
+}
+
+.portrait #title-open,
+.portrait #title-end {
+  padding: 160px 72px 240px;
+}
