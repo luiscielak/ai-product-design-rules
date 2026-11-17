@@ -4,10 +4,9 @@
 
 Six staged skills, six roles on a small product team. Each stage reads what the last one wrote, so the PRD, wireframes, UI kit, and coded prototype stay in one reviewable trail. Built for any AI coding or agent environment that can follow structured skills.
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/editorial/hero-brief-to-prototype-dark.png">
-  <img src="assets/editorial/hero-brief-to-prototype-light.png" width="880" alt="Finley, the sample prototype: a Today dashboard with cash, burn, a spending trend, and a category breakdown, plus Cost-to-operate on a phone. Pipeline under the screenshot: Brief → PRD → Lo-fi → Mid-fi → Hi-fi → Prototype.">
-</picture>
+[![Silent 42-second Finley showreel: hover a spending tooltip on the Today dashboard](demo/showreel/out/finley-showreel-teaser.gif)](demo/showreel/out/finley-showreel-16x9.mp4)
+
+Silent 42s teaser · [16:9](demo/showreel/out/finley-showreel-16x9.mp4) · [9:16](demo/showreel/out/finley-showreel-9x16.mp4) · sample data
 
 The walkthrough below is **Finley**, a personal finance dashboard for a solo consultant. Same product at every stage. All figures in the prototype are sample data.
 

@@ -1,0 +1,13 @@
+{
+  "name": "ai-product-design-showreel",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "record": "node record-prototype.mjs",
+    "render": "node render.mjs",
+    "verify": "bash verify.sh"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.1"
+  }
+}

@@ -1,0 +1,8 @@
+node_modules/
+.tmp/
+out/.tmp/
+out/*.webm
+out/*.log
+out/*.raw.mp4
+media/*.webm
+media/raw/

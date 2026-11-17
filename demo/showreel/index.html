@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" class="landscape">
+  <head>
+    <meta charset="utf-8" />
+    <title>Finley showreel — 16:9</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="stage" class="landscape">
+      <div class="grid"></div>
+      <div id="scenes">
+        <div class="scene" data-scene="open"></div>
+
+        <div class="scene" data-scene="brief">
+          <div class="bleed">
+            <img class="ken" src="../../assets/editorial/finley-01-design-brief-light.png" alt="" />
+          </div>
+          <div class="veil"></div>
+        </div>
+
+        <div class="scene" data-scene="prd">
+          <div class="bleed">
+            <img class="ken" src="../../assets/editorial/finley-02-prd-light.png" alt="" />
+          </div>
+          <div class="veil"></div>
+        </div>
+
+        <div class="scene" data-scene="lofi">
+          <div class="bleed">
+            <img class="ken" src="../../assets/editorial/finley-03-lofi-light.png" alt="" />
+          </div>
+          <div class="veil"></div>
+        </div>
+
+        <div class="scene" data-scene="midfi">
+          <div class="bleed">
+            <video class="ken" src="media/midfi-flash.mp4" muted playsinline preload="auto"></video>
+          </div>
+          <div class="veil"></div>
+        </div>
+
+        <div class="scene" data-scene="hifi">
+          <div class="bleed">
+            <video class="ken" src="media/hifi-flash.mp4" muted playsinline preload="auto"></video>
+          </div>
+          <div class="veil"></div>
+        </div>
+
+        <div class="scene" data-scene="proto-today">
+          <div class="bleed">
+            <video class="ken" src="media/today.mp4" muted playsinline preload="auto" data-offset="0.6"></video>
+          </div>
+          <div class="veil veil-proto"></div>
+        </div>
+
+        <div class="scene" data-scene="proto-range">
+          <div class="bleed">
+            <video class="ken" src="media/today.mp4" muted playsinline preload="auto" data-offset="7.4"></video>
+          </div>
+          <div class="veil veil-proto"></div>
+        </div>
+
+        <div class="scene" data-scene="proto-forecast">
+          <div class="bleed">
+            <video class="ken" src="media/forecast.mp4" muted playsinline preload="auto" data-offset="0.4"></video>
+          </div>
+          <div class="veil veil-proto"></div>
+        </div>
+
+        <div class="scene" data-scene="proto-mobile">
+          <div class="phone-wrap">
+            <div class="phone">
+              <video src="media/mobile.mp4" muted playsinline preload="auto" data-offset="8.4"></video>
+            </div>
+          </div>
+        </div>
+
+        <div class="scene" data-scene="end"></div>
+      </div>
+
+      <div id="title-open">
+        <p class="kicker-open">From a one-page brief</p>
+        <div class="beats">
+          <p class="beat">One page.</p>
+          <p class="beat">Six stages.</p>
+          <p class="beat">A prototype you can click.</p>
+        </div>
+        <p class="beat-sub" id="beat-sub">Design agents. A trail you can review.</p>
+      </div>
+
+      <div id="title-end">
+        <div class="end-row">
+          <div class="end-copy">
+            <p class="kicker-open">The brief, built</p>
+            <h1>AI Product Design</h1>
+            <p>github.com/luiscielak/ai-product-design-rules</p>
+            <p class="note">Skills for any AI coding system · sample data</p>
+          </div>
+          <div class="qr"><img src="media/qr.png" alt="QR code to the GitHub repository" /></div>
+        </div>
+      </div>
+
+      <div id="chrome">
+        <div class="topbar">
+          <span class="chip" id="kicker"></span>
+          <span class="stage-name" id="stage-name"></span>
+        </div>
+        <p class="caption" id="caption"></p>
+        <span class="sample" id="sample"></span>
+        <div class="rail">
+          <div class="cell">Brief</div>
+          <div class="cell">PRD</div>
+          <div class="cell">Lo-fi</div>
+          <div class="cell">Mid-fi</div>
+          <div class="cell">Hi-fi</div>
+          <div class="cell">Prototype</div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="player.js"></script>
+  </body>
+</html>
