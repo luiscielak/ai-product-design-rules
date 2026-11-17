@@ -24,4 +24,6 @@
 
 16:9 t=0 and t=42 must match (loop seam). 9:16 does not have to loop; same timeline.
 
+9:16 is a true vertical composition, not a crop of 16:9: stage stills sit in contained cards, desktop prototype is letterboxed 16:9 with captions above and the rail below, mobile is a phone with margin, QR is large. No UI may touch the frame edge.
+
 Pipeline flashes are ~1s. Prototype is ~27s.

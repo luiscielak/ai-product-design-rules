@@ -27,7 +27,7 @@ export const SCENES = [
   { id: "proto-today", t0: 9.05, t1: 18.3, step: 5, kicker: "Stage 6 · live", name: "Prototype", caption: "Hover a point. The chart answers back.", sample: "Finley · sample data" },
   { id: "proto-range", t0: 17.95, t1: 23.5, step: 5, kicker: "Stage 6 · live", name: "Prototype", caption: "30 / 90 / 365 days. Same mock ledger.", sample: "Finley · sample data" },
   { id: "proto-forecast", t0: 23.15, t1: 29.0, step: 5, kicker: "Stage 6 · live", name: "Prototype", caption: "Drag burn. Watch runway move.", sample: "Finley · sample data" },
-  { id: "proto-mobile", t0: 28.65, t1: 36.5, step: 5, kicker: "Stage 6 · live", name: "Prototype", caption: "Cost-to-operate, on a phone.", sample: "Finley · sample data" },
+  { id: "proto-mobile", t0: 28.65, t1: 36.5, step: 5, kicker: "Stage 6 · live", name: "Prototype", caption: "Same prototype. On a phone.", sample: "Finley · sample data" },
   { id: "end", t0: 36.1, t1: 40.2, step: -1, kicker: "AI product design", name: "", caption: "", sample: "" },
 ];
 
@@ -55,6 +55,7 @@ export function sceneOpacity(scene, t) {
 }
 
 export function kenScale(scene, t) {
+  if (document.documentElement.classList.contains("portrait")) return 1;
   if (scene.id === "open" || scene.id === "end") return 1;
   const u = range(t, scene.t0, scene.t1);
   return 1 + 0.035 * u;
@@ -150,8 +151,9 @@ export function seek(t, opts = {}) {
   if (name) name.textContent = chrome.name;
   if (caption) caption.textContent = chrome.caption;
   if (sample) sample.textContent = "";
-  if (topbar) topbar.style.opacity = proto ? "0" : "1";
-  if (caption) caption.style.opacity = proto ? "0" : "1";
+  const isPortrait = document.documentElement.classList.contains("portrait");
+  if (topbar) topbar.style.opacity = proto && !isPortrait ? "0" : "1";
+  if (caption) caption.style.opacity = proto && !isPortrait ? "0" : "1";
 
   $all(".rail .cell").forEach((cell, i) => {
     cell.classList.toggle("on", chrome.step === i);

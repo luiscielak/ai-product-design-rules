@@ -3,7 +3,7 @@
 Silent 42s product teaser of the AI Product Design pipeline, using the **Finley** sample. Two cuts:
 
 - `out/finley-showreel-16x9.mp4` — 1920×1080, loops
-- `out/finley-showreel-9x16.mp4` — 1080×1920, Reels / Stories
+- `out/finley-showreel-9x16.mp4` — 1080×1920, Reels / Stories. A vertical composition (`portrait.html`), not a crop of the 16:9 cut: pipeline stills sit in contained cards, desktop prototype is letterboxed with captions, mobile is a phone with margin, QR is large.
 
 Not the 52s documentary on PR #3. This one is faster and spends most of its time on the upgraded prototype.
 
@@ -26,6 +26,7 @@ npm install
 npx playwright install chrome   # if channel chrome is missing
 npm run record                  # live Finley clips → media/*.mp4
 npm run render                  # HTML composition → both MP4s + frames
+# node render.mjs 9x16          # portrait cut only
 bash verify.sh
 ```
 
