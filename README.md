@@ -1,7 +1,7 @@
 <a href="demo/showreel/out/finley-showreel-16x9.mp4">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="demo/cover/out/a-editorial-dark.png">
-    <img src="demo/cover/out/a-editorial-light.png" width="1280" height="640" alt="Cover: Brief to prototype. Finley Today on desktop with a spending chart, beside a phone of the Forecast chart. Design agents and skills for personal and client apps and systems. Sample data.">
+    <img src="demo/cover/out/a-editorial-light.png" width="100%" alt="Cover: Brief to prototype. Finley Today on desktop with a spending chart, beside a phone of the Forecast chart. Design agents and skills for personal and client apps and systems. Sample data.">
   </picture>
 </a>
 
@@ -19,7 +19,7 @@ The walkthrough below is **Finley**, a personal finance dashboard for a solo con
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="demo/cover/out/b-pipeline-dark.png">
-  <img src="demo/cover/out/b-pipeline-light.png" width="1280" height="640" alt="Six stages from a one-page brief to a prototype you can click: Brief, PRD, Lo-fi, Mid-fi, Hi-fi, and the live Finley sample prototype. Design agents and skills for personal and client apps and systems. Sample data.">
+  <img src="demo/cover/out/b-pipeline-light.png" width="100%" alt="Six stages from a one-page brief to a prototype you can click: Brief, PRD, Lo-fi, Mid-fi, Hi-fi, and the live Finley sample prototype. Design agents and skills for personal and client apps and systems. Sample data.">
 </picture>
 
 | Stage | Role | You get |

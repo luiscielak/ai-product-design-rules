@@ -10,6 +10,8 @@ Three 2400×1200 directions, built from HTML/CSS in `src/` and rendered with Pla
 
 GitHub-like README screenshots (desktop / mobile, light / dark) live in `out/readme/`.
 
+Do not set a `height` attribute on README `<img>` tags. The GitHub iOS app scales width to the screen and keeps a fixed height, which squeezes 2:1 covers. Use `width="100%"` (or width only) and let height come from the file.
+
 ## Rebuild
 
 From `demo/cover/`:

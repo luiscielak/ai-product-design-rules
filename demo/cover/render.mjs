@@ -126,6 +126,24 @@ async function renderPreviews(browser) {
         timeout: 30000,
       });
       await waitFonts(page);
+      if (w.id === "mobile") {
+        const boxes = await page.$$eval(".md img", (imgs) =>
+          imgs.slice(0, 2).map((img) => {
+            const r = img.getBoundingClientRect();
+            return { w: r.width, h: r.height, ratio: r.width / r.height };
+          })
+        );
+        for (const box of boxes) {
+          if (Math.abs(box.ratio - 2) > 0.04) {
+            throw new Error(
+              `cover aspect ${box.ratio.toFixed(3)} (expected ~2:1) at ${box.w.toFixed(1)}x${box.h.toFixed(1)} ${theme}`
+            );
+          }
+          console.log(
+            `ok ${theme} ${box.w.toFixed(1)}x${box.h.toFixed(1)} ratio ${box.ratio.toFixed(3)}`
+          );
+        }
+      }
       const dest = path.join(destDir, `${w.id}-${theme}.png`);
       await page.screenshot({ path: dest, type: "png", fullPage: true });
       await page.close();
@@ -146,6 +164,8 @@ Three 2400×1200 directions, built from HTML/CSS in \`src/\` and rendered with P
 | **C — Typographic** | \`out/c-typographic-light.png\`, \`out/c-typographic-dark.png\` | Not used (kept here as an unused alternate) |
 
 GitHub-like README screenshots (desktop / mobile, light / dark) live in \`out/readme/\`.
+
+Do not set a \`height\` attribute on README \`<img>\` tags. The GitHub iOS app scales width to the screen and keeps a fixed height, which squeezes 2:1 covers. Use \`width="100%"\` (or width only) and let height come from the file.
 
 ## Rebuild
 
