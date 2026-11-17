@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>README preview</title>
+    <style>
+      :root {
+        --canvas: #f6f8fa;
+        --page: #ffffff;
+        --text: #1f2328;
+        --muted: #59636e;
+        --border: #d1d9e0;
+        --link: #0969da;
+        --chip: #818b981a;
+        --tab: #1f2328;
+      }
+      html[data-theme="dark"] {
+        --canvas: #010409;
+        --page: #0d1117;
+        --text: #e6edf3;
+        --muted: #9198a1;
+        --border: #3d444d;
+        --link: #4493f8;
+        --chip: #656c7633;
+        --tab: #e6edf3;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body {
+        background: var(--canvas);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      }
+      body.desktop { width: 1280px; min-height: 900px; }
+      body.mobile { width: 390px; min-height: 844px; }
+
+      .shell { padding: 16px 24px 40px; }
+      body.mobile .shell { padding: 12px 0 32px; }
+
+      .repo-bar {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        padding: 8px 0 16px;
+        font-size: 20px;
+        font-weight: 400;
+      }
+      body.mobile .repo-bar { font-size: 16px; padding: 4px 16px 12px; }
+      .repo-bar .owner { color: var(--link); }
+      .repo-bar .slash { color: var(--muted); }
+      .repo-bar .name { color: var(--link); font-weight: 600; }
+      .repo-bar .pub {
+        margin-left: 8px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0 7px;
+        line-height: 18px;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 8px;
+        border-bottom: 1px solid var(--border);
+        padding: 0 0 0;
+        margin-bottom: 16px;
+        font-size: 14px;
+      }
+      body.mobile .tabs { margin: 0 0 12px; padding: 0 16px; overflow: hidden; }
+      .tabs span {
+        padding: 8px 12px 10px;
+        color: var(--muted);
+        border-bottom: 2px solid transparent;
+      }
+      .tabs span.on {
+        color: var(--tab);
+        font-weight: 600;
+        border-bottom-color: #fd8c73;
+      }
+
+      .readme {
+        background: var(--page);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 40px 40px 56px;
+        max-width: 1012px;
+        margin: 0 auto;
+      }
+      body.mobile .readme {
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        padding: 16px 16px 40px;
+        max-width: none;
+      }
+
+      .file-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--muted);
+        margin-bottom: 16px;
+        letter-spacing: 0.01em;
+      }
+
+      .md { font-size: 16px; line-height: 1.5; word-wrap: break-word; }
+      .md img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        background: transparent;
+      }
+      .md a { color: var(--link); text-decoration: none; }
+      .md h1 {
+        font-size: 2em;
+        font-weight: 600;
+        padding-bottom: 0.3em;
+        border-bottom: 1px solid var(--border);
+        margin: 24px 0 16px;
+        line-height: 1.25;
+      }
+      .md h1:first-child { margin-top: 0; }
+      .md p { margin: 0 0 16px; }
+      .md .lede { font-weight: 600; }
+      .md .muted { color: var(--muted); font-size: 14px; }
+      .md table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 8px 0 16px;
+        font-size: 14px;
+      }
+      .md th, .md td {
+        border: 1px solid var(--border);
+        padding: 6px 13px;
+        text-align: left;
+      }
+      .md th { font-weight: 600; }
+      .cover-link { display: block; margin: 0 0 16px; }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <div class="repo-bar">
+        <span class="owner">luiscielak</span>
+        <span class="slash">/</span>
+        <span class="name">ai-product-design-rules</span>
+        <span class="pub">Public</span>
+      </div>
+      <div class="tabs">
+        <span class="on">Code</span>
+        <span>Issues</span>
+        <span>Pull requests</span>
+      </div>
+      <article class="readme">
+        <div class="file-label">README.md</div>
+        <div class="md" id="md"></div>
+      </article>
+    </div>
+    <script>
+      const params = new URLSearchParams(location.search);
+      const dir = params.get("dir") || "a";
+      const theme = params.get("theme") || "light";
+      const frame = params.get("frame") || "desktop";
+      document.documentElement.dataset.theme = theme;
+      document.body.classList.add(frame);
+
+      const covers = {
+        a: {
+          light: "../out/a-editorial-light.png",
+          dark: "../out/a-editorial-dark.png",
+          alt: "Cover: Brief to prototype. Desktop Today dashboard with spending chart beside a phone showing the Forecast chart. Design agents and skills for personal and client apps and systems. Sample data.",
+        },
+        b: {
+          light: "../out/b-pipeline-light.png",
+          dark: "../out/b-pipeline-dark.png",
+          alt: "Cover: One page. Six stages. A prototype you can click. Strip of Brief, PRD, Lo-fi, Mid-fi, Hi-fi, and the live Finley prototype. Sample data.",
+        },
+        c: {
+          light: "../out/c-typographic-light.png",
+          dark: "../out/c-typographic-dark.png",
+          alt: "Cover: A prototype you can click. Tight crop of the Finley Forecast chart. Design agents and skills for personal and client apps and systems. Sample data.",
+        },
+        current: {
+          light: "../../showreel/out/finley-showreel-teaser.gif",
+          dark: "../../showreel/out/finley-showreel-teaser.gif",
+          alt: "Silent 42-second Finley showreel: hover a spending tooltip on the Today dashboard",
+        },
+      };
+
+      const c = covers[dir] || covers.a;
+      const src = theme === "dark" ? c.dark : c.light;
+      const img = `<img src="${src}" alt="${c.alt}" width="1280">`;
+
+      const rest = `
+        <h1>AI Product Design</h1>
+        <p class="lede">Design agents that take a one-page brief to a prototype you can click — without skipping the product thinking.</p>
+        <p>Six staged skills, six roles on a small product team. Each stage reads what the last one wrote, so the PRD, wireframes, UI kit, and coded prototype stay in one reviewable trail. Built for any AI coding or agent environment that can follow structured skills.</p>
+        <p class="muted">Silent 42s teaser · 16:9 · 9:16 · sample data</p>
+        <table>
+          <thead><tr><th>Stage</th><th>Role</th><th>You get</th></tr></thead>
+          <tbody>
+            <tr><td>1. Project setup</td><td>Project Manager</td><td>A project folder with app/, docs/, design/</td></tr>
+            <tr><td>2. PRD</td><td>Product Owner</td><td>docs/PRD.md, with requirements tied to metrics</td></tr>
+          </tbody>
+        </table>
+      `;
+
+      const md = document.getElementById("md");
+      if (dir === "current") {
+        md.innerHTML = `
+          <h1>AI Product Design</h1>
+          <p class="lede">Design agents that take a one-page brief to a prototype you can click — without skipping the product thinking.</p>
+          <p>Six staged skills, six roles on a small product team. Each stage reads what the last one wrote, so the PRD, wireframes, UI kit, and coded prototype stay in one reviewable trail. Built for any AI coding or agent environment that can follow structured skills.</p>
+          <a class="cover-link" href="#">${img}</a>
+          <p class="muted">Silent 42s teaser · 16:9 · 9:16 · sample data</p>
+        `;
+      } else {
+        md.innerHTML = `
+          <a class="cover-link" href="#">${img}</a>
+          ${rest}
+        `;
+      }
+    </script>
+  </body>
+</html>

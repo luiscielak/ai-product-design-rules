@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Cover A — Editorial</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="artboard a" id="board">
+      <div class="grid"></div>
+      <div class="rule-top"></div>
+      <div class="copy">
+        <p class="kicker">Design agents and skills</p>
+        <h1>Brief to<br />prototype.</h1>
+        <p class="value">For personal and client<br />apps and systems.</p>
+      </div>
+      <div class="stage">
+        <div class="laptop">
+          <img id="desk" src="../shots/today-desktop-light.png" alt="" />
+        </div>
+        <div class="phone">
+          <img id="phone" src="../shots/forecast-phone-light.png" alt="" />
+        </div>
+      </div>
+      <p class="meta">
+        <span class="dot"></span>
+        Six stages · a reviewable trail
+        <span class="dot"></span>
+        Sample data
+      </p>
+    </div>
+    <script>
+      const dark = new URLSearchParams(location.search).get("theme") === "dark";
+      const board = document.getElementById("board");
+      if (dark) {
+        board.classList.add("dark");
+        document.getElementById("desk").src = "../shots/today-desktop-dark.png";
+        document.getElementById("phone").src = "../shots/forecast-phone-light.png";
+      }
+    </script>
+  </body>
+</html>
