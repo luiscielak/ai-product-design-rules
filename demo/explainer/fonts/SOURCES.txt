@@ -1,0 +1,9 @@
+Vendored Latin woff2 files from Fontsource via jsDelivr, for offline rendering.
+
+- Source Serif 4 600/700 — SIL OFL 1.1 — https://fontsource.org/fonts/source-serif-4
+- Space Grotesk 500/700 — SIL OFL 1.1 — https://fontsource.org/fonts/space-grotesk
+- Inter 400/500 — SIL OFL 1.1 — https://fontsource.org/fonts/inter
+- JetBrains Mono 400/500 — SIL OFL 1.1 — https://fontsource.org/fonts/jetbrains-mono
+
+URLs used:
+https://cdn.jsdelivr.net/fontsource/fonts/{family}@5.2.8/latin-{weight}-normal.woff2
