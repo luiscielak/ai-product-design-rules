@@ -1,0 +1,17 @@
+Clips are lossless-intent recodes of existing README demo recordings.
+No new UI was staged. In-points chosen so the frame shows real artifact content
+(not a loading spinner or desktop wallpaper).
+
+midfi-clip.mp4
+  source: assets/finley-04-midfi-demo.mp4
+  in: 8.000s  duration: 8.000s
+  original: silent H.264 1280x828 walkthrough of Finley mid-fi ui.html
+
+hifi-clip.mp4
+  source: assets/finley-05-hifi-demo.mp4
+  in: 9.000s  duration: 8.000s
+  original: silent H.264 1280x828 walkthrough of Finley component-gallery.html
+
+qr.svg / qr.png
+  payload: https://github.com/luiscielak/ai-product-design-rules
+  generator: segno (Python), error level M
